@@ -1149,6 +1149,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 36096458879596110, guid: 619c7eb9c936f86359e46a155cdd00b2, type: 3}
+      propertyPath: m_SuspensionDistance
+      value: 0.24
+      objectReference: {fileID: 0}
+    - target: {fileID: 36096458879596110, guid: 619c7eb9c936f86359e46a155cdd00b2, type: 3}
+      propertyPath: m_ForceAppPointDistance
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 36096458879596110, guid: 619c7eb9c936f86359e46a155cdd00b2, type: 3}
+      propertyPath: m_SuspensionSpring.damper
+      value: 2000
+      objectReference: {fileID: 0}
+    - target: {fileID: 36096458879596110, guid: 619c7eb9c936f86359e46a155cdd00b2, type: 3}
+      propertyPath: m_SuspensionSpring.spring
+      value: 32000
+      objectReference: {fileID: 0}
+    - target: {fileID: 107790971449004262, guid: 619c7eb9c936f86359e46a155cdd00b2, type: 3}
+      propertyPath: sidewaysGrip
+      value: 0.55
+      objectReference: {fileID: 0}
     - target: {fileID: 176788011348684413, guid: 619c7eb9c936f86359e46a155cdd00b2, type: 3}
       propertyPath: m_LocalPosition.x
       value: -8.97
@@ -1205,6 +1225,22 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 625bdbe83b4ea84dfa54f6d13905d6fa, type: 2}
+    - target: {fileID: 4519996372670725494, guid: 619c7eb9c936f86359e46a155cdd00b2, type: 3}
+      propertyPath: m_SuspensionDistance
+      value: 0.24
+      objectReference: {fileID: 0}
+    - target: {fileID: 4519996372670725494, guid: 619c7eb9c936f86359e46a155cdd00b2, type: 3}
+      propertyPath: m_ForceAppPointDistance
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4519996372670725494, guid: 619c7eb9c936f86359e46a155cdd00b2, type: 3}
+      propertyPath: m_SuspensionSpring.damper
+      value: 2000
+      objectReference: {fileID: 0}
+    - target: {fileID: 4519996372670725494, guid: 619c7eb9c936f86359e46a155cdd00b2, type: 3}
+      propertyPath: m_SuspensionSpring.spring
+      value: 32000
+      objectReference: {fileID: 0}
     - target: {fileID: 4699848957263448335, guid: 619c7eb9c936f86359e46a155cdd00b2, type: 3}
       propertyPath: m_Name
       value: MainVehicle
@@ -1213,6 +1249,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 625bdbe83b4ea84dfa54f6d13905d6fa, type: 2}
+    - target: {fileID: 6584074151574937997, guid: 619c7eb9c936f86359e46a155cdd00b2, type: 3}
+      propertyPath: sidewaysGrip
+      value: 0.55
+      objectReference: {fileID: 0}
     - target: {fileID: 7271104911880096731, guid: 619c7eb9c936f86359e46a155cdd00b2, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -1223,7 +1263,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8138033270050918596, guid: 619c7eb9c936f86359e46a155cdd00b2, type: 3}
       propertyPath: m_Mass
-      value: 1500
+      value: 1600
       objectReference: {fileID: 0}
     - target: {fileID: 8465346678599120039, guid: 619c7eb9c936f86359e46a155cdd00b2, type: 3}
       propertyPath: TCS
@@ -1240,6 +1280,10 @@ PrefabInstance:
     - target: {fileID: 8465346678599120039, guid: 619c7eb9c936f86359e46a155cdd00b2, type: 3}
       propertyPath: totalGears
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8465346678599120039, guid: 619c7eb9c936f86359e46a155cdd00b2, type: 3}
+      propertyPath: brakeTorque
+      value: 5000
       objectReference: {fileID: 0}
     - target: {fileID: 8465346678599120039, guid: 619c7eb9c936f86359e46a155cdd00b2, type: 3}
       propertyPath: engineInertia
