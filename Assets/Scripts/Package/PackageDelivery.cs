@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PackageDelivery : MonoBehaviour
@@ -7,6 +8,7 @@ public class PackageDelivery : MonoBehaviour
     private Collider _playerCollider;
     private Rigidbody _playerRigidbody;
     private VehiclePickupAnimator _vehicleAnimator;
+    private bool _delivered;
 
     void Update()
     {
@@ -43,12 +45,39 @@ public class PackageDelivery : MonoBehaviour
 
     void TriggerDelivery()
     {
-        if (!_vehicleAnimator.HasPackage())
+        if (_delivered || !_vehicleAnimator.HasPackage())
             return;
 
-        _vehicleAnimator.StartDeliverySequence();
+        _delivered = true;
+        _vehicleAnimator.StartDeliverySequence(OnPushComplete);
         _playerCollider = null;
         _playerRigidbody = null;
         _vehicleAnimator = null;
+    }
+
+    void OnPushComplete(Transform package)
+    {
+        ParticleSystem smoke = package.GetComponentInChildren<ParticleSystem>();
+        StartCoroutine(DeliverPackage(package, smoke));
+    }
+
+    IEnumerator DeliverPackage(Transform package, ParticleSystem smoke)
+    {
+        if (smoke != null)
+        {
+            smoke.transform.SetParent(null);
+            smoke.Play();
+        }
+
+        yield return new WaitForSeconds(0.4f);
+        package.gameObject.SetActive(false);
+
+        if (smoke != null)
+        {
+            yield return new WaitUntil(() => !smoke.IsAlive(true));
+            Destroy(smoke.gameObject);
+        }
+
+        gameObject.SetActive(false);
     }
 }

@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(RCC_CarControllerV4))]
 public class VehiclePickupAnimator : MonoBehaviour
@@ -27,17 +26,10 @@ public class VehiclePickupAnimator : MonoBehaviour
     public float clipReturnDuration = 0.3f;
 
     private RCC_CarControllerV4 _car;
-    private Transform _deliveredPackage;
 
     void Awake()
     {
         _car = GetComponent<RCC_CarControllerV4>();
-    }
-
-    void Update()
-    {
-        if (Keyboard.current.tKey.wasPressedThisFrame && _deliveredPackage != null)
-            StartCoroutine(ReturnPackageToVehicle());
     }
 
     public bool HasPackage() => packageSlot.childCount > 0;
@@ -96,12 +88,12 @@ public class VehiclePickupAnimator : MonoBehaviour
         yield return StartCoroutine(FlyArc(package, bouncePoint.position, packageSlot.position, archHeight * 0.5f, packageBounceDuration));
     }
 
-    public void StartDeliverySequence()
+    public void StartDeliverySequence(System.Action<Transform> onPushComplete = null)
     {
-        StartCoroutine(DeliverySequence());
+        StartCoroutine(DeliverySequence(onPushComplete));
     }
 
-    IEnumerator DeliverySequence()
+    IEnumerator DeliverySequence(System.Action<Transform> onPushComplete)
     {
         if (packageSlot.childCount == 0)
             yield break;
@@ -110,13 +102,13 @@ public class VehiclePickupAnimator : MonoBehaviour
         _car.canControl = false;
 
         yield return StartCoroutine(AnimateDoors(true));
-        yield return StartCoroutine(PushPackage(package));
+        yield return StartCoroutine(PushPackage(package, onPushComplete));
         yield return StartCoroutine(AnimateDoors(false));
 
         _car.canControl = true;
     }
 
-    IEnumerator PushPackage(Transform package)
+    IEnumerator PushPackage(Transform package, System.Action<Transform> onPushComplete)
     {
         Vector3 clipLocalStart = clip.localPosition;
         Vector3 clipLocalEnd = clipLocalStart + clipPushDirection * clipPushDistance;
@@ -126,19 +118,9 @@ public class VehiclePickupAnimator : MonoBehaviour
         yield return StartCoroutine(AnimateLocalPosition(clip, clipLocalStart, clipLocalEnd, clipPushDuration));
 
         package.SetParent(null);
-        _deliveredPackage = package;
+        onPushComplete?.Invoke(package);
 
         yield return StartCoroutine(AnimateLocalPosition(clip, clipLocalEnd, clipLocalStart, clipReturnDuration));
-    }
-
-    IEnumerator ReturnPackageToVehicle()
-    {
-        Transform package = _deliveredPackage;
-        _deliveredPackage = null;
-
-        yield return StartCoroutine(FlyArc(package, package.position, packageSlot.position, archHeight, packageFlyDuration));
-
-        package.SetParent(packageSlot);
     }
 
     IEnumerator AnimateLocalPosition(Transform target, Vector3 from, Vector3 to, float duration)
