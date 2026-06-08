@@ -26,6 +26,7 @@ public class VehiclePickupAnimator : MonoBehaviour
     public float clipReturnDuration = 0.3f;
 
     private RCC_CarControllerV4 _car;
+    private IPackageEffect _activeEffect;
 
     void Awake()
     {
@@ -34,8 +35,9 @@ public class VehiclePickupAnimator : MonoBehaviour
 
     public bool HasPackage() => packageSlot.childCount > 0;
 
-    public void StartPickupSequence(Transform package)
+    public void StartPickupSequence(Transform package, IPackageEffect effect = null)
     {
+        _activeEffect = effect;
         StartCoroutine(PickupSequence(package));
     }
 
@@ -48,6 +50,7 @@ public class VehiclePickupAnimator : MonoBehaviour
         yield return StartCoroutine(AnimateDoors(false));
 
         package.SetParent(packageSlot);
+        if (_activeEffect != null) _activeEffect.Activate(_car);
         _car.canControl = true;
     }
 
@@ -99,6 +102,7 @@ public class VehiclePickupAnimator : MonoBehaviour
             yield break;
 
         Transform package = packageSlot.GetChild(0);
+        if (_activeEffect != null) { _activeEffect.Deactivate(); _activeEffect = null; }
         _car.canControl = false;
 
         yield return StartCoroutine(AnimateDoors(true));

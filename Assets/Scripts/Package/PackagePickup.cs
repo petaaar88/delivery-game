@@ -3,23 +3,31 @@ using UnityEngine.InputSystem;
 
 public class PackagePickup : MonoBehaviour
 {
+    public PackageVariant[] variants;
+    public Transform packageSpawnPosition;
     public float speedThreshold = 0.5f;
 
     private Transform _packageVisual;
+    private GameObject _spawnedPackage;
+    private PackageVariant _activeVariant;
     private GameObject _triggerZone;
     private bool _pickedUp;
-    private Vector3 _originalLocalPos;
-    private Quaternion _originalLocalRot;
 
     private Collider _playerCollider;
     private Rigidbody _playerRigidbody;
 
     void Awake()
     {
-        _packageVisual = transform.Find("Package");
-        _originalLocalPos = _packageVisual.localPosition;
-        _originalLocalRot = _packageVisual.localRotation;
         _triggerZone = transform.Find("TriggerZone").gameObject;
+        SpawnVariant();
+    }
+
+    void SpawnVariant()
+    {
+        if (variants == null || variants.Length == 0) return;
+        _activeVariant = variants[Random.Range(0, variants.Length)];
+        _spawnedPackage = Instantiate(_activeVariant.prefab, packageSpawnPosition.position, packageSpawnPosition.rotation);
+        _packageVisual = _spawnedPackage.transform;
     }
 
     void Update()
@@ -61,19 +69,22 @@ public class PackagePickup : MonoBehaviour
         _pickedUp = true;
         GetComponent<Collider>().enabled = false;
         _triggerZone.SetActive(false);
-        animator.StartPickupSequence(_packageVisual);
+
+        IPackageEffect effect = _activeVariant?.effect as IPackageEffect;
+        animator.StartPickupSequence(_packageVisual, effect);
     }
 
     public void ResetPackage()
     {
-        _packageVisual.SetParent(transform);
-        _packageVisual.localPosition = _originalLocalPos;
-        _packageVisual.localRotation = _originalLocalRot;
-        _packageVisual.gameObject.SetActive(true);
+        if (_spawnedPackage != null)
+            Destroy(_spawnedPackage);
+
         _triggerZone.SetActive(true);
         GetComponent<Collider>().enabled = true;
         _playerCollider = null;
         _playerRigidbody = null;
         _pickedUp = false;
+
+        SpawnVariant();
     }
 }
