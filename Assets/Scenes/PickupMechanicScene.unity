@@ -477,9 +477,12 @@ MonoBehaviour:
   leftDoor: {fileID: 574825397}
   doorOpenAngle: 112.9
   doorAnimDuration: 0.3
+  audioManager: {fileID: 0}
+  openDoorSound: OpeningDoor
+  closeDoorSound: ClosingDoor
   bouncePoint: {fileID: 927555803}
   packageSlot: {fileID: 1203242862}
-  archHeight: 2
+  archHeight: 3
   packageFlyDuration: 0.9
   packageBounceDuration: 0.45
   impactVFX: {fileID: 545948589}
@@ -488,6 +491,45 @@ MonoBehaviour:
   clipPushDistance: 0.3
   clipPushDuration: 0.3
   clipReturnDuration: 0.3
+--- !u!114 &282520976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 282520961}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4629b2fc8bc6013b3981d3e780414721, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObjectAudioManager
+  soundClips:
+  - soundName: OpeningDoor
+    audioClip: {fileID: 8300000, guid: f8fcd597c59736e5ea72caf67875d6f4, type: 3}
+    soundType: 0
+    individualVolume: 0.147
+    pitch: 1.29
+    loop: 0
+    playAtAwake: 0
+    is3D: 0
+    spatialBlend: 0
+    minDistance: 0
+    maxDistance: 5
+    rolloffMode: 1
+    audioSource: {fileID: 0}
+  - soundName: ClosingDoor
+    audioClip: {fileID: 8300000, guid: f8fcd597c59736e5ea72caf67875d6f4, type: 3}
+    soundType: 0
+    individualVolume: 0.074
+    pitch: 1
+    loop: 0
+    playAtAwake: 0
+    is3D: 0
+    spatialBlend: 0
+    minDistance: 0
+    maxDistance: 5
+    rolloffMode: 1
+    audioSource: {fileID: 0}
 --- !u!4 &306339709 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f11508fdb9ec94e628f639a31d56902a, type: 3}
@@ -952,6 +994,53 @@ Transform:
   m_Children: []
   m_Father: {fileID: 282520972}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &557666332
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 557666334}
+  - component: {fileID: 557666333}
+  m_Layer: 0
+  m_Name: GlobalAudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &557666333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 557666332}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51b943f19e810a438a1da07286270fb2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GlobalAudioManager
+  masterVolume: 1
+  sfxVolume: 1
+  musicVolume: 1
+--- !u!4 &557666334
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 557666332}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 7.05284, y: -0, z: -18.11387}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &574825397 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3121625076746295084, guid: 619c7eb9c936f86359e46a155cdd00b2, type: 3}
@@ -1240,7 +1329,7 @@ Transform:
   m_GameObject: {fileID: 927555802}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.573, z: -5.72}
+  m_LocalPosition: {x: 0, y: -1.573, z: -5.03}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2384,7 +2473,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 11400656, guid: 9f32ea4a11500b344ae05427bdc21e05, type: 3}
       propertyPath: TPSDistance
-      value: 19.25
+      value: 11.05
       objectReference: {fileID: 0}
     - target: {fileID: 11400656, guid: 9f32ea4a11500b344ae05427bdc21e05, type: 3}
       propertyPath: TPSAutoFocus
@@ -3342,6 +3431,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4699848957263448335, guid: 619c7eb9c936f86359e46a155cdd00b2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 282520973}
+    - targetCorrespondingSourceObject: {fileID: 4699848957263448335, guid: 619c7eb9c936f86359e46a155cdd00b2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 282520976}
   m_SourcePrefab: {fileID: 100100000, guid: 619c7eb9c936f86359e46a155cdd00b2, type: 3}
 --- !u!33 &2738810873801102916
 MeshFilter:
@@ -3712,3 +3804,4 @@ SceneRoots:
   - {fileID: 1263077617}
   - {fileID: 1184559204}
   - {fileID: 1288405075460765660}
+  - {fileID: 557666334}

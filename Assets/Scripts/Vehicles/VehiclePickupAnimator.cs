@@ -11,6 +11,11 @@ public class VehiclePickupAnimator : MonoBehaviour
     public float doorOpenAngle = 90f;
     public float doorAnimDuration = 0.35f;
 
+    [Header("Door Sounds")]
+    public ObjectAudioManager audioManager;
+    public string openDoorSound = "OpeningDoor";
+    public string closeDoorSound = "ClosingDoor";
+
     [Header("Package")]
     public Transform bouncePoint;
     public Transform packageSlot;
@@ -34,6 +39,8 @@ public class VehiclePickupAnimator : MonoBehaviour
     void Awake()
     {
         _car = GetComponent<RCC_CarControllerV4>();
+        if (audioManager == null)
+            audioManager = GetComponent<ObjectAudioManager>();
     }
 
     public bool HasPackage() => packageSlot.childCount > 0;
@@ -65,12 +72,15 @@ public class VehiclePickupAnimator : MonoBehaviour
         float firstAngle = leftFirst ? (open ? doorOpenAngle : 0f) : (open ? -doorOpenAngle : 0f);
         float secondAngle = leftFirst ? (open ? -doorOpenAngle : 0f) : (open ? doorOpenAngle : 0f);
 
-        yield return StartCoroutine(AnimateSingleDoor(first, firstAngle));
-        yield return StartCoroutine(AnimateSingleDoor(second, secondAngle));
+        yield return StartCoroutine(AnimateSingleDoor(first, firstAngle, open));
+        yield return StartCoroutine(AnimateSingleDoor(second, secondAngle, open));
     }
 
-    IEnumerator AnimateSingleDoor(Transform door, float targetYAngle)
+    IEnumerator AnimateSingleDoor(Transform door, float targetYAngle, bool open)
     {
+        if (audioManager != null)
+            audioManager.PlaySoundOneShot(open ? openDoorSound : closeDoorSound);
+
         float elapsed = 0f;
         Quaternion start = door.localRotation;
         Quaternion target = Quaternion.Euler(0f, targetYAngle, 0f);

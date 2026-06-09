@@ -460,7 +460,7 @@ MonoBehaviour:
   maxGearShiftingSoundVolume: 0.5
   maxCrashSoundVolume: 0.5
   maxWindSoundVolume: 1
-  maxBrakeSoundVolume: 0.5
+  maxBrakeSoundVolume: 0.343
   foldGeneralSettings: 1
   foldBehaviorSettings: 1
   foldControllerSettings: 1
