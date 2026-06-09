@@ -482,6 +482,7 @@ MonoBehaviour:
   archHeight: 2
   packageFlyDuration: 0.9
   packageBounceDuration: 0.45
+  impactVFX: {fileID: 545948589}
   clip: {fileID: 764147660}
   clipPushDirection: {x: 0, y: 0, z: -1}
   clipPushDistance: 0.3
@@ -904,6 +905,52 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &545948588
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 545948590}
+  - component: {fileID: 545948589}
+  m_Layer: 0
+  m_Name: ImpactVFX
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &545948589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 545948588}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af0cba8de303247f5898505c26c22e73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PackageImpactVFX
+  dustColor: {r: 0.8962264, g: 0.878296, b: 0.85817903, a: 1}
+  scale: 0.01
+--- !u!4 &545948590
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 545948588}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 282520972}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &574825397 stripped
 Transform:
@@ -2337,7 +2384,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 11400656, guid: 9f32ea4a11500b344ae05427bdc21e05, type: 3}
       propertyPath: TPSDistance
-      value: 13.23
+      value: 19.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400656, guid: 9f32ea4a11500b344ae05427bdc21e05, type: 3}
+      propertyPath: TPSAutoFocus
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 11400656, guid: 9f32ea4a11500b344ae05427bdc21e05, type: 3}
       propertyPath: cameraTarget.playerVehicle
@@ -3275,6 +3326,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 176788011348684413, guid: 619c7eb9c936f86359e46a155cdd00b2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 927555803}
+    - targetCorrespondingSourceObject: {fileID: 176788011348684413, guid: 619c7eb9c936f86359e46a155cdd00b2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 545948590}
     - targetCorrespondingSourceObject: {fileID: 725105239581440462, guid: 619c7eb9c936f86359e46a155cdd00b2, type: 3}
       insertIndex: 0
       addedObject: {fileID: 764147660}

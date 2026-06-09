@@ -18,6 +18,9 @@ public class VehiclePickupAnimator : MonoBehaviour
     public float packageFlyDuration = 1.0f;
     public float packageBounceDuration = 0.7f;
 
+    [Header("VFX")]
+    public PackageImpactVFX impactVFX;
+
     [Header("Clip")]
     public Transform clip;
     public Vector3 clipPushDirection = Vector3.back;
@@ -88,6 +91,7 @@ public class VehiclePickupAnimator : MonoBehaviour
         package.SetParent(null);
 
         yield return StartCoroutine(FlyArc(package, package.position, bouncePoint.position, archHeight, packageFlyDuration));
+        impactVFX?.Play(bouncePoint.position);
         yield return StartCoroutine(FlyArc(package, bouncePoint.position, packageSlot.position, archHeight * 0.5f, packageBounceDuration));
     }
 
