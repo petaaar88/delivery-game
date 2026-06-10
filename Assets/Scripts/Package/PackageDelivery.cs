@@ -69,8 +69,23 @@ public class PackageDelivery : MonoBehaviour
             smoke.Play();
         }
 
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(0.35f);
+
+        // Brief bulge, then shrink away — beats blinking out of existence.
+        Vector3 baseScale = package.localScale;
+        float duration = 0.3f;
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / duration);
+            float bulge = 1f + 0.2f * Mathf.Sin(t * Mathf.PI);
+            float shrink = 1f - t * t * t;
+            package.localScale = baseScale * (bulge * shrink);
+            yield return null;
+        }
         package.gameObject.SetActive(false);
+        package.localScale = baseScale;
 
         if (smoke != null)
         {

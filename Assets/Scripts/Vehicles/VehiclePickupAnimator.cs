@@ -10,6 +10,10 @@ public class VehiclePickupAnimator : MonoBehaviour
     [Range(45f, 135f)]
     public float doorOpenAngle = 90f;
     public float doorAnimDuration = 0.35f;
+    public float doorStagger = 0.12f;
+    public float doorOvershoot = 7f;
+    public float doorSlamRebound = 4f;
+    public float doorSettleDuration = 0.18f;
 
     [Header("Door Sounds")]
     public ObjectAudioManager audioManager;
@@ -26,12 +30,30 @@ public class VehiclePickupAnimator : MonoBehaviour
     [Header("VFX")]
     public PackageImpactVFX impactVFX;
 
+    [Header("Package Juice")]
+    public float anticipationSquash = 0.2f;
+    public float anticipationDuration = 0.15f;
+    public float spinSpeedMin = 180f;
+    public float spinSpeedMax = 420f;
+    public float flightStretch = 0.2f;
+    public float impactSquash = 0.35f;
+    public float impactSquashDuration = 0.09f;
+    public float landSquash = 0.25f;
+    public float settleDuration = 0.35f;
+
     [Header("Clip")]
     public Transform clip;
     public Vector3 clipPushDirection = Vector3.back;
     public float clipPushDistance = 1f;
     public float clipPushDuration = 0.4f;
     public float clipReturnDuration = 0.3f;
+
+    [Header("Delivery Juice")]
+    public float clipWindupFraction = 0.25f;
+    public float clipWindupDuration = 0.15f;
+    public float tossDistance = 1.4f;
+    public float tossArcHeight = 0.5f;
+    public float tossDuration = 0.45f;
 
     private RCC_CarControllerV4 _car;
     private IPackageEffect _activeEffect;
@@ -67,30 +89,72 @@ public class VehiclePickupAnimator : MonoBehaviour
     IEnumerator AnimateDoors(bool open)
     {
         bool leftFirst = Random.value < 0.5f;
-        Transform first = leftFirst ? leftDoor : rightDoor;
-        Transform second = leftFirst ? rightDoor : leftDoor;
-        float firstAngle = leftFirst ? (open ? doorOpenAngle : 0f) : (open ? -doorOpenAngle : 0f);
-        float secondAngle = leftFirst ? (open ? -doorOpenAngle : 0f) : (open ? doorOpenAngle : 0f);
-
-        yield return StartCoroutine(AnimateSingleDoor(first, firstAngle, open));
-        yield return StartCoroutine(AnimateSingleDoor(second, secondAngle, open));
+        Coroutine left = StartCoroutine(AnimateSingleDoor(leftDoor, 1f, open, leftFirst ? 0f : doorStagger));
+        Coroutine right = StartCoroutine(AnimateSingleDoor(rightDoor, -1f, open, leftFirst ? doorStagger : 0f));
+        yield return left;
+        yield return right;
     }
 
-    IEnumerator AnimateSingleDoor(Transform door, float targetYAngle, bool open)
+    IEnumerator AnimateSingleDoor(Transform door, float sign, bool open, float delay)
     {
-        if (audioManager != null)
-            audioManager.PlaySoundOneShot(open ? openDoorSound : closeDoorSound);
+        if (delay > 0f)
+            yield return new WaitForSeconds(delay);
 
-        float elapsed = 0f;
         Quaternion start = door.localRotation;
-        Quaternion target = Quaternion.Euler(0f, targetYAngle, 0f);
+        Quaternion target = Quaternion.Euler(0f, open ? sign * doorOpenAngle : 0f, 0f);
 
-        while (elapsed < doorAnimDuration)
+        if (open)
         {
-            elapsed += Time.deltaTime;
-            float t = Mathf.Clamp01(elapsed / doorAnimDuration);
-            door.localRotation = Quaternion.Lerp(start, target, t);
-            yield return null;
+            // Fast swing past the open angle, then settle back — like hitting the hinge stop.
+            if (audioManager != null)
+                audioManager.PlaySoundOneShot(openDoorSound);
+
+            Quaternion overshot = Quaternion.Euler(0f, sign * (doorOpenAngle + doorOvershoot), 0f);
+            float elapsed = 0f;
+            while (elapsed < doorAnimDuration)
+            {
+                elapsed += Time.deltaTime;
+                float t = Mathf.Clamp01(elapsed / doorAnimDuration);
+                float easeOut = 1f - (1f - t) * (1f - t) * (1f - t);
+                door.localRotation = Quaternion.Lerp(start, overshot, easeOut);
+                yield return null;
+            }
+
+            elapsed = 0f;
+            while (elapsed < doorSettleDuration)
+            {
+                elapsed += Time.deltaTime;
+                float t = Mathf.Clamp01(elapsed / doorSettleDuration);
+                float smooth = t * t * (3f - 2f * t);
+                door.localRotation = Quaternion.Lerp(overshot, target, smooth);
+                yield return null;
+            }
+        }
+        else
+        {
+            // Accelerating slam shut, sound on impact, then a small damped rebound.
+            float elapsed = 0f;
+            while (elapsed < doorAnimDuration)
+            {
+                elapsed += Time.deltaTime;
+                float t = Mathf.Clamp01(elapsed / doorAnimDuration);
+                float easeIn = t * t * t;
+                door.localRotation = Quaternion.Lerp(start, target, easeIn);
+                yield return null;
+            }
+
+            if (audioManager != null)
+                audioManager.PlaySoundOneShot(closeDoorSound);
+
+            elapsed = 0f;
+            while (elapsed < doorSettleDuration)
+            {
+                elapsed += Time.deltaTime;
+                float t = Mathf.Clamp01(elapsed / doorSettleDuration);
+                float rebound = sign * doorSlamRebound * Mathf.Sin(t * Mathf.PI) * (1f - t);
+                door.localRotation = Quaternion.Euler(0f, rebound, 0f);
+                yield return null;
+            }
         }
 
         door.localRotation = target;
@@ -99,10 +163,93 @@ public class VehiclePickupAnimator : MonoBehaviour
     IEnumerator FlyPackage(Transform package)
     {
         package.SetParent(null);
+        Vector3 baseScale = package.localScale;
 
-        yield return StartCoroutine(FlyArc(package, package.position, bouncePoint.position, archHeight, packageFlyDuration));
-        impactVFX?.Play(bouncePoint.position);
-        yield return StartCoroutine(FlyArc(package, bouncePoint.position, packageSlot.position, archHeight * 0.5f, packageBounceDuration));
+        yield return StartCoroutine(SquashPulse(package, baseScale, anticipationSquash, anticipationDuration));
+
+        yield return StartCoroutine(FlyArcJuicy(package, package.position, bouncePoint.position, archHeight, packageFlyDuration, baseScale, null));
+
+        if (impactVFX != null)
+            impactVFX.Play(bouncePoint.position);
+        yield return StartCoroutine(SquashPulse(package, baseScale, impactSquash, impactSquashDuration));
+
+        yield return StartCoroutine(FlyArcJuicy(package, bouncePoint.position, packageSlot.position, archHeight * 0.5f, packageBounceDuration, baseScale, packageSlot.rotation));
+
+        yield return StartCoroutine(LandingSettle(package, baseScale));
+    }
+
+    // Squash down (and bulge sideways) then return to base — used for launch anticipation and bounce impact.
+    IEnumerator SquashPulse(Transform obj, Vector3 baseScale, float amount, float duration)
+    {
+        if (duration <= 0f || amount <= 0f)
+            yield break;
+
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / duration);
+            float pulse = Mathf.Sin(t * Mathf.PI) * amount;
+            obj.localScale = Vector3.Scale(baseScale, new Vector3(1f + pulse, 1f - pulse, 1f + pulse));
+            yield return null;
+        }
+        obj.localScale = baseScale;
+    }
+
+    IEnumerator FlyArcJuicy(Transform obj, Vector3 from, Vector3 to, float height, float duration, Vector3 baseScale, Quaternion? alignTo)
+    {
+        Quaternion startRot = obj.rotation;
+        Vector3 spinAxis = Random.onUnitSphere;
+        float spinSpeed = Random.Range(spinSpeedMin, spinSpeedMax);
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / duration);
+
+            // Linear horizontal travel + parabolic height = real projectile feel with hang time at the apex.
+            Vector3 pos = Vector3.Lerp(from, to, t);
+            pos.y += height * 4f * t * (1f - t);
+            obj.position = pos;
+
+            if (alignTo.HasValue)
+                obj.rotation = Quaternion.Slerp(startRot, alignTo.Value, t * t * (3f - 2f * t));
+            else
+                obj.Rotate(spinAxis, spinSpeed * Time.deltaTime, Space.World);
+
+            // Stretch is strongest at launch/landing (fast) and zero at the apex (slow).
+            float speedFactor = Mathf.Abs(1f - 2f * t);
+            float stretch = 1f + flightStretch * speedFactor;
+            float thin = 1f / Mathf.Sqrt(stretch);
+            obj.localScale = Vector3.Scale(baseScale, new Vector3(thin, stretch, thin));
+
+            yield return null;
+        }
+
+        obj.position = to;
+        if (alignTo.HasValue)
+            obj.rotation = alignTo.Value;
+        obj.localScale = baseScale;
+    }
+
+    // Damped squash-and-overshoot wobble after the package lands in the slot.
+    IEnumerator LandingSettle(Transform obj, Vector3 baseScale)
+    {
+        if (settleDuration <= 0f || landSquash <= 0f)
+            yield break;
+
+        float elapsed = 0f;
+        while (elapsed < settleDuration)
+        {
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / settleDuration);
+            float damp = (1f - t) * (1f - t);
+            float offset = landSquash * Mathf.Cos(t * Mathf.PI * 3f) * damp;
+            obj.localScale = Vector3.Scale(baseScale, new Vector3(1f + offset, 1f - offset, 1f + offset));
+            yield return null;
+        }
+        obj.localScale = baseScale;
     }
 
     public void StartDeliverySequence(System.Action<Transform> onPushComplete = null)
@@ -129,47 +276,53 @@ public class VehiclePickupAnimator : MonoBehaviour
     IEnumerator PushPackage(Transform package, System.Action<Transform> onPushComplete)
     {
         Vector3 clipLocalStart = clip.localPosition;
+        Vector3 clipLocalWindup = clipLocalStart - clipPushDirection * (clipPushDistance * clipWindupFraction);
         Vector3 clipLocalEnd = clipLocalStart + clipPushDirection * clipPushDistance;
+        Vector3 baseScale = package.localScale;
 
         package.SetParent(clip);
 
-        yield return StartCoroutine(AnimateLocalPosition(clip, clipLocalStart, clipLocalEnd, clipPushDuration));
+        // Wind-up pull back, then a snappy ease-out shove.
+        yield return StartCoroutine(AnimateLocalPosition(clip, clipLocalStart, clipLocalWindup, clipWindupDuration, EaseSmooth));
+        yield return StartCoroutine(AnimateLocalPosition(clip, clipLocalWindup, clipLocalEnd, clipPushDuration, EaseOutCubic));
 
         package.SetParent(null);
+
+        // Clip slides home while the package carries the shove's momentum out the back.
+        Coroutine clipReturn = StartCoroutine(AnimateLocalPosition(clip, clipLocalEnd, clipLocalStart, clipReturnDuration, EaseSmooth));
+
+        Vector3 pushDirWorld = clip.parent != null ? clip.parent.TransformDirection(clipPushDirection) : clipPushDirection;
+        Vector3 tossStart = package.position;
+        Vector3 tossEnd = tossStart + pushDirWorld.normalized * tossDistance;
+
+        float clearance = 0f;
+        Renderer rend = package.GetComponentInChildren<Renderer>();
+        if (rend != null)
+            clearance = rend.bounds.extents.y;
+        if (Physics.Raycast(tossEnd + Vector3.up * 2f, Vector3.down, out RaycastHit hit, 10f, ~0, QueryTriggerInteraction.Ignore))
+            tossEnd.y = hit.point.y + clearance;
+
+        yield return StartCoroutine(FlyArcJuicy(package, tossStart, tossEnd, tossArcHeight, tossDuration, baseScale, null));
+        yield return StartCoroutine(LandingSettle(package, baseScale));
+
         onPushComplete?.Invoke(package);
 
-        yield return StartCoroutine(AnimateLocalPosition(clip, clipLocalEnd, clipLocalStart, clipReturnDuration));
+        yield return clipReturn;
     }
 
-    IEnumerator AnimateLocalPosition(Transform target, Vector3 from, Vector3 to, float duration)
+    static float EaseSmooth(float t) => t * t * (3f - 2f * t);
+    static float EaseOutCubic(float t) => 1f - (1f - t) * (1f - t) * (1f - t);
+
+    IEnumerator AnimateLocalPosition(Transform target, Vector3 from, Vector3 to, float duration, System.Func<float, float> ease)
     {
         float elapsed = 0f;
         while (elapsed < duration)
         {
             elapsed += Time.deltaTime;
             float t = Mathf.Clamp01(elapsed / duration);
-            float smooth = t * t * (3f - 2f * t);
-            target.localPosition = Vector3.Lerp(from, to, smooth);
+            target.localPosition = Vector3.Lerp(from, to, ease(t));
             yield return null;
         }
         target.localPosition = to;
-    }
-
-    IEnumerator FlyArc(Transform obj, Vector3 from, Vector3 to, float height, float duration)
-    {
-        float elapsed = 0f;
-
-        while (elapsed < duration)
-        {
-            elapsed += Time.deltaTime;
-            float t = Mathf.Clamp01(elapsed / duration);
-            float smooth = t * t * (3f - 2f * t);
-            Vector3 pos = Vector3.Lerp(from, to, smooth);
-            pos.y += height * Mathf.Sin(smooth * Mathf.PI);
-            obj.position = pos;
-            yield return null;
-        }
-
-        obj.position = to;
     }
 }
