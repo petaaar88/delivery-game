@@ -8,6 +8,10 @@ public class PackageImpactVFX : MonoBehaviour
     [Tooltip("Overall scale of the burst")]
     public float scale = 1f;
 
+    [Tooltip("How strongly the burst leans in the package's travel direction")]
+    [Range(0f, 1f)]
+    public float directionalBias = 0.45f;
+
     private ParticleSystem _dustRing;
     private ParticleSystem _dustClouds;
     private ParticleSystem _pebbles;
@@ -22,9 +26,19 @@ public class PackageImpactVFX : MonoBehaviour
         transform.localScale = Vector3.one * scale;
     }
 
-    public void Play(Vector3 worldPosition)
+    public void Play(Vector3 worldPosition) => Play(worldPosition, Vector3.zero);
+
+    public void Play(Vector3 worldPosition, Vector3 impactDirection)
     {
         transform.position = worldPosition;
+
+        // Lean the whole burst along the travel direction — debris kicks forward
+        // on an angled impact instead of spraying out in a perfect circle.
+        Vector3 flat = impactDirection;
+        flat.y = 0f;
+        transform.rotation = flat.sqrMagnitude > 0.001f
+            ? Quaternion.FromToRotation(Vector3.up, (Vector3.up + flat.normalized * directionalBias).normalized)
+            : Quaternion.identity;
 
         _dustRing.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
         _dustClouds.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
@@ -60,7 +74,7 @@ public class PackageImpactVFX : MonoBehaviour
 
         var emission = ps.emission;
         emission.rateOverTime = 0f;
-        emission.SetBursts(new[] { new ParticleSystem.Burst(0f, 50) });
+        emission.SetBursts(new[] { new ParticleSystem.Burst(0f, 40, 55) });
 
         var shape = ps.shape;
         shape.shapeType = ParticleSystemShapeType.Cone;
@@ -102,10 +116,10 @@ public class PackageImpactVFX : MonoBehaviour
         ps.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
 
         var main = ps.main;
-        main.duration = 0.08f;
+        main.duration = 0.15f;
         main.loop = false;
-        main.startLifetime = new ParticleSystem.MinMaxCurve(0.28f, 0.42f);
-        main.startSpeed = new ParticleSystem.MinMaxCurve(1f, 2f);
+        main.startLifetime = new ParticleSystem.MinMaxCurve(0.55f, 0.95f);
+        main.startSpeed = new ParticleSystem.MinMaxCurve(0.8f, 1.8f);
         main.startSize = new ParticleSystem.MinMaxCurve(0.16f, 0.34f);
         main.startRotation = new ParticleSystem.MinMaxCurve(0f, Mathf.PI * 2f);
         main.startColor = DustGradient(0.6f);
@@ -114,9 +128,10 @@ public class PackageImpactVFX : MonoBehaviour
         main.playOnAwake = false;
         main.maxParticles = 30;
 
+        // A beat after the shockwave — dust billows up out of the initial hit.
         var emission = ps.emission;
         emission.rateOverTime = 0f;
-        emission.SetBursts(new[] { new ParticleSystem.Burst(0f, 18) });
+        emission.SetBursts(new[] { new ParticleSystem.Burst(0.05f, 14, 20) });
 
         var shape = ps.shape;
         shape.shapeType = ParticleSystemShapeType.Hemisphere;
@@ -159,7 +174,7 @@ public class PackageImpactVFX : MonoBehaviour
         var main = ps.main;
         main.duration = 0.08f;
         main.loop = false;
-        main.startLifetime = new ParticleSystem.MinMaxCurve(0.25f, 0.4f);
+        main.startLifetime = new ParticleSystem.MinMaxCurve(0.35f, 0.6f);
         main.startSpeed = new ParticleSystem.MinMaxCurve(2.5f, 5f);
         main.startSize = new ParticleSystem.MinMaxCurve(0.03f, 0.08f);
         main.startRotation = new ParticleSystem.MinMaxCurve(0f, Mathf.PI * 2f);
@@ -173,7 +188,7 @@ public class PackageImpactVFX : MonoBehaviour
 
         var emission = ps.emission;
         emission.rateOverTime = 0f;
-        emission.SetBursts(new[] { new ParticleSystem.Burst(0f, 18) });
+        emission.SetBursts(new[] { new ParticleSystem.Burst(0f, 12, 20) });
 
         var shape = ps.shape;
         shape.shapeType = ParticleSystemShapeType.Cone;
@@ -184,6 +199,21 @@ public class PackageImpactVFX : MonoBehaviour
         var rol = ps.rotationOverLifetime;
         rol.enabled = true;
         rol.z = new ParticleSystem.MinMaxCurve(-3f, 3f);
+
+        // Bounce off the ground instead of falling through it.
+        var collision = ps.collision;
+        collision.enabled = true;
+        collision.type = ParticleSystemCollisionType.World;
+        collision.mode = ParticleSystemCollisionMode.Collision3D;
+        collision.bounce = 0.45f;
+        collision.dampen = 0.3f;
+        collision.lifetimeLoss = 0.15f;
+
+        // Shrink out at the end of life instead of popping out of existence.
+        var sol = ps.sizeOverLifetime;
+        sol.enabled = true;
+        sol.size = new ParticleSystem.MinMaxCurve(1f,
+            new AnimationCurve(new Keyframe(0f, 1f), new Keyframe(0.65f, 1f), new Keyframe(1f, 0f)));
 
         ApplyParticleMaterial(go, 2, soft: false);
         ps.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);

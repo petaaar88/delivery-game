@@ -167,10 +167,11 @@ public class VehiclePickupAnimator : MonoBehaviour
 
         yield return StartCoroutine(SquashPulse(package, baseScale, anticipationSquash, anticipationDuration));
 
-        yield return StartCoroutine(FlyArcJuicy(package, package.position, bouncePoint.position, archHeight, packageFlyDuration, baseScale, null));
+        Vector3 flightStart = package.position;
+        yield return StartCoroutine(FlyArcJuicy(package, flightStart, bouncePoint.position, archHeight, packageFlyDuration, baseScale, null));
 
         if (impactVFX != null)
-            impactVFX.Play(bouncePoint.position);
+            impactVFX.Play(bouncePoint.position, bouncePoint.position - flightStart);
         yield return StartCoroutine(SquashPulse(package, baseScale, impactSquash, impactSquashDuration));
 
         yield return StartCoroutine(FlyArcJuicy(package, bouncePoint.position, packageSlot.position, archHeight * 0.5f, packageBounceDuration, baseScale, packageSlot.rotation));
