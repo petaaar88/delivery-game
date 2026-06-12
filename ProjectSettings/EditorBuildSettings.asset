@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
+    path: Assets/Scenes/MapScene.unity
+    guid: ab2a91b2fa3c0cb878e43050c7c09bb4
+  - enabled: 0
     path: Assets/Scenes/PickupMechanicScene.unity
     guid: bea06505fc4ba72dda6287e64f589173
   - enabled: 0

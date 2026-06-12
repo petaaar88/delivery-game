@@ -9,6 +9,25 @@ public class PackageDelivery : MonoBehaviour
     private Rigidbody _playerRigidbody;
     private VehiclePickupAnimator _vehicleAnimator;
     private bool _delivered;
+    private GameObject _triggerZone;
+
+    void Awake()
+    {
+        _triggerZone = transform.Find("TriggerZone").gameObject;
+    }
+
+    public void Activate()
+    {
+        _delivered = false;
+        GetComponent<Collider>().enabled = true;
+        _triggerZone.SetActive(true);
+    }
+
+    public void Deactivate()
+    {
+        GetComponent<Collider>().enabled = false;
+        _triggerZone.SetActive(false);
+    }
 
     void Update()
     {
@@ -93,6 +112,8 @@ public class PackageDelivery : MonoBehaviour
             Destroy(smoke.gameObject);
         }
 
-        gameObject.SetActive(false);
+        Deactivate();
+        if (DeliveryManager.Instance != null)
+            DeliveryManager.Instance.OnPackageDelivered();
     }
 }

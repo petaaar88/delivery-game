@@ -80,7 +80,7 @@ MonoBehaviour:
     damp: 0.5
     volume: 0.9
     groundParticles: {fileID: 1088255853978532, guid: 3c696ed2c46f7e4428d31d0bf5d0fd84, type: 3}
-    groundSound: {fileID: 8300000, guid: 9cffa87722b739342ab15969766b1005, type: 3}
+    groundSound: {fileID: 8300000, guid: 59e038dfc28ad83419aff1c81f974134, type: 3}
     skidmark: {fileID: 114759648095143906, guid: f9bbf9e575fb2714aa217acfd7d02f15, type: 3}
     deflate: 0
   terrainFrictions:

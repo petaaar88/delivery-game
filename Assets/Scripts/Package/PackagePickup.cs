@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class PackagePickup : MonoBehaviour
 {
@@ -32,9 +31,6 @@ public class PackagePickup : MonoBehaviour
 
     void Update()
     {
-        if (Keyboard.current.rKey.wasPressedThisFrame)
-            ResetPackage();
-
         if (_pickedUp || _playerCollider == null)
             return;
 
@@ -67,11 +63,26 @@ public class PackagePickup : MonoBehaviour
             return;
 
         _pickedUp = true;
-        GetComponent<Collider>().enabled = false;
-        _triggerZone.SetActive(false);
+        _playerCollider = null;
+        _playerRigidbody = null;
 
         IPackageEffect effect = _activeVariant?.effect as IPackageEffect;
         animator.StartPickupSequence(_packageVisual, effect);
+
+        DeliveryManager.Instance?.OnPackagePickedUp(this);
+    }
+
+    public void Activate()
+    {
+        if (_pickedUp) return;
+        GetComponent<Collider>().enabled = true;
+        _triggerZone.SetActive(true);
+    }
+
+    public void Deactivate()
+    {
+        GetComponent<Collider>().enabled = false;
+        _triggerZone.SetActive(false);
     }
 
     public void ResetPackage()
@@ -79,12 +90,12 @@ public class PackagePickup : MonoBehaviour
         if (_spawnedPackage != null)
             Destroy(_spawnedPackage);
 
-        _triggerZone.SetActive(true);
-        GetComponent<Collider>().enabled = true;
         _playerCollider = null;
         _playerRigidbody = null;
         _pickedUp = false;
 
         SpawnVariant();
+        GetComponent<Collider>().enabled = true;
+        _triggerZone.SetActive(true);
     }
 }
