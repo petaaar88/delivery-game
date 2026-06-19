@@ -1,0 +1,145 @@
+using System.Collections.Generic;
+using UnityEngine;
+
+public class NavigationGraph : MonoBehaviour
+{
+    public static NavigationGraph Instance { get; private set; }
+
+    [Tooltip("Per-node connection sphere radius. Two nodes connect bidirectionally when their spheres overlap, i.e. when their centers are within 2x this radius.")]
+    public float autoConnectRadius = 20f;
+
+    private NavNode[] _nodes;
+
+    // Nodes that make up the most recently computed path. Used for gizmo highlighting.
+    private readonly HashSet<NavNode> _pathNodes = new HashSet<NavNode>();
+
+    void Awake()
+    {
+        Instance = this;
+        _nodes = GetComponentsInChildren<NavNode>();
+        BuildGraph();
+    }
+
+    /// <summary>True if the node is part of the most recently computed path.</summary>
+    public bool IsOnPath(NavNode node) => _pathNodes.Contains(node);
+
+    /// <summary>Clears the highlighted path (e.g. when a delivery ends).</summary>
+    public void ClearPath() => _pathNodes.Clear();
+
+    private List<Vector3> StorePath(List<NavNode> pathNodes)
+    {
+        _pathNodes.Clear();
+        var result = new List<Vector3>();
+        foreach (var n in pathNodes)
+        {
+            _pathNodes.Add(n);
+            result.Add(n.transform.position);
+        }
+        return result;
+    }
+
+    void BuildGraph()
+    {
+        foreach (var node in _nodes)
+            node.neighbors.Clear();
+        // Two nodes connect when their connection spheres (radius = autoConnectRadius) overlap,
+        // i.e. when the centers are within the sum of the two radii (2 * autoConnectRadius).
+        float connectDistance = autoConnectRadius * 2f;
+        Debug.Log($"[NavGraph] Building graph with {_nodes.Length} nodes, autoConnectRadius={autoConnectRadius} (connect when centers <= {connectDistance})");
+
+        for (int i = 0; i < _nodes.Length; i++)
+        {
+            for (int j = i + 1; j < _nodes.Length; j++)
+            {
+                if (Vector3.Distance(_nodes[i].transform.position, _nodes[j].transform.position) <= connectDistance)
+                {
+                    if (!_nodes[i].neighbors.Contains(_nodes[j])) _nodes[i].neighbors.Add(_nodes[j]);
+                    if (!_nodes[j].neighbors.Contains(_nodes[i])) _nodes[j].neighbors.Add(_nodes[i]);
+                }
+            }
+            foreach (var n in _nodes[i].manualNeighbors)
+                if (n != null && !_nodes[i].neighbors.Contains(n))
+                    _nodes[i].neighbors.Add(n);
+        }
+    }
+
+    public NavNode FindNearest(Vector3 position)
+    {
+        NavNode nearest = null;
+        float bestSq = float.MaxValue;
+        foreach (var node in _nodes)
+        {
+            float sq = (node.transform.position - position).sqrMagnitude;
+            if (sq < bestSq) { bestSq = sq; nearest = node; }
+        }
+        return nearest;
+    }
+
+    /// <summary>
+    /// Returns ordered node positions from the node nearest 'from' to the node nearest 'to'.
+    /// Returns an empty list when no nodes are present.
+    /// </summary>
+    public List<Vector3> FindPath(Vector3 from, Vector3 to)
+    {
+        if (_nodes.Length == 0) { Debug.LogWarning("[NavGraph] No nodes loaded!"); _pathNodes.Clear(); return new List<Vector3>(); }
+
+        NavNode startNode = FindNearest(from);
+        NavNode endNode   = FindNearest(to);
+
+        Debug.Log($"[NavGraph] FindPath: start={startNode.name} ({startNode.neighbors.Count} neighbors), end={endNode.name} ({endNode.neighbors.Count} neighbors)");
+
+        if (startNode == endNode)
+        {
+            Debug.Log("[NavGraph] start==end, returning single node");
+            return StorePath(new List<NavNode> { endNode });
+        }
+
+        var open      = new HashSet<NavNode> { startNode };
+        var closed    = new HashSet<NavNode>();
+        var cameFrom  = new Dictionary<NavNode, NavNode>();
+        var gScore    = new Dictionary<NavNode, float>();
+
+        foreach (var n in _nodes) gScore[n] = float.MaxValue;
+        gScore[startNode] = 0f;
+
+        while (open.Count > 0)
+        {
+            NavNode current = null;
+            float bestF = float.MaxValue;
+            foreach (var n in open)
+            {
+                float f = gScore.GetValueOrDefault(n, float.MaxValue)
+                        + Vector3.Distance(n.transform.position, endNode.transform.position);
+                if (f < bestF) { bestF = f; current = n; }
+            }
+
+            if (current == null || current == endNode) break;
+            open.Remove(current);
+            closed.Add(current);
+
+            foreach (var neighbor in current.neighbors)
+            {
+                if (neighbor == null || closed.Contains(neighbor)) continue;
+                float tentativeG = gScore.GetValueOrDefault(current, float.MaxValue)
+                                 + Vector3.Distance(current.transform.position, neighbor.transform.position);
+                if (tentativeG < gScore.GetValueOrDefault(neighbor, float.MaxValue))
+                {
+                    cameFrom[neighbor] = current;
+                    gScore[neighbor]   = tentativeG;
+                    open.Add(neighbor);
+                }
+            }
+        }
+
+        var path = new List<NavNode>();
+        var cursor = endNode;
+        int guard = _nodes.Length + 2;
+        while (cursor != null && guard-- > 0)
+        {
+            path.Insert(0, cursor);
+            cursor = cameFrom.TryGetValue(cursor, out var prev) ? prev : null;
+        }
+
+        return StorePath(path);
+    }
+}

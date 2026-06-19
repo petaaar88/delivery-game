@@ -5,9 +5,13 @@ public class DeliveryManager : MonoBehaviour
 {
     public static DeliveryManager Instance { get; private set; }
 
+    public static event System.Action<Transform> OnDeliveryStarted;
+    public static event System.Action OnDeliveryCompleted;
+
     private PackagePickup[] _pickups;
     private PackageDelivery[] _destinations;
     private PackagePickup _lastUsedPickup;
+    private PackageDelivery _activeDestination;
 
     void Awake()
     {
@@ -35,7 +39,9 @@ public class DeliveryManager : MonoBehaviour
         foreach (var p in _pickups) p.Deactivate();
 
         if (_destinations.Length == 0) return;
-        _destinations[Random.Range(0, _destinations.Length)].Activate();
+        _activeDestination = _destinations[Random.Range(0, _destinations.Length)];
+        _activeDestination.Activate();
+        OnDeliveryStarted?.Invoke(_activeDestination.transform);
     }
 
     public void OnPackageDelivered()
@@ -48,6 +54,8 @@ public class DeliveryManager : MonoBehaviour
             if (p != _lastUsedPickup) p.Activate();
         }
         _lastUsedPickup = null;
+        _activeDestination = null;
+        OnDeliveryCompleted?.Invoke();
     }
 
     void DebugResetAll()
@@ -55,5 +63,7 @@ public class DeliveryManager : MonoBehaviour
         foreach (var d in _destinations) d.Deactivate();
         foreach (var p in _pickups) p.ResetPackage();
         _lastUsedPickup = null;
+        _activeDestination = null;
+        OnDeliveryCompleted?.Invoke();
     }
 }
