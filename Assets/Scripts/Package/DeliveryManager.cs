@@ -6,6 +6,9 @@ public class DeliveryManager : MonoBehaviour
     public static DeliveryManager Instance { get; private set; }
 
     public static event System.Action<Transform> OnDeliveryStarted;
+    public static event System.Action OnDeliveryZoneEntered;
+    public static event System.Action OnDeliveryZoneExited;
+    public static event System.Action OnDeliveryTriggered;
     public static event System.Action OnDeliveryCompleted;
 
     private PackagePickup[] _pickups;
@@ -42,6 +45,21 @@ public class DeliveryManager : MonoBehaviour
         _activeDestination = _destinations[Random.Range(0, _destinations.Length)];
         _activeDestination.Activate();
         OnDeliveryStarted?.Invoke(_activeDestination.transform);
+    }
+
+    public void NotifyDeliveryZoneEntered()
+    {
+        OnDeliveryZoneEntered?.Invoke();
+    }
+
+    public void NotifyDeliveryZoneExited()
+    {
+        OnDeliveryZoneExited?.Invoke();
+    }
+
+    public void NotifyDeliveryTriggered()
+    {
+        OnDeliveryTriggered?.Invoke();
     }
 
     public void OnPackageDelivered()

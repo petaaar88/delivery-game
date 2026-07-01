@@ -9,7 +9,10 @@ EditorBuildSettings:
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
-    path: Assets/Scenes/MapScene.unity
+    path: Assets/Scenes/MapV1Scene.unity
+    guid: 54eaaa2f70227c9cab748d889a010c90
+  - enabled: 0
+    path: Assets/Scenes/BlockoutMapScene.unity
     guid: ab2a91b2fa3c0cb878e43050c7c09bb4
   - enabled: 0
     path: Assets/Scenes/PickupMechanicScene.unity

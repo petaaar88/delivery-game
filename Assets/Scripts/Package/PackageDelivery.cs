@@ -50,6 +50,7 @@ public class PackageDelivery : MonoBehaviour
         _playerCollider = other;
         _playerRigidbody = other.GetComponentInParent<Rigidbody>();
         _vehicleAnimator = animator;
+        DeliveryManager.Instance?.NotifyDeliveryZoneEntered();
     }
 
     void OnTriggerExit(Collider other)
@@ -59,6 +60,8 @@ public class PackageDelivery : MonoBehaviour
             _playerCollider = null;
             _playerRigidbody = null;
             _vehicleAnimator = null;
+            if (!_delivered)
+                DeliveryManager.Instance?.NotifyDeliveryZoneExited();
         }
     }
 
@@ -68,6 +71,8 @@ public class PackageDelivery : MonoBehaviour
             return;
 
         _delivered = true;
+        Deactivate();
+        DeliveryManager.Instance?.NotifyDeliveryTriggered();
         _vehicleAnimator.StartDeliverySequence(OnPushComplete);
         _playerCollider = null;
         _playerRigidbody = null;

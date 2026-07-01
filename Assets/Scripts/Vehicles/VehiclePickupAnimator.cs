@@ -55,6 +55,8 @@ public class VehiclePickupAnimator : MonoBehaviour
     public float tossArcHeight = 0.5f;
     public float tossDuration = 0.45f;
 
+    public static event System.Action OnPickupComplete;
+
     private RCC_CarControllerV4 _car;
     private IPackageEffect _activeEffect;
 
@@ -84,6 +86,7 @@ public class VehiclePickupAnimator : MonoBehaviour
         package.SetParent(packageSlot);
         if (_activeEffect != null) _activeEffect.Activate(_car);
         _car.canControl = true;
+        OnPickupComplete?.Invoke();
     }
 
     IEnumerator AnimateDoors(bool open)
