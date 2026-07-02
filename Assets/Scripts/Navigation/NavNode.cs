@@ -28,7 +28,7 @@ public class NavNode : MonoBehaviour
             bool pathEdge = Application.isPlaying
                 && NavigationGraph.Instance != null
                 && NavigationGraph.Instance.IsPathEdge(this, n);
-            Gizmos.color = pathEdge ? Color.yellow : Color.cyan;
+            Gizmos.color = pathEdge ? Color.yellow : Color.blue;
             Gizmos.DrawLine(transform.position, n.transform.position);
         }
     }
