@@ -5,13 +5,11 @@ public class NavigationGraph : MonoBehaviour
 {
     public static NavigationGraph Instance { get; private set; }
 
-    [Tooltip("Per-node connection sphere radius. Two nodes connect bidirectionally when their spheres overlap, i.e. when their centers are within 2x this radius.")]
-    public float autoConnectRadius = 20f;
-
     private NavNode[] _nodes;
 
-    // Nodes that make up the most recently computed path. Used for gizmo highlighting.
+    // Nodes and consecutive node pairs of the most recently computed path. Used for gizmo highlighting.
     private readonly HashSet<NavNode> _pathNodes = new HashSet<NavNode>();
+    private readonly HashSet<(NavNode, NavNode)> _pathEdges = new HashSet<(NavNode, NavNode)>();
 
     void Awake()
     {
@@ -23,17 +21,29 @@ public class NavigationGraph : MonoBehaviour
     /// <summary>True if the node is part of the most recently computed path.</summary>
     public bool IsOnPath(NavNode node) => _pathNodes.Contains(node);
 
+    /// <summary>True if a and b are consecutive nodes on the most recently computed path (either direction).</summary>
+    public bool IsPathEdge(NavNode a, NavNode b) => _pathEdges.Contains((a, b));
+
     /// <summary>Clears the highlighted path (e.g. when a delivery ends).</summary>
-    public void ClearPath() => _pathNodes.Clear();
+    public void ClearPath()
+    {
+        _pathNodes.Clear();
+        _pathEdges.Clear();
+    }
 
     private List<Vector3> StorePath(List<NavNode> pathNodes)
     {
-        _pathNodes.Clear();
+        ClearPath();
         var result = new List<Vector3>();
-        foreach (var n in pathNodes)
+        for (int i = 0; i < pathNodes.Count; i++)
         {
-            _pathNodes.Add(n);
-            result.Add(n.transform.position);
+            _pathNodes.Add(pathNodes[i]);
+            result.Add(pathNodes[i].transform.position);
+            if (i > 0)
+            {
+                _pathEdges.Add((pathNodes[i - 1], pathNodes[i]));
+                _pathEdges.Add((pathNodes[i], pathNodes[i - 1]));
+            }
         }
         return result;
     }
@@ -42,25 +52,24 @@ public class NavigationGraph : MonoBehaviour
     {
         foreach (var node in _nodes)
             node.neighbors.Clear();
-        // Two nodes connect when their connection spheres (radius = autoConnectRadius) overlap,
-        // i.e. when the centers are within the sum of the two radii (2 * autoConnectRadius).
-        float connectDistance = autoConnectRadius * 2f;
-        Debug.Log($"[NavGraph] Building graph with {_nodes.Length} nodes, autoConnectRadius={autoConnectRadius} (connect when centers <= {connectDistance})");
 
-        for (int i = 0; i < _nodes.Length; i++)
+        // Manual connections only. Each manual link is treated as two-way: wiring one side
+        // in the Inspector is enough.
+        int edgeCount = 0;
+        foreach (var node in _nodes)
         {
-            for (int j = i + 1; j < _nodes.Length; j++)
+            foreach (var n in node.manualNeighbors)
             {
-                if (Vector3.Distance(_nodes[i].transform.position, _nodes[j].transform.position) <= connectDistance)
-                {
-                    if (!_nodes[i].neighbors.Contains(_nodes[j])) _nodes[i].neighbors.Add(_nodes[j]);
-                    if (!_nodes[j].neighbors.Contains(_nodes[i])) _nodes[j].neighbors.Add(_nodes[i]);
-                }
+                if (n == null) continue;
+                if (!node.neighbors.Contains(n)) { node.neighbors.Add(n); edgeCount++; }
+                if (!n.neighbors.Contains(node)) { n.neighbors.Add(node); edgeCount++; }
             }
-            foreach (var n in _nodes[i].manualNeighbors)
-                if (n != null && !_nodes[i].neighbors.Contains(n))
-                    _nodes[i].neighbors.Add(n);
         }
+
+        Debug.Log($"[NavGraph] Built graph: {_nodes.Length} nodes, {edgeCount} directed edges (manual links, two-way)");
+        foreach (var node in _nodes)
+            if (node.neighbors.Count == 0)
+                Debug.LogWarning($"[NavGraph] Node '{node.name}' has no neighbors — it is unreachable.");
     }
 
     public NavNode FindNearest(Vector3 position)

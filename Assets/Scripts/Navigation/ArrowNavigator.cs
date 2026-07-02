@@ -10,8 +10,11 @@ public class ArrowNavigator : MonoBehaviour
     [Tooltip("Height above the vehicle root in world space.")]
     public float heightAboveVehicle = 4f;
 
-    [Tooltip("Arrow rotation speed in degrees/sec. 0 = instant snap.")]
-    public float rotationSpeed = 270f;
+    [Tooltip("Approx. seconds for the arrow to settle on a new direction.")]
+    public float rotationSmoothTime = 0.2f;
+
+    [Tooltip("Vehicle must get this close to a node before the arrow advances to the next one.")]
+    public float nodeReachedRadius = 12f;
 
     [Tooltip("Degrees added to the computed Y angle. Adjust until the arrow tip points forward.")]
     public float modelForwardAngleOffset = 0f;
@@ -32,6 +35,8 @@ public class ArrowNavigator : MonoBehaviour
     private float _refreshTimer;
     private Coroutine _popCoroutine;
     private Vector3 _baseScale;
+    private float _rotationVelocity;
+    private int _segmentIndex;
 
     void Awake()
     {
@@ -74,8 +79,9 @@ public class ArrowNavigator : MonoBehaviour
 
     void HandleDeliveryCompleted()
     {
-        _active      = false;
-        _destination = null;
+        _active       = false;
+        _destination  = null;
+        _segmentIndex = 0;
         _path.Clear();
         if (NavigationGraph.Instance != null) NavigationGraph.Instance.ClearPath();
         HideArrow();
@@ -164,22 +170,38 @@ public class ArrowNavigator : MonoBehaviour
             _refreshTimer = pathRefreshInterval;
         }
 
-        // _path[0] = node nearest to vehicle (already "at" it), aim for _path[1].
-        Vector3 target;
-        if (_path.Count >= 2)
-            target = _path[1];
-        else if (_path.Count == 1)
+        // Aim at the far end of the current path segment. The segment index is sticky:
+        // it only advances during a drive (re-derived from scratch on each path refresh),
+        // so two near-equidistant segments at a node can't fight over the target.
+        Vector3 vpos = vehicle.transform.position;
+        Vector3 target = _destination != null ? _destination.position : transform.position;
+        if (_path.Count == 1)
+        {
             target = _path[0];
-        else
-            target = _destination != null ? _destination.position : transform.position;
+        }
+        else if (_path.Count >= 2)
+        {
+            _segmentIndex = Mathf.Clamp(_segmentIndex, 0, _path.Count - 2);
+            Vector3 p = vpos; p.y = 0f;
+            while (_segmentIndex < _path.Count - 2)
+            {
+                Vector3 a = _path[_segmentIndex];     a.y = 0f;
+                Vector3 b = _path[_segmentIndex + 1]; b.y = 0f;
+                Vector3 ab = b - a;
+                float t = ab.sqrMagnitude > 0.0001f ? Vector3.Dot(p - a, ab) / ab.sqrMagnitude : 1f;
+                bool nearEnd = (b - p).sqrMagnitude < nodeReachedRadius * nodeReachedRadius;
+                if (t >= 1f || nearEnd) _segmentIndex++;   // passed or reached the segment end
+                else break;
+            }
+            target = _path[_segmentIndex + 1];
+        }
 
-        Vector3 dir = new Vector3(target.x - vehicle.transform.position.x, 0f, target.z - vehicle.transform.position.z);
+        Vector3 dir = new Vector3(target.x - vpos.x, 0f, target.z - vpos.z);
         if (dir.sqrMagnitude > 0.01f)
         {
             float targetAngle = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg + modelForwardAngleOffset;
-            float newAngle = rotationSpeed > 0f
-                ? Mathf.MoveTowardsAngle(transform.eulerAngles.y, targetAngle, rotationSpeed * Time.deltaTime)
-                : targetAngle;
+            float newAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle,
+                                                   ref _rotationVelocity, rotationSmoothTime);
             transform.rotation = Quaternion.Euler(0f, newAngle, 0f);
         }
     }
@@ -201,5 +223,28 @@ public class ArrowNavigator : MonoBehaviour
 
         if (_destination != null)
             _path.Add(_destination.position);
+
+        // New path — re-derive the sticky segment index from the vehicle's position.
+        _segmentIndex = (vehicle != null && _path.Count >= 2) ? ClosestSegment() : 0;
+    }
+
+    /// <summary>Index of the path segment nearest the vehicle (XZ plane). Ties go to the later segment.</summary>
+    int ClosestSegment()
+    {
+        Vector3 p = vehicle.transform.position; p.y = 0f;
+        int best = 0;
+        float bestDistSq = float.MaxValue;
+        for (int i = 0; i < _path.Count - 1; i++)
+        {
+            Vector3 a = _path[i];     a.y = 0f;
+            Vector3 b = _path[i + 1]; b.y = 0f;
+            Vector3 ab = b - a;
+            float t = ab.sqrMagnitude > 0.0001f
+                ? Mathf.Clamp01(Vector3.Dot(p - a, ab) / ab.sqrMagnitude)
+                : 0f;
+            float distSq = (a + ab * t - p).sqrMagnitude;
+            if (distSq <= bestDistSq) { bestDistSq = distSq; best = i; }
+        }
+        return best;
     }
 }
