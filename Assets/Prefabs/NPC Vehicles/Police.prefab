@@ -624,6 +624,7 @@ GameObject:
   - component: {fileID: 7865091058130915347}
   - component: {fileID: 2309378098174129200}
   - component: {fileID: 6309900285383686153}
+  - component: {fileID: 8137987642982499504}
   m_Layer: 8
   m_Name: Police
   m_TagString: Untagged
@@ -1007,6 +1008,22 @@ MonoBehaviour:
   brakeZones: []
   targetChase: {fileID: 0}
   targetBrake: {fileID: 0}
+--- !u!114 &8137987642982499504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4710304166163586853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48662595e7c4ecd71bbed0416ea276c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FlipRecovery
+  overturnedDotThreshold: 0.3
+  maxSpeedForRecovery: 2
+  overturnedTimeBeforeFlip: 2
+  liftOnFlip: 1
 --- !u!1 &5335118583546753036
 GameObject:
   m_ObjectHideFlags: 0

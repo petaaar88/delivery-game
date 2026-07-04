@@ -526,6 +526,7 @@ GameObject:
   - component: {fileID: 1373387265531829541}
   - component: {fileID: 3457534788585539809}
   - component: {fileID: 2438564362733264052}
+  - component: {fileID: -6165160503041354445}
   m_Layer: 8
   m_Name: Fire Truck
   m_TagString: Untagged
@@ -909,6 +910,22 @@ MonoBehaviour:
   brakeZones: []
   targetChase: {fileID: 0}
   targetBrake: {fileID: 0}
+--- !u!114 &-6165160503041354445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2920483392698029874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48662595e7c4ecd71bbed0416ea276c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FlipRecovery
+  overturnedDotThreshold: 0.3
+  maxSpeedForRecovery: 2
+  overturnedTimeBeforeFlip: 2
+  liftOnFlip: 1
 --- !u!1 &3133067558678416580
 GameObject:
   m_ObjectHideFlags: 0
