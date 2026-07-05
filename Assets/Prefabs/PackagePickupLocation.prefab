@@ -207,6 +207,12 @@ MonoBehaviour:
   maxInterval: 6
   shakeTorque: 1200
   shakeForce: 500
+  scratchSound: ScratchSFX
+  catSounds:
+  - CatSFX1
+  - CatSFX2
+  - CatSFX3
+  catChance: 0.5
 --- !u!114 &4533567449442934419
 MonoBehaviour:
   m_ObjectHideFlags: 0

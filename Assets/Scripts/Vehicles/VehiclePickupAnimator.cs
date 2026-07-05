@@ -20,6 +20,12 @@ public class VehiclePickupAnimator : MonoBehaviour
     public string openDoorSound = "OpeningDoor";
     public string closeDoorSound = "ClosingDoor";
 
+    [Header("Package Sounds")]
+    public string packageSpawnSound = "PackageSpawn";
+    public string packageHitGroundSound = "PackageHitGround";
+    public string packageHitVehicleSound = "PackageHitVehicle";
+    public string clipSlideSound = "ClipSlide";
+
     [Header("Package")]
     public Transform bouncePoint;
     public Transform packageSlot;
@@ -168,6 +174,9 @@ public class VehiclePickupAnimator : MonoBehaviour
         package.SetParent(null);
         Vector3 baseScale = package.localScale;
 
+        if (audioManager != null)
+            audioManager.PlaySoundOneShot(packageSpawnSound);
+
         yield return StartCoroutine(SquashPulse(package, baseScale, anticipationSquash, anticipationDuration));
 
         Vector3 flightStart = package.position;
@@ -175,10 +184,14 @@ public class VehiclePickupAnimator : MonoBehaviour
 
         if (impactVFX != null)
             impactVFX.Play(bouncePoint.position, bouncePoint.position - flightStart);
+        if (audioManager != null)
+            audioManager.PlaySoundOneShot(packageHitGroundSound);
         yield return StartCoroutine(SquashPulse(package, baseScale, impactSquash, impactSquashDuration));
 
         yield return StartCoroutine(FlyArcJuicy(package, bouncePoint.position, packageSlot.position, archHeight * 0.5f, packageBounceDuration, baseScale, packageSlot.rotation));
 
+        if (audioManager != null)
+            audioManager.PlaySoundOneShot(packageHitVehicleSound);
         yield return StartCoroutine(LandingSettle(package, baseScale));
     }
 
@@ -288,6 +301,8 @@ public class VehiclePickupAnimator : MonoBehaviour
 
         // Wind-up pull back, then a snappy ease-out shove.
         yield return StartCoroutine(AnimateLocalPosition(clip, clipLocalStart, clipLocalWindup, clipWindupDuration, EaseSmooth));
+        if (audioManager != null)
+            audioManager.PlaySoundOneShot(clipSlideSound);
         yield return StartCoroutine(AnimateLocalPosition(clip, clipLocalWindup, clipLocalEnd, clipPushDuration, EaseOutCubic));
 
         package.SetParent(null);

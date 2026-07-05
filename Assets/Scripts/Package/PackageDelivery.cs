@@ -4,10 +4,12 @@ using UnityEngine;
 public class PackageDelivery : MonoBehaviour
 {
     public float speedThreshold = 0.5f;
+    public string packageDisappearSound = "PackageDisappear";
 
     private Collider _playerCollider;
     private Rigidbody _playerRigidbody;
     private VehiclePickupAnimator _vehicleAnimator;
+    private ObjectAudioManager _audio;
     private bool _delivered;
     private GameObject _triggerZone;
 
@@ -73,6 +75,7 @@ public class PackageDelivery : MonoBehaviour
         _delivered = true;
         Deactivate();
         DeliveryManager.Instance?.NotifyDeliveryTriggered();
+        _audio = _vehicleAnimator.audioManager;
         _vehicleAnimator.StartDeliverySequence(OnPushComplete);
         _playerCollider = null;
         _playerRigidbody = null;
@@ -96,6 +99,9 @@ public class PackageDelivery : MonoBehaviour
         yield return new WaitForSeconds(0.35f);
 
         // Brief bulge, then shrink away — beats blinking out of existence.
+        if (_audio != null)
+            _audio.PlaySoundOneShot(packageDisappearSound);
+
         Vector3 baseScale = package.localScale;
         float duration = 0.3f;
         float elapsed = 0f;

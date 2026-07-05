@@ -272,6 +272,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PackageDelivery
   speedThreshold: 0.5
+  packageDisappearSound: PackageDisappear
 --- !u!1 &7176799180986209212
 GameObject:
   m_ObjectHideFlags: 0
