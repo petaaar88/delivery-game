@@ -625,6 +625,7 @@ GameObject:
   - component: {fileID: 2309378098174129200}
   - component: {fileID: 6309900285383686153}
   - component: {fileID: 8137987642982499504}
+  - component: {fileID: 7628244001540405250}
   m_Layer: 8
   m_Name: Police
   m_TagString: Untagged
@@ -910,7 +911,7 @@ MonoBehaviour:
     damageResolution: 100
     damageFilter:
       serializedVersion: 2
-      m_Bits: 4294967295
+      m_Bits: 3895
     damageRadius: 0.75
     damageMultiplier: 1
     maximumDamage: 0.5
@@ -933,7 +934,7 @@ MonoBehaviour:
     lights: []
     wheels: []
     octrees: []
-  useDamage: 1
+  useDamage: 0
   useCollisionParticles: 1
   useCollisionAudio: 1
   maximumContactSparkle: 5
@@ -1024,6 +1025,21 @@ MonoBehaviour:
   maxSpeedForRecovery: 2
   overturnedTimeBeforeFlip: 2
   liftOnFlip: 1
+--- !u!114 &7628244001540405250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4710304166163586853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f7791d356321d0c6a5e003c5eaf7df3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RCCAudioDistanceOverride
+  maxDistance: 14
+  minDistance: 3
+  useLinearRolloff: 1
 --- !u!1 &5335118583546753036
 GameObject:
   m_ObjectHideFlags: 0

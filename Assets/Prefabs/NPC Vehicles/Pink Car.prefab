@@ -526,6 +526,7 @@ GameObject:
   - component: {fileID: 1704971649744885359}
   - component: {fileID: 7710432582504916523}
   - component: {fileID: -4609598027341188085}
+  - component: {fileID: 2381863361446321211}
   m_Layer: 8
   m_Name: Pink Car
   m_TagString: Untagged
@@ -811,7 +812,7 @@ MonoBehaviour:
     damageResolution: 100
     damageFilter:
       serializedVersion: 2
-      m_Bits: 4294967295
+      m_Bits: 3895
     damageRadius: 0.75
     damageMultiplier: 1
     maximumDamage: 0.5
@@ -834,7 +835,7 @@ MonoBehaviour:
     lights: []
     wheels: []
     octrees: []
-  useDamage: 1
+  useDamage: 0
   useCollisionParticles: 1
   useCollisionAudio: 1
   maximumContactSparkle: 5
@@ -925,6 +926,21 @@ MonoBehaviour:
   maxSpeedForRecovery: 2
   overturnedTimeBeforeFlip: 2
   liftOnFlip: 1
+--- !u!114 &2381863361446321211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5682797585436486131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f7791d356321d0c6a5e003c5eaf7df3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RCCAudioDistanceOverride
+  maxDistance: 14
+  minDistance: 3
+  useLinearRolloff: 1
 --- !u!1 &5683813830506019186
 GameObject:
   m_ObjectHideFlags: 0

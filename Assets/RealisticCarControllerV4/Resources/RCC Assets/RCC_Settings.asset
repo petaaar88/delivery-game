@@ -397,7 +397,7 @@ MonoBehaviour:
   uiType: 0
   useTelemetry: 0
   mobileController: 0
-  mobileControllerEnabled: 0
+  mobileControllerEnabled: 1
   UIButtonSensitivity: 5
   UIButtonGravity: 5
   gyroSensitivity: 2.5
@@ -457,10 +457,10 @@ MonoBehaviour:
   hdrpVolumeProfilePrefab: {fileID: 0}
   defaultDecalMaterial: {fileID: 2100000, guid: ca119b072bfec6c48ae8711ba087bc8d, type: 2}
   defaultNeonMaterial: {fileID: 2100000, guid: b103c5575bdcce7458140ac8bbb0f8ca, type: 2}
-  maxGearShiftingSoundVolume: 0.5
-  maxCrashSoundVolume: 0.5
-  maxWindSoundVolume: 1
-  maxBrakeSoundVolume: 0.343
+  maxGearShiftingSoundVolume: 0.283
+  maxCrashSoundVolume: 0.196
+  maxWindSoundVolume: 0
+  maxBrakeSoundVolume: 0.131
   foldGeneralSettings: 1
   foldBehaviorSettings: 1
   foldControllerSettings: 1

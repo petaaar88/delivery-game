@@ -527,6 +527,7 @@ GameObject:
   - component: {fileID: 3457534788585539809}
   - component: {fileID: 2438564362733264052}
   - component: {fileID: -6165160503041354445}
+  - component: {fileID: -9187125484525458537}
   m_Layer: 8
   m_Name: Fire Truck
   m_TagString: Untagged
@@ -812,7 +813,7 @@ MonoBehaviour:
     damageResolution: 100
     damageFilter:
       serializedVersion: 2
-      m_Bits: 4294967295
+      m_Bits: 3895
     damageRadius: 0.75
     damageMultiplier: 1
     maximumDamage: 0.5
@@ -835,7 +836,7 @@ MonoBehaviour:
     lights: []
     wheels: []
     octrees: []
-  useDamage: 1
+  useDamage: 0
   useCollisionParticles: 1
   useCollisionAudio: 1
   maximumContactSparkle: 5
@@ -926,6 +927,21 @@ MonoBehaviour:
   maxSpeedForRecovery: 2
   overturnedTimeBeforeFlip: 2
   liftOnFlip: 1
+--- !u!114 &-9187125484525458537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2920483392698029874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f7791d356321d0c6a5e003c5eaf7df3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RCCAudioDistanceOverride
+  maxDistance: 14
+  minDistance: 3
+  useLinearRolloff: 1
 --- !u!1 &3133067558678416580
 GameObject:
   m_ObjectHideFlags: 0
