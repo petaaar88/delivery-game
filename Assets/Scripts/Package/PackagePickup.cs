@@ -26,6 +26,7 @@ public class PackagePickup : MonoBehaviour
         if (variants == null || variants.Length == 0) return;
         _activeVariant = variants[Random.Range(0, variants.Length)];
         _spawnedPackage = Instantiate(_activeVariant.prefab, packageSpawnPosition.position, packageSpawnPosition.rotation);
+        _spawnedPackage.SetActive(false);
         _packageVisual = _spawnedPackage.transform;
     }
 
@@ -65,6 +66,8 @@ public class PackagePickup : MonoBehaviour
         _pickedUp = true;
         _playerCollider = null;
         _playerRigidbody = null;
+
+        _spawnedPackage.SetActive(true);
 
         IPackageEffect effect = _activeVariant?.effect as IPackageEffect;
         animator.StartPickupSequence(_packageVisual, effect);

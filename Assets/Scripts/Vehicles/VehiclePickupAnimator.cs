@@ -30,6 +30,7 @@ public class VehiclePickupAnimator : MonoBehaviour
     public Transform bouncePoint;
     public Transform packageSlot;
     public float archHeight = 2f;
+    public float vehicleEntryArchHeight = 1f;
     public float packageFlyDuration = 1.0f;
     public float packageBounceDuration = 0.7f;
 
@@ -188,7 +189,7 @@ public class VehiclePickupAnimator : MonoBehaviour
             audioManager.PlaySoundOneShot(packageHitGroundSound);
         yield return StartCoroutine(SquashPulse(package, baseScale, impactSquash, impactSquashDuration));
 
-        yield return StartCoroutine(FlyArcJuicy(package, bouncePoint.position, packageSlot.position, archHeight * 0.5f, packageBounceDuration, baseScale, packageSlot.rotation));
+        yield return StartCoroutine(FlyArcJuicy(package, bouncePoint.position, packageSlot.position, vehicleEntryArchHeight, packageBounceDuration, baseScale, packageSlot.rotation));
 
         if (audioManager != null)
             audioManager.PlaySoundOneShot(packageHitVehicleSound);
@@ -314,19 +315,46 @@ public class VehiclePickupAnimator : MonoBehaviour
         Vector3 tossStart = package.position;
         Vector3 tossEnd = tossStart + pushDirWorld.normalized * tossDistance;
 
+        // Measure the package's own mesh height — NOT GetComponentInChildren<Renderer>(), which
+        // would return the attached smoke's particle renderer and its huge (cloud-sized) bounds.
         float clearance = 0f;
-        Renderer rend = package.GetComponentInChildren<Renderer>();
+        MeshRenderer rend = package.GetComponentInChildren<MeshRenderer>();
         if (rend != null)
             clearance = rend.bounds.extents.y;
-        if (Physics.Raycast(tossEnd + Vector3.up * 2f, Vector3.down, out RaycastHit hit, 10f, ~0, QueryTriggerInteraction.Ignore))
-            tossEnd.y = hit.point.y + clearance;
+        // Drop the package down to the ground next to the car — same height as the wheels'
+        // contact point — so it lands low instead of hovering at the clip's height.
+        tossEnd.y = GetWheelGroundLevel() + clearance;
 
         yield return StartCoroutine(FlyArcJuicy(package, tossStart, tossEnd, tossArcHeight, tossDuration, baseScale, null));
         yield return StartCoroutine(LandingSettle(package, baseScale));
 
+
         onPushComplete?.Invoke(package);
 
         yield return clipReturn;
+    }
+
+    // Actual road-surface height under the car, taken from the rear wheels' ground-contact points.
+    float GetWheelGroundLevel()
+    {
+        float sum = 0f;
+        int count = 0;
+        foreach (RCC_WheelCollider w in new[] { _car.RearLeftWheelCollider, _car.RearRightWheelCollider })
+        {
+            if (w != null && w.isGrounded && w.wheelHit.point != Vector3.zero)
+            {
+                sum += w.wheelHit.point.y;
+                count++;
+            }
+        }
+        if (count > 0)
+            return sum / count;
+
+        // Fallback: raycast straight down under the car, ignoring the vehicle's own layers.
+        int mask = ~(1 << 8 | 1 << 9 | 1 << 10 | 1 << 11);
+        if (Physics.Raycast(transform.position + Vector3.up, Vector3.down, out RaycastHit hit, 20f, mask, QueryTriggerInteraction.Ignore))
+            return hit.point.y;
+        return transform.position.y;
     }
 
     static float EaseSmooth(float t) => t * t * (3f - 2f * t);
