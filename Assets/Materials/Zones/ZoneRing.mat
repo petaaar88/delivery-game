@@ -27,12 +27,12 @@ Material:
     m_Floats:
     - _DashCount: 14
     - _DashSpeed: 0.06
-    - _EdgeWidth: 0.0394
+    - _EdgeWidth: 0.036
     - _FillStrength: 0.157
     - _Intensity: 1.64
     - _PulseSpeed: 0.45
-    - _PulseWidth: 0.055
+    - _PulseWidth: 0.072
     m_Colors:
-    - _Color: {r: 0.19999996, g: 1, b: 0.39999998, a: 1}
+    - _Color: {r: 1, g: 0.72156864, b: 0.2, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

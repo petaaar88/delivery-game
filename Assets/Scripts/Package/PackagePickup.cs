@@ -6,28 +6,16 @@ public class PackagePickup : MonoBehaviour
     public Transform packageSpawnPosition;
     public float speedThreshold = 0.5f;
 
-    private Transform _packageVisual;
     private GameObject _spawnedPackage;
-    private PackageVariant _activeVariant;
-    private GameObject _triggerZone;
     private bool _pickedUp;
 
     private Collider _playerCollider;
     private Rigidbody _playerRigidbody;
+    private GameObject _triggerZone;
 
     void Awake()
     {
         _triggerZone = transform.Find("TriggerZone").gameObject;
-        SpawnVariant();
-    }
-
-    void SpawnVariant()
-    {
-        if (variants == null || variants.Length == 0) return;
-        _activeVariant = variants[Random.Range(0, variants.Length)];
-        _spawnedPackage = Instantiate(_activeVariant.prefab, packageSpawnPosition.position, packageSpawnPosition.rotation);
-        _spawnedPackage.SetActive(false);
-        _packageVisual = _spawnedPackage.transform;
     }
 
     void Update()
@@ -60,17 +48,19 @@ public class PackagePickup : MonoBehaviour
     void TriggerPickup()
     {
         VehiclePickupAnimator animator = _playerCollider.GetComponentInParent<VehiclePickupAnimator>();
-        if (animator == null)
+        if (animator == null || variants == null || variants.Length == 0)
             return;
 
         _pickedUp = true;
         _playerCollider = null;
         _playerRigidbody = null;
 
-        _spawnedPackage.SetActive(true);
+        // Spawn the package only now, on pickup — idle locations no longer each hold one in memory.
+        PackageVariant variant = variants[Random.Range(0, variants.Length)];
+        _spawnedPackage = Instantiate(variant.prefab, packageSpawnPosition.position, packageSpawnPosition.rotation);
 
-        IPackageEffect effect = _activeVariant?.effect as IPackageEffect;
-        animator.StartPickupSequence(_packageVisual, effect);
+        IPackageEffect effect = variant.effect as IPackageEffect;
+        animator.StartPickupSequence(_spawnedPackage.transform, effect);
 
         DeliveryManager.Instance?.OnPackagePickedUp(this);
     }
@@ -91,13 +81,15 @@ public class PackagePickup : MonoBehaviour
     public void ResetPackage()
     {
         if (_spawnedPackage != null)
+        {
             Destroy(_spawnedPackage);
+            _spawnedPackage = null;
+        }
 
         _playerCollider = null;
         _playerRigidbody = null;
         _pickedUp = false;
 
-        SpawnVariant();
         GetComponent<Collider>().enabled = true;
         _triggerZone.SetActive(true);
     }
