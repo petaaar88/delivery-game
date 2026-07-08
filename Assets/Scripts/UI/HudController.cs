@@ -35,6 +35,23 @@ public class HudController : MonoBehaviour
         new Color(1f, 0.85f, 0.4f),        // yellow
     };
 
+    // Hot exhaust-style sparks for the speedo burst.
+    static readonly Color[] SpeedSparkColors =
+    {
+        new Color(1f, 0.96f, 0.84f),       // white-hot
+        new Color(1f, 0.82f, 0.30f),       // gold
+        new Color(1f, 0.60f, 0.24f),       // orange
+        new Color(0.91f, 0.33f, 0.36f),    // red
+    };
+
+    // Golden glitter for the coin counter.
+    static readonly Color[] CoinSparkColors =
+    {
+        new Color(1f, 0.96f, 0.78f),
+        new Color(1f, 0.82f, 0.30f),
+        new Color(1f, 0.72f, 0.16f),
+    };
+
     Label _coinsLabel;
     Label _deliveriesLabel;
     Label _timerLabel;
@@ -46,6 +63,9 @@ public class HudController : MonoBehaviour
     VisualElement _needle;
     VisualElement _gauge;
     VisualElement _speedPanel;
+    VisualElement _coinsPill;
+    VisualElement _coinBadge;
+    VisualElement _deliveryCard;
     VisualElement _routeFill;
     VisualElement _timerFill;
 
@@ -71,6 +91,9 @@ public class HudController : MonoBehaviour
         _needle = root.Q("speed-needle");
         _gauge = root.Q("speed-gauge");
         _speedPanel = root.Q("speed-panel");
+        _coinsPill = root.Q("coins-pill");
+        _coinBadge = _coinsPill?.Q(className: "coin-badge");
+        _deliveryCard = root.Q("delivery-card");
         _routeFill = root.Q("route-fill");
         _timerFill = root.Q("timer-fill");
 
@@ -158,7 +181,8 @@ public class HudController : MonoBehaviour
             {
                 _fast = true;
                 _speedPanel.AddToClassList("speed--fast");
-                SpawnConfetti(15f, 66f, 10, 220f); // little burst off the speedo
+                SpawnSparks(_gauge, 14, 110f, SpeedSparkColors);
+                PopPanel(_speedPanel);
             }
             else if (_fast && _displaySpeed <= FastExitSpeed)
             {
@@ -221,6 +245,63 @@ public class HudController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Short elastic scale bounce on a panel (class-driven, see .panel-pop).
+    /// </summary>
+    static void PopPanel(VisualElement panel)
+    {
+        if (panel == null)
+            return;
+
+        panel.AddToClassList("panel-pop");
+        panel.schedule.Execute(() => panel.RemoveFromClassList("panel-pop")).ExecuteLater(200);
+    }
+
+    /// <summary>
+    /// Radial spark burst that visibly originates from the given element:
+    /// pieces are parented to it and fly out from its centre. Each spark is an
+    /// elongated streak rotated to match its flight direction.
+    /// </summary>
+    static void SpawnSparks(VisualElement origin, int count, float distance, Color[] palette)
+    {
+        if (origin == null)
+            return;
+
+        for (int i = 0; i < count; i++)
+        {
+            var spark = new VisualElement { pickingMode = PickingMode.Ignore };
+            spark.AddToClassList("spark");
+
+            float length = Random.Range(14f, 26f);
+            float thickness = Random.Range(4f, 6f);
+            spark.style.width = length;
+            spark.style.height = thickness;
+            spark.style.marginLeft = -length * 0.5f;
+            spark.style.marginTop = -thickness * 0.5f;
+            spark.style.backgroundColor = palette[Random.Range(0, palette.Length)];
+
+            // Streak points along its flight path.
+            float angleDeg = Random.Range(0f, 360f);
+            spark.style.rotate = new StyleRotate(new Rotate(new Angle(angleDeg, AngleUnit.Degree)));
+            origin.Add(spark);
+
+            float rad = angleDeg * Mathf.Deg2Rad;
+            float dist = Random.Range(distance * 0.55f, distance);
+            float dx = Mathf.Cos(rad) * dist;
+            float dy = Mathf.Sin(rad) * dist;
+
+            var s = spark;
+            s.schedule.Execute(() =>
+            {
+                s.style.translate = new StyleTranslate(new Translate(dx, dy));
+                s.style.opacity = 0f;
+                s.style.scale = new StyleScale(new Scale(new Vector2(0.3f, 0.3f)));
+            }).ExecuteLater(16);
+
+            s.schedule.Execute(() => s.RemoveFromHierarchy()).ExecuteLater(650);
+        }
+    }
+
     void UpdateTimer()
     {
         var session = GameSession.Instance;
@@ -229,7 +310,13 @@ public class HudController : MonoBehaviour
 
         float t = session.TimeRemaining;
         _timerLabel.text = string.Format("{0}:{1:00}", (int)(t / 60f), (int)(t % 60f));
-        _timerPill.EnableInClassList("timer--low", t <= LowTimeThreshold);
+
+        bool low = t <= LowTimeThreshold && t > 0f;
+        _timerPill.EnableInClassList("timer--low", low);
+
+        // Heartbeat pulse on the countdown while time is running out.
+        float pulse = low ? 1f + 0.1f * Mathf.Abs(Mathf.Sin(Time.unscaledTime * 6f)) : 1f;
+        _timerLabel.style.scale = new StyleScale(new Scale(new Vector2(pulse, pulse)));
 
         if (_timerFill != null)
         {
@@ -243,6 +330,8 @@ public class HudController : MonoBehaviour
     void HandleCoinsChanged(int coins)
     {
         _coinsLabel.text = coins.ToString();
+        PopPanel(_coinsPill);
+        SpawnSparks(_coinBadge, 8, 52f, CoinSparkColors);
     }
 
     void HandleDeliveriesChanged(int deliveries)
@@ -263,6 +352,7 @@ public class HudController : MonoBehaviour
     void HandleDeliveryStarted(Transform destination)
     {
         _timerPill.AddToClassList("timer--visible");
+        PopPanel(_deliveryCard);
         ShowBanner("DELIVER THE PACKAGE!", 2.5f);
     }
 

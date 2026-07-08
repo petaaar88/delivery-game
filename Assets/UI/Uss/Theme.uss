@@ -2644,3 +2644,58 @@
     transition-duration: 0.95s, 0.95s, 0.95s;
     transition-timing-function: ease-out;
 }
+
+/* ============================================================
+   Juice pass — sparks that fly out of their source element,
+   elastic panel bounces, springier banner/toast entrances.
+   Deliveries panel is parked (hidden) for now.
+   ============================================================ */
+
+#deliveries-pill {
+    display: none;
+}
+
+/* spark streak: spawned at the centre of its origin element and
+   rotated to point along its outward flight (see SpawnSparks). */
+.spark {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    border-radius: 3px;
+    opacity: 1;
+    transition-property: translate, opacity, scale;
+    transition-duration: 0.5s, 0.5s, 0.5s;
+    transition-timing-function: ease-out, ease-out, ease-out;
+}
+
+/* elastic pop applied briefly from C# */
+#speed-panel,
+#coins-pill,
+#delivery-card {
+    transition-property: scale;
+    transition-duration: 0.34s;
+    transition-timing-function: ease-out-elastic;
+}
+
+.panel-pop {
+    scale: 1.09 1.09;
+}
+
+/* springier banner entrance */
+#banner {
+    scale: 0.7 0.7;
+    transition-duration: 0.3s, 0.3s;
+    transition-timing-function: ease-out-back, ease-out-back;
+}
+
+/* reward toast pops in with a bounce too */
+#reward-toast {
+    scale: 0.6 0.6;
+    transition-property: opacity, translate, scale;
+    transition-duration: 0.3s, 0.3s, 0.3s;
+    transition-timing-function: ease-out-back, ease-out-back, ease-out-back;
+}
+
+#reward-toast.toast--show {
+    scale: 1 1;
+}
