@@ -2699,3 +2699,46 @@
 #reward-toast.toast--show {
     scale: 1 1;
 }
+
+/* ============================================================
+   Main menu requested polish pass
+   ============================================================ */
+
+.title-card {
+    display: none;
+}
+
+.menu-score-pill {
+    min-width: 210px;
+    min-height: 92px;
+    width: auto;
+    border-radius: 46px;
+    padding: 12px 32px;
+    background-color: rgb(245, 247, 251);
+    border-width: 2px;
+    border-color: rgba(255, 255, 255, 0.9);
+    border-bottom-width: 8px;
+    border-bottom-color: rgb(213, 218, 227);
+}
+
+.menu-score-pill .coin-badge {
+    width: 56px;
+    height: 56px;
+    border-radius: 28px;
+}
+
+.menu-score-pill Label {
+    -unity-font-definition: url("../Fonts/Baloo2-ExtraBold.ttf");
+    font-size: 53px;
+    margin-left: 22px;
+    color: rgb(91, 55, 33);
+    -unity-text-outline-width: 0;
+}
+
+.button-depth__shadow--play {
+    background-color: rgb(30, 190, 54);
+}
+
+#play-button {
+    background-color: rgb(83, 224, 72);
+}
