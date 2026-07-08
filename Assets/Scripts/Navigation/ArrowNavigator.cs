@@ -50,6 +50,7 @@ public class ArrowNavigator : MonoBehaviour
         DeliveryManager.OnDeliveryZoneExited   += HandleDeliveryZoneExited;
         DeliveryManager.OnDeliveryTriggered    += HandleDeliveryCompleted;
         DeliveryManager.OnDeliveryCompleted    += HandleDeliveryCompleted;
+        DeliveryManager.OnDeliveryFailed       += HandleDeliveryCompleted;
         VehiclePickupAnimator.OnPickupComplete += HandlePickupComplete;
     }
 
@@ -60,6 +61,7 @@ public class ArrowNavigator : MonoBehaviour
         DeliveryManager.OnDeliveryZoneExited   -= HandleDeliveryZoneExited;
         DeliveryManager.OnDeliveryTriggered    -= HandleDeliveryCompleted;
         DeliveryManager.OnDeliveryCompleted    -= HandleDeliveryCompleted;
+        DeliveryManager.OnDeliveryFailed       -= HandleDeliveryCompleted;
         VehiclePickupAnimator.OnPickupComplete -= HandlePickupComplete;
     }
 

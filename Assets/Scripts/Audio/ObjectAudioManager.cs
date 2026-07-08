@@ -164,6 +164,11 @@ public class ObjectAudioManager : MonoBehaviour
     }
 
     // Korisne metode
+    public bool HasSound(string soundName)
+    {
+        return soundDictionary != null && soundDictionary.ContainsKey(soundName);
+    }
+
     public bool IsSoundPlaying(string soundName)
     {
         if (soundDictionary.ContainsKey(soundName))

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -108,11 +109,13 @@ public class HudController : MonoBehaviour
         GameSession.OnCoinsChanged += HandleCoinsChanged;
         GameSession.OnDeliveriesChanged += HandleDeliveriesChanged;
         GameSession.OnDeliveryRewarded += HandleDeliveryRewarded;
+        GameSession.OnDeliveryFailedPenalty += HandleDeliveryFailedPenalty;
         DeliveryManager.OnDeliveryStarted += HandleDeliveryStarted;
         DeliveryManager.OnDeliveryZoneEntered += HandleZoneEntered;
         DeliveryManager.OnDeliveryZoneExited += HandleZoneExited;
         DeliveryManager.OnDeliveryTriggered += HandleDeliveryTriggered;
         DeliveryManager.OnDeliveryCompleted += HandleDeliveryCompleted;
+        DeliveryManager.OnDeliveryFailed += HandleDeliveryFailed;
     }
 
     void OnDisable()
@@ -120,11 +123,13 @@ public class HudController : MonoBehaviour
         GameSession.OnCoinsChanged -= HandleCoinsChanged;
         GameSession.OnDeliveriesChanged -= HandleDeliveriesChanged;
         GameSession.OnDeliveryRewarded -= HandleDeliveryRewarded;
+        GameSession.OnDeliveryFailedPenalty -= HandleDeliveryFailedPenalty;
         DeliveryManager.OnDeliveryStarted -= HandleDeliveryStarted;
         DeliveryManager.OnDeliveryZoneEntered -= HandleZoneEntered;
         DeliveryManager.OnDeliveryZoneExited -= HandleZoneExited;
         DeliveryManager.OnDeliveryTriggered -= HandleDeliveryTriggered;
         DeliveryManager.OnDeliveryCompleted -= HandleDeliveryCompleted;
+        DeliveryManager.OnDeliveryFailed -= HandleDeliveryFailed;
     }
 
     void Start()
@@ -392,6 +397,51 @@ public class HudController : MonoBehaviour
     {
         _timerPill.RemoveFromClassList("timer--visible");
         ShowBanner("PICK UP A PACKAGE!", 2.5f);
+    }
+
+    void HandleDeliveryFailed()
+    {
+        _timerPill.RemoveFromClassList("timer--visible");
+        FlashScreen(new Color(1f, 0.25f, 0.2f), 0.4f, 600);
+        ShowBanner("PACKAGE EXPLODED!", 3f);
+    }
+
+    void HandleDeliveryFailedPenalty(int penalty)
+    {
+        if (penalty <= 0)
+            return;
+
+        _rewardToast.text = $"-{penalty}";
+        _rewardToast.AddToClassList("toast--show");
+
+        _toastHide?.Pause();
+        _toastHide = _rewardToast.schedule.Execute(() => _rewardToast.RemoveFromClassList("toast--show"));
+        _toastHide.ExecuteLater(2200);
+    }
+
+    /// <summary>
+    /// Full-screen colour flash that fades out via an inline USS transition —
+    /// a throwaway VisualElement like the confetti, no stylesheet class needed.
+    /// </summary>
+    void FlashScreen(Color color, float peakOpacity, int fadeMs)
+    {
+        if (_root == null)
+            return;
+
+        var flash = new VisualElement { pickingMode = PickingMode.Ignore };
+        flash.style.position = Position.Absolute;
+        flash.style.left = 0f;
+        flash.style.right = 0f;
+        flash.style.top = 0f;
+        flash.style.bottom = 0f;
+        flash.style.backgroundColor = color;
+        flash.style.opacity = peakOpacity;
+        flash.style.transitionProperty = new List<StylePropertyName> { new StylePropertyName("opacity") };
+        flash.style.transitionDuration = new List<TimeValue> { new TimeValue(fadeMs, TimeUnit.Millisecond) };
+        _root.Add(flash);
+
+        flash.schedule.Execute(() => flash.style.opacity = 0f).ExecuteLater(30);
+        flash.schedule.Execute(() => flash.RemoveFromHierarchy()).ExecuteLater(fadeMs + 120);
     }
 
     void ShowBanner(string text, float durationSeconds)

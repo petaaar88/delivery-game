@@ -270,6 +270,106 @@ public class VehiclePickupAnimator : MonoBehaviour
         obj.localScale = baseScale;
     }
 
+    /// <summary>
+    /// Chaotic door reaction to the package detonating: both rear doors get
+    /// blasted open past the hinge stop, rattle in the blast wave, then slam
+    /// shut with uneven rebounds. Each door runs on its own random timing so
+    /// they never move in sync — deliberately messier than the tidy
+    /// pickup/delivery door animation.
+    /// </summary>
+    public void PlayExplosionDoorBlast()
+    {
+        StartCoroutine(BlastDoorRoutine(leftDoor, 1f, Random.Range(0f, 0.06f)));
+        StartCoroutine(BlastDoorRoutine(rightDoor, -1f, Random.Range(0f, 0.06f)));
+    }
+
+    IEnumerator BlastDoorRoutine(Transform door, float sign, float delay)
+    {
+        if (door == null)
+            yield break;
+        if (delay > 0f)
+            yield return new WaitForSeconds(delay);
+
+        if (audioManager != null)
+            audioManager.PlaySoundOneShot(openDoorSound);
+
+        // Dust and sparks knocked off the door as it's blown open. MeshRenderer
+        // specifically — a plain Renderer lookup could catch a particle system.
+        MeshRenderer doorRend = door.GetComponentInChildren<MeshRenderer>();
+        Vector3 burstPos = doorRend != null ? doorRend.bounds.center : door.position;
+        Vector3 burstDir = (-transform.forward + Vector3.up * 0.35f).normalized;
+        VanExplosionVFX.GetOrCreate().PlayDoorBurst(burstPos, burstDir);
+
+        // Kicked open way past the normal stop, each door a different amount.
+        float blastAngle = sign * Mathf.Min(doorOpenAngle + Random.Range(25f, 45f), 150f);
+        yield return StartCoroutine(SwingDoor(door, 0f, blastAngle, Random.Range(0.06f, 0.1f), EaseOutCubic));
+
+        // Rattle around the blown-open angle — two incommensurate sine waves
+        // per door with random frequency/phase, damping out.
+        float rattleTime = Random.Range(0.6f, 0.9f);
+        float freq = Random.Range(9f, 14f);
+        float amp = Random.Range(12f, 22f);
+        float phase = Random.Range(0f, Mathf.PI * 2f);
+        float elapsed = 0f;
+        while (elapsed < rattleTime)
+        {
+            elapsed += Time.deltaTime;
+            float damp = 1f - Mathf.Clamp01(elapsed / rattleTime);
+            damp *= damp;
+            float wobble = (Mathf.Sin(elapsed * freq + phase) * amp
+                          + Mathf.Sin(elapsed * freq * 2.7f) * amp * 0.4f) * damp;
+            door.localRotation = Quaternion.Euler(0f, blastAngle + sign * wobble, 0f);
+            yield return null;
+        }
+
+        // Doors don't decide to close together.
+        yield return new WaitForSeconds(Random.Range(0f, 0.25f));
+
+        // Accelerating slam, then two shrinking rebounds off the frame.
+        yield return StartCoroutine(SwingDoor(door, blastAngle, 0f, Random.Range(0.18f, 0.3f), EaseInCubic));
+        if (audioManager != null)
+            audioManager.PlaySoundOneShot(closeDoorSound);
+
+        float bounce = sign * Random.Range(18f, 32f);
+        for (int i = 0; i < 2; i++)
+        {
+            yield return StartCoroutine(SwingDoor(door, 0f, bounce, Random.Range(0.08f, 0.13f), EaseOutCubic));
+            yield return StartCoroutine(SwingDoor(door, bounce, 0f, Random.Range(0.1f, 0.16f), EaseInCubic));
+            bounce *= 0.35f;
+        }
+        if (audioManager != null)
+            audioManager.PlaySoundOneShot(closeDoorSound);
+
+        door.localRotation = Quaternion.identity;
+    }
+
+    IEnumerator SwingDoor(Transform door, float fromY, float toY, float duration, System.Func<float, float> ease)
+    {
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float t = ease(Mathf.Clamp01(elapsed / duration));
+            door.localRotation = Quaternion.Euler(0f, Mathf.LerpUnclamped(fromY, toY, t), 0f);
+            yield return null;
+        }
+        door.localRotation = Quaternion.Euler(0f, toY, 0f);
+    }
+
+    /// <summary>
+    /// Aborts the active package effect outside the normal delivery flow —
+    /// e.g. the explosive package detonating destroys the package without a
+    /// delivery sequence ever running.
+    /// </summary>
+    public void ClearActiveEffect()
+    {
+        if (_activeEffect != null)
+        {
+            _activeEffect.Deactivate();
+            _activeEffect = null;
+        }
+    }
+
     public void StartDeliverySequence(System.Action<Transform> onPushComplete = null)
     {
         StartCoroutine(DeliverySequence(onPushComplete));
@@ -359,6 +459,7 @@ public class VehiclePickupAnimator : MonoBehaviour
 
     static float EaseSmooth(float t) => t * t * (3f - 2f * t);
     static float EaseOutCubic(float t) => 1f - (1f - t) * (1f - t) * (1f - t);
+    static float EaseInCubic(float t) => t * t * t;
 
     IEnumerator AnimateLocalPosition(Transform target, Vector3 from, Vector3 to, float duration, System.Func<float, float> ease)
     {

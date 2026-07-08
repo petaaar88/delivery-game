@@ -10,6 +10,7 @@ public class DeliveryManager : MonoBehaviour
     public static event System.Action OnDeliveryZoneExited;
     public static event System.Action OnDeliveryTriggered;
     public static event System.Action OnDeliveryCompleted;
+    public static event System.Action OnDeliveryFailed;
 
     private PackagePickup[] _pickups;
     private PackageDelivery[] _destinations;
@@ -74,6 +75,27 @@ public class DeliveryManager : MonoBehaviour
         _lastUsedPickup = null;
         _activeDestination = null;
         OnDeliveryCompleted?.Invoke();
+    }
+
+    /// <summary>
+    /// The package in transit was destroyed (explosive package detonating).
+    /// Resets the run state like a completed delivery, but fires
+    /// OnDeliveryFailed instead of the reward flow.
+    /// </summary>
+    public void OnPackageDestroyed()
+    {
+        if (_lastUsedPickup != null)
+            _lastUsedPickup.ResetPackage();
+
+        foreach (var p in _pickups)
+        {
+            if (p != _lastUsedPickup) p.Activate();
+        }
+        if (_activeDestination != null)
+            _activeDestination.Deactivate();
+        _lastUsedPickup = null;
+        _activeDestination = null;
+        OnDeliveryFailed?.Invoke();
     }
 
     void DebugResetAll()

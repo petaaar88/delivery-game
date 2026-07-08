@@ -1453,7 +1453,7 @@ Transform:
   m_GameObject: {fileID: 2770598513139660654}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.32999992, y: 0.3209566, z: -4.765}
+  m_LocalPosition: {x: 0.01, y: -0.91, z: -5.55}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2353,6 +2353,7 @@ GameObject:
   - component: {fileID: 4823296214937439983}
   - component: {fileID: 5653191623142832966}
   - component: {fileID: 7792870105270849295}
+  - component: {fileID: 8412795189143707025}
   m_Layer: 8
   m_Name: MainVan
   m_TagString: Player
@@ -2532,7 +2533,7 @@ MonoBehaviour:
   engineRPMRaw: 0
   engineInertia: 0.05
   useRevLimiter: 1
-  useExhaustFlame: 1
+  useExhaustFlame: 0
   RunEngineAtAwake: 1
   engineRunning: 0
   useSteeringLimiter: 1
@@ -2588,18 +2589,18 @@ MonoBehaviour:
   audioType: 0
   autoCreateEngineOffSounds: 1
   engineStartClip: {fileID: 0}
-  engineClipHigh: {fileID: 0}
+  engineClipHigh: {fileID: 8300000, guid: 4f463345a2f01fa4bb742a6cc79dbabd, type: 3}
   engineClipMed: {fileID: 0}
   engineClipLow: {fileID: 0}
   engineClipIdle: {fileID: 0}
   engineClipHighOff: {fileID: 0}
   engineClipMedOff: {fileID: 0}
   engineClipLowOff: {fileID: 0}
-  minEngineSoundPitch: 0.75
-  maxEngineSoundPitch: 1.75
+  minEngineSoundPitch: 0.579
+  maxEngineSoundPitch: 1.67
   minEngineSoundVolume: 0.05
-  maxEngineSoundVolume: 0.85
-  idleEngineSoundVolume: 0.85
+  maxEngineSoundVolume: 0.619
+  idleEngineSoundVolume: 0.717
   engineSoundPosition: {x: 0, y: 0, z: 1.5}
   gearSoundPosition: {x: 0, y: -0.5, z: 0.5}
   turboSoundPosition: {x: 0, y: 0, z: 1.5}
@@ -2635,7 +2636,7 @@ MonoBehaviour:
   damage:
     carController: {fileID: 0}
     automaticInstallation: 1
-    meshDeformation: 1
+    meshDeformation: 0
     deformationMode: 1
     damageResolution: 100
     damageFilter:
@@ -2648,14 +2649,14 @@ MonoBehaviour:
     repaired: 1
     recalculateNormals: 1
     recalculateBounds: 1
-    wheelDamage: 1
+    wheelDamage: 0
     wheelDamageRadius: 1
     wheelDamageMultiplier: 1
     wheelDetachment: 1
-    lightDamage: 1
+    lightDamage: 0
     lightDamageRadius: 0.5
     lightDamageMultiplier: 1
-    partDamage: 1
+    partDamage: 0
     partDamageRadius: 1
     partDamageMultiplier: 1
     meshFilters: []
@@ -2663,7 +2664,7 @@ MonoBehaviour:
     lights: []
     wheels: []
     octrees: []
-  useDamage: 1
+  useDamage: 0
   useCollisionParticles: 1
   useCollisionAudio: 1
   maximumContactSparkle: 5
@@ -2768,6 +2769,123 @@ MonoBehaviour:
     maxDistance: 5
     rolloffMode: 1
     audioSource: {fileID: 0}
+  - soundName: PackageSpawn
+    audioClip: {fileID: 8300000, guid: 66b76f880131d3949a0efb1c717ca492, type: 3}
+    soundType: 0
+    individualVolume: 0.782
+    pitch: 1
+    loop: 0
+    playAtAwake: 0
+    is3D: 1
+    spatialBlend: 0
+    minDistance: 0
+    maxDistance: 5
+    rolloffMode: 1
+    audioSource: {fileID: 0}
+  - soundName: PackageHitGround
+    audioClip: {fileID: 8300000, guid: 2baa597434b371f65ac0de9f7a123413, type: 3}
+    soundType: 0
+    individualVolume: 1
+    pitch: 3
+    loop: 0
+    playAtAwake: 0
+    is3D: 1
+    spatialBlend: 0
+    minDistance: 0
+    maxDistance: 5
+    rolloffMode: 1
+    audioSource: {fileID: 0}
+  - soundName: PackageHitVehicle
+    audioClip: {fileID: 8300000, guid: 226abbaa06274c170835bde53c2fdc8f, type: 3}
+    soundType: 0
+    individualVolume: 0.506
+    pitch: 1
+    loop: 0
+    playAtAwake: 0
+    is3D: 0
+    spatialBlend: 0
+    minDistance: 0
+    maxDistance: 5
+    rolloffMode: 1
+    audioSource: {fileID: 0}
+  - soundName: ScratchSFX
+    audioClip: {fileID: 8300000, guid: f8fcd597c59736e5ea72caf67875d6f4, type: 3}
+    soundType: 0
+    individualVolume: 0.119
+    pitch: 0.66
+    loop: 0
+    playAtAwake: 0
+    is3D: 0
+    spatialBlend: 0
+    minDistance: 0
+    maxDistance: 5
+    rolloffMode: 1
+    audioSource: {fileID: 0}
+  - soundName: CatSFX1
+    audioClip: {fileID: 8300000, guid: 9fe9e467b01c675669d16b2e6fb37931, type: 3}
+    soundType: 0
+    individualVolume: 0.634
+    pitch: 1
+    loop: 0
+    playAtAwake: 0
+    is3D: 0
+    spatialBlend: 0
+    minDistance: 0
+    maxDistance: 5
+    rolloffMode: 1
+    audioSource: {fileID: 0}
+  - soundName: CatSFX2
+    audioClip: {fileID: 8300000, guid: 0955312328f2f5d5b8b9ff46a35562aa, type: 3}
+    soundType: 0
+    individualVolume: 0.889
+    pitch: 1
+    loop: 0
+    playAtAwake: 0
+    is3D: 0
+    spatialBlend: 0
+    minDistance: 0
+    maxDistance: 5
+    rolloffMode: 1
+    audioSource: {fileID: 0}
+  - soundName: CatSFX3
+    audioClip: {fileID: 8300000, guid: 07532eea73e95f8c89c4aaa120b938f6, type: 3}
+    soundType: 0
+    individualVolume: 1
+    pitch: 1
+    loop: 0
+    playAtAwake: 0
+    is3D: 0
+    spatialBlend: 0
+    minDistance: 0
+    maxDistance: 5
+    rolloffMode: 1
+    audioSource: {fileID: 0}
+  - soundName: ClipSlide
+    audioClip: {fileID: 8300000, guid: 4035648348483ffdbaa38727fbbeb575, type: 3}
+    soundType: 0
+    individualVolume: 0.556
+    pitch: 0.57
+    loop: 0
+    playAtAwake: 0
+    is3D: 0
+    spatialBlend: 0
+    minDistance: 0
+    maxDistance: 5
+    rolloffMode: 1
+    audioSource: {fileID: 0}
+  - soundName: PackageDisappear
+    audioClip: {fileID: 8300000, guid: 56b23490918a277b8ad2a9848744d2c9, type: 3}
+    soundType: 0
+    individualVolume: 0.737
+    pitch: 1
+    loop: 0
+    playAtAwake: 0
+    is3D: 0
+    spatialBlend: 0
+    minDistance: 0
+    maxDistance: 5
+    rolloffMode: 1
+    audioSource: {fileID: 0}
 --- !u!114 &7792870105270849295
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2791,9 +2909,14 @@ MonoBehaviour:
   audioManager: {fileID: 5653191623142832966}
   openDoorSound: OpeningDoor
   closeDoorSound: ClosingDoor
+  packageSpawnSound: PackageSpawn
+  packageHitGroundSound: PackageHitGround
+  packageHitVehicleSound: PackageHitVehicle
+  clipSlideSound: ClipSlide
   bouncePoint: {fileID: 5109876735101930124}
   packageSlot: {fileID: 472694717211453729}
-  archHeight: 3
+  archHeight: 4.03
+  vehicleEntryArchHeight: 1.3
   packageFlyDuration: 0.9
   packageBounceDuration: 0.45
   impactVFX: {fileID: 6155441071295990158}
@@ -2816,6 +2939,21 @@ MonoBehaviour:
   tossDistance: 1.4
   tossArcHeight: 0.5
   tossDuration: 0.45
+--- !u!114 &8412795189143707025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4265047255690386405}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f7791d356321d0c6a5e003c5eaf7df3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RCCAudioDistanceOverride
+  maxDistance: 20
+  minDistance: 3
+  useLinearRolloff: 1
 --- !u!1 &4354798562633956779
 GameObject:
   m_ObjectHideFlags: 0

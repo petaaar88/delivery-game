@@ -13,10 +13,14 @@ public class GameSession : MonoBehaviour
     public static event System.Action<int> OnDeliveriesChanged;
     /// <summary>baseReward, timeBonus — fired when a delivery is rewarded.</summary>
     public static event System.Action<int, int> OnDeliveryRewarded;
+    /// <summary>Coins actually deducted — fired when a delivery fails (package destroyed).</summary>
+    public static event System.Action<int> OnDeliveryFailedPenalty;
 
     [Header("Rewards")]
     public int baseReward = 50;
     public int maxTimeBonus = 50;
+    [Tooltip("Coins lost when the package is destroyed (clamped so coins never go negative).")]
+    public int failPenalty = 25;
 
     [Header("Delivery timer")]
     [Tooltip("Flat seconds granted per delivery.")]
@@ -43,6 +47,7 @@ public class GameSession : MonoBehaviour
         DeliveryManager.OnDeliveryStarted += HandleDeliveryStarted;
         DeliveryManager.OnDeliveryTriggered += HandleDeliveryTriggered;
         DeliveryManager.OnDeliveryCompleted += HandleDeliveryCompleted;
+        DeliveryManager.OnDeliveryFailed += HandleDeliveryFailed;
     }
 
     void OnDisable()
@@ -50,6 +55,7 @@ public class GameSession : MonoBehaviour
         DeliveryManager.OnDeliveryStarted -= HandleDeliveryStarted;
         DeliveryManager.OnDeliveryTriggered -= HandleDeliveryTriggered;
         DeliveryManager.OnDeliveryCompleted -= HandleDeliveryCompleted;
+        DeliveryManager.OnDeliveryFailed -= HandleDeliveryFailed;
     }
 
     void Update()
@@ -96,5 +102,17 @@ public class GameSession : MonoBehaviour
         HasPackage = false;
         _timerRunning = false;
         TimeRemaining = -1f;
+    }
+
+    void HandleDeliveryFailed()
+    {
+        HasPackage = false;
+        _timerRunning = false;
+        TimeRemaining = -1f;
+
+        int penalty = Mathf.Min(Coins, failPenalty);
+        Coins -= penalty;
+        OnDeliveryFailedPenalty?.Invoke(penalty);
+        OnCoinsChanged?.Invoke(Coins);
     }
 }
