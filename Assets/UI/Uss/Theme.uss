@@ -1,0 +1,2646 @@
+/* ============================================================
+   Delivery game UI theme — shared by HUD, pause menu, main menu.
+   Palette pulled from the game world: sky blue, grass green,
+   delivery-van red, package brown, coin gold on a dark blue ink.
+   ============================================================ */
+
+.theme {
+    --ink: rgb(46, 58, 80);
+    --ink-soft: rgb(103, 116, 140);
+    --paper: rgb(255, 255, 255);
+    --paper-warm: rgb(244, 246, 250);
+    --accent: rgb(232, 85, 91);
+    --accent-dark: rgb(196, 63, 69);
+    --gold: rgb(255, 197, 61);
+    --gold-dark: rgb(224, 165, 38);
+    --green: rgb(91, 194, 91);
+    --green-dark: rgb(70, 163, 70);
+    --sky: rgb(111, 195, 239);
+    --sky-dark: rgb(74, 158, 204);
+    --shadow: rgba(31, 41, 61, 0.18);
+    --dim: rgba(23, 32, 51, 0.6);
+    --cream: rgb(255, 248, 239);
+    --cream-2: rgb(255, 239, 207);
+    --warm-ink: rgb(69, 48, 29);
+    --warm-muted: rgb(140, 115, 88);
+    --coral: rgb(255, 127, 99);
+    --coral-dark: rgb(223, 91, 65);
+    --glass: rgba(83, 57, 35, 0.82);
+    --glass-strong: rgba(67, 47, 31, 0.88);
+    --glass-soft: rgba(255, 255, 255, 0.84);
+
+    -unity-font-definition: url("../Fonts/Nunito-SemiBold.ttf");
+    color: var(--ink);
+}
+
+/* ---------- typography ---------- */
+
+.font-display {
+    -unity-font-definition: url("../Fonts/Baloo2-ExtraBold.ttf");
+}
+
+.font-bold {
+    -unity-font-definition: url("../Fonts/Baloo2-Bold.ttf");
+}
+
+.font-body {
+    -unity-font-definition: url("../Fonts/Nunito-SemiBold.ttf");
+}
+
+.font-body-strong {
+    -unity-font-definition: url("../Fonts/Nunito-ExtraBold.ttf");
+}
+
+/* ---------- generic building blocks ---------- */
+
+.panel {
+    background-color: var(--paper);
+    border-radius: 20px;
+    border-bottom-width: 5px;
+    border-bottom-color: var(--shadow);
+}
+
+.pill {
+    flex-direction: row;
+    align-items: center;
+    background-color: var(--paper);
+    border-radius: 18px;
+    padding: 6px 18px 6px 12px;
+    border-bottom-width: 4px;
+    border-bottom-color: var(--shadow);
+}
+
+.btn {
+    -unity-font-definition: url("../Fonts/Baloo2-Bold.ttf");
+    font-size: 26px;
+    color: white;
+    background-color: var(--accent);
+    border-radius: 16px;
+    border-width: 0;
+    border-bottom-width: 5px;
+    border-bottom-color: var(--accent-dark);
+    padding: 10px 26px;
+    -unity-text-align: middle-center;
+    transition-property: scale;
+    transition-duration: 0.06s;
+}
+
+.btn:hover:enabled {
+    scale: 1.03 1.03;
+}
+
+.btn:active:enabled {
+    scale: 0.97 0.97;
+    translate: 0 2px;
+    border-bottom-width: 3px;
+}
+
+.btn--green {
+    background-color: var(--green);
+    border-bottom-color: var(--green-dark);
+}
+
+.btn--sky {
+    background-color: var(--sky);
+    border-bottom-color: var(--sky-dark);
+}
+
+.btn--gold {
+    background-color: var(--gold);
+    border-bottom-color: var(--gold-dark);
+    color: var(--ink);
+}
+
+.btn--ghost {
+    background-color: var(--paper-warm);
+    border-bottom-color: var(--shadow);
+    color: var(--ink-soft);
+}
+
+/* ============================================================
+   HUD
+   ============================================================ */
+
+#hud-root {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+}
+
+#safe-area {
+    flex-grow: 1;
+    justify-content: space-between;
+    padding: 18px 22px;
+}
+
+/* ---------- top bar ---------- */
+
+#top-bar {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+#top-left {
+    flex-direction: row;
+    align-items: center;
+}
+
+.stat-pill Label {
+    -unity-font-definition: url("../Fonts/Baloo2-ExtraBold.ttf");
+    font-size: 30px;
+    color: var(--ink);
+    margin-left: 10px;
+}
+
+#coins-pill {
+    margin-right: 14px;
+}
+
+.coin-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 12px;
+    background-color: var(--gold);
+    border-width: 3px;
+    border-color: var(--gold-dark);
+    align-items: center;
+    justify-content: center;
+}
+
+.coin-icon__inner {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+    border-width: 3px;
+    border-color: var(--gold-dark);
+}
+
+.package-icon {
+    width: 32px;
+    height: 30px;
+    border-radius: 7px;
+    background-color: rgb(205, 145, 84);
+    border-bottom-width: 3px;
+    border-bottom-color: rgb(164, 110, 58);
+    align-items: center;
+}
+
+.package-icon__tape {
+    width: 8px;
+    height: 100%;
+    background-color: rgba(255, 248, 232, 0.85);
+}
+
+/* ---------- delivery timer ---------- */
+
+#timer-pill {
+    position: absolute;
+    top: 18px;
+    left: 50%;
+    translate: -50% 0;
+    padding: 8px 24px;
+    display: none;
+}
+
+#timer-pill.timer--visible {
+    display: flex;
+}
+
+#timer-label {
+    -unity-font-definition: url("../Fonts/Baloo2-ExtraBold.ttf");
+    font-size: 34px;
+    color: var(--ink);
+    margin-left: 12px;
+}
+
+#timer-pill.timer--low #timer-label {
+    color: var(--accent);
+}
+
+.clock-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 10px;
+    background-color: var(--sky);
+    border-width: 3px;
+    border-color: var(--sky-dark);
+    align-items: center;
+    justify-content: center;
+}
+
+.clock-icon__hand {
+    width: 4px;
+    height: 9px;
+    background-color: white;
+    border-radius: 2px;
+    translate: 0 -3px;
+}
+
+/* ---------- pause button ---------- */
+
+#pause-button {
+    width: 58px;
+    height: 58px;
+    border-radius: 16px;
+    background-color: rgb(46, 58, 80);
+    border-width: 0;
+    border-bottom-width: 4px;
+    border-bottom-color: rgba(23, 32, 51, 0.6);
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition-property: scale;
+    transition-duration: 0.06s;
+}
+
+#pause-button:hover:enabled {
+    scale: 1.06 1.06;
+}
+
+#pause-button:active:enabled {
+    scale: 0.94 0.94;
+}
+
+.pause-bar {
+    width: 7px;
+    height: 24px;
+    border-radius: 3px;
+    background-color: white;
+    margin: 0 3px;
+}
+
+/* ---------- banner + reward toast ---------- */
+
+#banner {
+    position: absolute;
+    top: 22%;
+    left: 0;
+    right: 0;
+    -unity-text-align: middle-center;
+    -unity-font-definition: url("../Fonts/Baloo2-ExtraBold.ttf");
+    font-size: 52px;
+    color: white;
+    -unity-text-outline-width: 2px;
+    -unity-text-outline-color: var(--ink);
+    opacity: 0;
+    scale: 0.8 0.8;
+    transition-property: opacity, scale;
+    transition-duration: 0.18s, 0.18s;
+}
+
+#banner.banner--show {
+    opacity: 1;
+    scale: 1 1;
+}
+
+#reward-toast {
+    position: absolute;
+    top: 34%;
+    left: 0;
+    right: 0;
+    -unity-text-align: middle-center;
+    -unity-font-definition: url("../Fonts/Baloo2-ExtraBold.ttf");
+    font-size: 44px;
+    color: var(--gold);
+    -unity-text-outline-width: 2px;
+    -unity-text-outline-color: var(--ink);
+    opacity: 0;
+    transition-property: opacity, translate;
+    transition-duration: 0.25s, 0.25s;
+    translate: 0 20px;
+}
+
+#reward-toast.toast--show {
+    opacity: 1;
+    translate: 0 0;
+}
+
+/* ---------- bottom bar / speed ---------- */
+
+#bottom-bar {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+#speed-panel {
+    align-items: center;
+    flex-direction: row;
+    margin-left: auto;
+}
+
+#speed-label {
+    -unity-font-definition: url("../Fonts/Baloo2-ExtraBold.ttf");
+    font-size: 64px;
+    color: white;
+    -unity-text-outline-width: 2px;
+    -unity-text-outline-color: var(--ink);
+}
+
+#speed-unit {
+    -unity-font-definition: url("../Fonts/Baloo2-Bold.ttf");
+    font-size: 24px;
+    color: white;
+    -unity-text-outline-width: 1px;
+    -unity-text-outline-color: var(--ink);
+    margin-left: 8px;
+    margin-bottom: 12px;
+}
+
+/* ============================================================
+   Mobile touch controls (hidden unless root has .is-mobile)
+   ============================================================ */
+
+.mobile-controls {
+    display: none;
+    flex-direction: row;
+    align-items: flex-end;
+}
+
+.is-mobile .mobile-controls {
+    display: flex;
+}
+
+.is-mobile #speed-panel {
+    position: absolute;
+    bottom: 240px;
+    right: 24px;
+    margin-left: 0;
+}
+
+.touch-btn {
+    background-color: rgba(255, 255, 255, 0.38);
+    border-width: 3px;
+    border-color: rgba(46, 58, 80, 0.25);
+    align-items: center;
+    justify-content: center;
+    transition-property: scale, background-color;
+    transition-duration: 0.05s, 0.05s;
+}
+
+.touch-btn:active {
+    scale: 0.94 0.94;
+    background-color: rgba(255, 255, 255, 0.6);
+}
+
+.steer-btn {
+    width: 150px;
+    height: 150px;
+    border-radius: 24px;
+}
+
+#steer-left {
+    margin-right: 20px;
+}
+
+/* chevron built from two rotated bars; the default points left */
+.chevron {
+    width: 48px;
+    height: 48px;
+    justify-content: center;
+    align-items: center;
+}
+
+.chevron__bar-up {
+    position: absolute;
+    width: 34px;
+    height: 11px;
+    border-radius: 5px;
+    background-color: white;
+    rotate: -45deg;
+    translate: 0 -9px;
+}
+
+.chevron__bar-down {
+    position: absolute;
+    width: 34px;
+    height: 11px;
+    border-radius: 5px;
+    background-color: white;
+    rotate: 45deg;
+    translate: 0 9px;
+}
+
+.chevron--right {
+    rotate: 180deg;
+}
+
+.pedal-label {
+    -unity-font-definition: url("../Fonts/Baloo2-Bold.ttf");
+    font-size: 26px;
+    color: white;
+    -unity-text-outline-width: 1px;
+    -unity-text-outline-color: rgba(46, 58, 80, 0.5);
+}
+
+#pedal-brake {
+    width: 122px;
+    height: 150px;
+    border-radius: 28px;
+    background-color: rgba(232, 85, 91, 0.75);
+    border-color: rgba(196, 63, 69, 0.9);
+    margin-right: 20px;
+}
+
+#pedal-gas {
+    width: 122px;
+    height: 180px;
+    border-radius: 28px;
+    background-color: rgba(91, 194, 91, 0.75);
+    border-color: rgba(70, 163, 70, 0.9);
+}
+
+#handbrake-btn {
+    width: 96px;
+    height: 96px;
+    border-radius: 20px;
+    background-color: rgba(255, 197, 61, 0.8);
+    border-color: rgba(224, 165, 38, 0.9);
+    margin-right: 20px;
+    margin-bottom: 26px;
+}
+
+#handbrake-btn .pedal-label {
+    font-size: 36px;
+}
+
+/* ============================================================
+   Pause overlay + settings
+   ============================================================ */
+
+#pause-overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--dim);
+    align-items: center;
+    justify-content: center;
+    display: none;
+}
+
+#pause-overlay.overlay--show {
+    display: flex;
+}
+
+.menu-card {
+    width: 440px;
+    background-color: var(--paper);
+    border-radius: 26px;
+    border-bottom-width: 6px;
+    border-bottom-color: rgba(31, 41, 61, 0.35);
+    padding: 30px 34px;
+}
+
+.menu-card__title {
+    -unity-font-definition: url("../Fonts/Baloo2-ExtraBold.ttf");
+    font-size: 42px;
+    color: var(--ink);
+    -unity-text-align: middle-center;
+    margin-bottom: 22px;
+}
+
+.menu-card .btn {
+    margin-bottom: 12px;
+}
+
+/* ---------- sliders ---------- */
+
+.settings-row {
+    margin-bottom: 6px;
+}
+
+.settings-row__label {
+    -unity-font-definition: url("../Fonts/Baloo2-Bold.ttf");
+    font-size: 22px;
+    color: var(--ink);
+    margin-bottom: 2px;
+}
+
+.volume-slider {
+    margin: 0 0 10px 0;
+}
+
+.volume-slider .unity-base-slider__tracker {
+    height: 12px;
+    border-radius: 6px;
+    background-color: var(--paper-warm);
+    border-width: 1px;
+    border-color: rgba(46, 58, 80, 0.12);
+    margin-top: -6px;
+}
+
+.volume-slider .unity-base-slider__dragger {
+    width: 28px;
+    height: 28px;
+    border-radius: 10px;
+    background-color: var(--accent);
+    border-width: 4px;
+    border-color: white;
+    margin-top: -14px;
+}
+
+/* ============================================================
+   Main menu
+   ============================================================ */
+
+#menu-root {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--sky);
+    align-items: center;
+    justify-content: center;
+}
+
+.menu-ground {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 22%;
+    background-color: rgb(126, 203, 79);
+}
+
+.menu-road {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 6%;
+    height: 9%;
+    background-color: rgb(62, 68, 82);
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.menu-road__dash {
+    width: 60px;
+    height: 8px;
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.85);
+}
+
+.menu-cloud {
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 18px;
+}
+
+#game-title {
+    -unity-font-definition: url("../Fonts/Baloo2-ExtraBold.ttf");
+    font-size: 96px;
+    color: white;
+    -unity-text-outline-width: 3px;
+    -unity-text-outline-color: var(--ink);
+    -unity-text-align: middle-center;
+    margin-bottom: 8px;
+}
+
+#game-subtitle {
+    -unity-font-definition: url("../Fonts/Baloo2-Bold.ttf");
+    font-size: 28px;
+    color: rgba(255, 255, 255, 0.95);
+    -unity-text-outline-width: 1px;
+    -unity-text-outline-color: var(--ink);
+    -unity-text-align: middle-center;
+    margin-bottom: 40px;
+}
+
+#menu-buttons {
+    width: 340px;
+}
+
+#play-button {
+    font-size: 36px;
+    padding: 16px 26px;
+}
+
+#version-label {
+    position: absolute;
+    bottom: 10px;
+    right: 16px;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 14px;
+}
+
+/* ============================================================
+   Prototype pass: warm arcade HUD + 3D menu overlay
+   ============================================================ */
+
+.pill,
+.top-pill,
+.hud-progress,
+#delivery-card,
+#speed-panel {
+    background-color: var(--glass);
+    border-width: 2px;
+    border-color: rgba(255, 255, 255, 0.18);
+    border-bottom-width: 6px;
+    border-bottom-color: rgba(47, 30, 15, 0.22);
+}
+
+.btn {
+    border-radius: 24px;
+    min-height: 56px;
+    padding: 10px 18px;
+    -unity-font-definition: url("../Fonts/Baloo2-ExtraBold.ttf");
+    font-size: 24px;
+    letter-spacing: 0;
+}
+
+.btn--green {
+    background-color: rgb(121, 216, 111);
+    border-bottom-color: rgb(74, 174, 74);
+    color: white;
+    -unity-text-outline-width: 1px;
+    -unity-text-outline-color: rgba(74, 174, 74, 0.8);
+}
+
+.btn--sky {
+    background-color: rgb(115, 206, 255);
+    border-bottom-color: rgb(72, 172, 223);
+}
+
+.btn--gold {
+    background-color: rgb(255, 216, 96);
+    border-bottom-color: rgb(216, 169, 51);
+    color: var(--warm-ink);
+}
+
+.btn--ghost {
+    background-color: var(--glass-soft);
+    border-bottom-color: rgba(111, 77, 39, 0.14);
+    color: rgb(106, 68, 39);
+    -unity-text-outline-width: 0;
+    font-size: 14px;
+}
+
+.btn--wide {
+    width: 100%;
+}
+
+/* ---------- refreshed HUD layout ---------- */
+
+#safe-area {
+    padding: 14px 16px;
+}
+
+#top-bar {
+    position: relative;
+    min-height: 86px;
+}
+
+#top-left {
+    position: absolute;
+    left: 0;
+    top: 0;
+    flex-direction: row;
+    align-items: center;
+}
+
+#pause-button {
+    width: 44px;
+    height: 44px;
+    border-radius: 18px;
+    background-color: var(--glass-strong);
+    border-width: 2px;
+    border-color: rgba(255, 255, 255, 0.16);
+    border-bottom-width: 5px;
+    border-bottom-color: rgba(47, 30, 15, 0.24);
+    margin-right: 8px;
+}
+
+.pause-bar {
+    width: 5px;
+    height: 18px;
+    margin: 0 2px;
+}
+
+#coins-pill {
+    min-height: 44px;
+    padding: 8px 14px;
+    margin-right: 0;
+}
+
+.stat-pill Label {
+    font-size: 18px;
+    color: white;
+    margin-left: 8px;
+}
+
+.coin-icon {
+    width: 26px;
+    height: 26px;
+    border-radius: 10px;
+    border-width: 0;
+    border-bottom-width: 3px;
+    background-color: var(--gold);
+    border-bottom-color: var(--gold-dark);
+}
+
+.coin-icon__inner {
+    width: 12px;
+    height: 12px;
+    border-width: 2px;
+    border-color: rgba(120, 75, 18, 0.35);
+}
+
+#deliveries-pill {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    translate: -50% 0;
+}
+
+.hud-progress {
+    width: 190px;
+    min-height: 44px;
+    border-radius: 18px;
+    padding: 8px 12px;
+}
+
+.hud-progress-row {
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 4px;
+}
+
+.hud-progress-row Label {
+    -unity-font-definition: url("../Fonts/Nunito-ExtraBold.ttf");
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.74);
+    -unity-text-align: middle-left;
+}
+
+#deliveries-label {
+    color: white;
+}
+
+.track {
+    height: 8px;
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.16);
+}
+
+.track__fill {
+    width: 58%;
+    height: 8px;
+    border-radius: 4px;
+    background-color: var(--green);
+}
+
+#delivery-card {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 214px;
+    min-height: 76px;
+    border-radius: 24px;
+    padding: 12px 13px;
+    flex-direction: row;
+    align-items: center;
+}
+
+.package-icon {
+    border-width: 0;
+}
+
+.package-icon--large {
+    width: 48px;
+    height: 48px;
+    border-radius: 17px;
+    background-color: var(--gold);
+    border-bottom-width: 4px;
+    border-bottom-color: var(--gold-dark);
+    margin-right: 10px;
+    align-items: center;
+    justify-content: center;
+}
+
+.package-icon__tape {
+    width: 6px;
+    height: 100%;
+    background-color: rgba(120, 75, 18, 0.25);
+}
+
+.delivery-copy {
+    flex-grow: 1;
+}
+
+.delivery-copy__eyebrow {
+    -unity-font-definition: url("../Fonts/Nunito-ExtraBold.ttf");
+    font-size: 9px;
+    color: rgba(255, 255, 255, 0.56);
+}
+
+.delivery-copy__target {
+    -unity-font-definition: url("../Fonts/Baloo2-Bold.ttf");
+    font-size: 15px;
+    color: white;
+    margin-top: -2px;
+}
+
+#timer-pill {
+    position: relative;
+    top: auto;
+    left: auto;
+    translate: 0 0;
+    display: none;
+    background-color: transparent;
+    border-width: 0;
+    border-bottom-width: 0;
+    padding: 2px 0 0 0;
+    margin-top: 2px;
+    flex-direction: row;
+}
+
+#timer-pill.timer--visible {
+    display: flex;
+}
+
+#timer-label {
+    font-size: 13px;
+    color: var(--gold);
+    margin-left: 6px;
+    margin-right: 6px;
+}
+
+.clock-icon {
+    width: 18px;
+    height: 18px;
+    border-width: 2px;
+}
+
+.clock-icon__hand {
+    width: 3px;
+    height: 6px;
+    translate: 0 -2px;
+}
+
+.timer-line {
+    flex-grow: 1;
+    height: 6px;
+    border-radius: 3px;
+    background-color: rgba(255, 255, 255, 0.16);
+    align-self: center;
+}
+
+.timer-line__fill {
+    width: 66%;
+    height: 6px;
+    border-radius: 3px;
+    background-color: var(--gold);
+}
+
+#bottom-bar {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+}
+
+#speed-panel {
+    min-width: 148px;
+    min-height: 66px;
+    border-radius: 26px;
+    padding: 8px 16px 8px 10px;
+    margin-left: 0;
+    flex-direction: row;
+    align-items: center;
+}
+
+.gauge {
+    width: 58px;
+    height: 58px;
+    border-radius: 16px;
+    border-width: 7px;
+    border-color: rgba(121, 216, 111, 0.95);
+    background-color: rgba(20, 14, 10, 0.28);
+    margin-right: 12px;
+    align-items: center;
+    justify-content: center;
+}
+
+.needle {
+    width: 4px;
+    height: 24px;
+    border-radius: 2px;
+    background-color: white;
+    rotate: -28deg;
+    translate: 6px -3px;
+}
+
+#speed-label {
+    font-size: 28px;
+    color: white;
+    -unity-text-outline-width: 0;
+}
+
+#speed-unit {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.74);
+    -unity-text-outline-width: 0;
+    margin-left: 8px;
+    margin-bottom: 2px;
+}
+
+#banner {
+    top: 25%;
+    font-size: 48px;
+}
+
+#reward-toast {
+    top: 38%;
+}
+
+.touch-btn {
+    background-color: var(--glass);
+    border-color: rgba(255, 255, 255, 0.16);
+}
+
+.control-btn,
+#pedal-brake,
+#pedal-gas,
+#handbrake-btn {
+    border-bottom-width: 5px;
+    border-bottom-color: rgba(47, 30, 15, 0.24);
+}
+
+/* ---------- refreshed menu overlay ---------- */
+
+#menu-root {
+    background-color: rgba(0, 0, 0, 0);
+    align-items: stretch;
+    justify-content: flex-start;
+}
+
+.menu-vignette {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(45, 30, 17, 0.16);
+}
+
+.menu-top-row {
+    position: absolute;
+    left: 18px;
+    top: 18px;
+    right: 18px;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.top-pill {
+    min-height: 40px;
+    border-radius: 18px;
+    padding: 8px 14px;
+    flex-direction: row;
+    align-items: center;
+}
+
+.top-pill Label {
+    -unity-font-definition: url("../Fonts/Baloo2-ExtraBold.ttf");
+    font-size: 18px;
+    color: white;
+    margin-left: 8px;
+}
+
+.soft-icon {
+    width: 26px;
+    height: 26px;
+    border-radius: 10px;
+    background-color: var(--gold);
+    border-bottom-width: 3px;
+    border-bottom-color: var(--gold-dark);
+}
+
+.soft-icon--star {
+    border-radius: 12px;
+}
+
+.icon-btn {
+    width: 42px;
+    height: 42px;
+    border-radius: 16px;
+    padding: 0;
+    background-color: var(--glass-soft);
+    border-width: 0;
+    border-bottom-width: 5px;
+    border-bottom-color: rgba(80, 52, 27, 0.12);
+    align-items: center;
+    justify-content: center;
+}
+
+.gear-icon {
+    width: 22px;
+    height: 22px;
+    border-radius: 12px;
+    border-width: 5px;
+    border-color: var(--warm-ink);
+    align-items: center;
+    justify-content: center;
+}
+
+.gear-icon__dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 3px;
+    background-color: var(--warm-ink);
+}
+
+.title-card {
+    position: absolute;
+    left: 50%;
+    top: 28px;
+    translate: -50% 0;
+    width: 420px;
+    align-items: center;
+}
+
+.eyebrow {
+    width: 178px;
+    padding: 7px 14px;
+    margin-bottom: 10px;
+    border-radius: 14px;
+    background-color: rgba(255, 255, 255, 0.86);
+    color: rgb(143, 93, 47);
+    -unity-font-definition: url("../Fonts/Nunito-ExtraBold.ttf");
+    font-size: 10px;
+    -unity-text-align: middle-center;
+}
+
+#game-title {
+    -unity-font-definition: url("../Fonts/Baloo2-ExtraBold.ttf");
+    font-size: 64px;
+    color: white;
+    -unity-text-outline-width: 0;
+    -unity-text-align: middle-center;
+    margin-bottom: 0;
+}
+
+#game-subtitle {
+    width: 180px;
+    padding: 7px 14px;
+    margin-top: 12px;
+    margin-bottom: 0;
+    border-radius: 14px;
+    background-color: rgba(255, 255, 255, 0.78);
+    color: rgb(106, 68, 39);
+    -unity-font-definition: url("../Fonts/Nunito-ExtraBold.ttf");
+    font-size: 12px;
+    -unity-text-outline-width: 0;
+}
+
+#menu-buttons {
+    position: absolute;
+    right: 42px;
+    bottom: 54px;
+    width: 230px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+#menu-buttons .btn {
+    margin-bottom: 10px;
+}
+
+#play-button {
+    width: 100%;
+    font-size: 28px;
+    padding: 12px 18px;
+}
+
+#garage-button,
+#shop-button {
+    width: 110px;
+}
+
+#quit-button {
+    width: 100%;
+}
+
+#version-label {
+    bottom: 12px;
+    right: 16px;
+    color: rgba(255, 255, 255, 0.74);
+    font-size: 13px;
+}
+
+/* ---------- main menu 1920x1080 prototype-scale correction ---------- */
+
+.menu-vignette {
+    background-color: rgba(45, 30, 17, 0.08);
+}
+
+.menu-top-row {
+    left: 42px;
+    top: 52px;
+    right: 42px;
+}
+
+.top-pill {
+    min-width: 148px;
+    min-height: 104px;
+    border-radius: 18px;
+    padding: 18px 32px;
+    border-bottom-width: 10px;
+}
+
+.top-pill Label {
+    font-size: 40px;
+    margin-left: 18px;
+}
+
+.soft-icon {
+    width: 58px;
+    height: 58px;
+    border-radius: 22px;
+    border-bottom-width: 7px;
+}
+
+.soft-icon--star {
+    border-radius: 12px;
+}
+
+.icon-btn {
+    width: 108px;
+    height: 108px;
+    border-radius: 38px;
+    border-bottom-width: 10px;
+}
+
+.gear-icon {
+    width: 54px;
+    height: 54px;
+    border-width: 11px;
+}
+
+.gear-icon__dot {
+    width: 14px;
+    height: 14px;
+}
+
+.title-card {
+    top: 80px;
+    width: 920px;
+}
+
+.eyebrow {
+    width: 420px;
+    min-height: 58px;
+    padding: 18px 32px;
+    margin-bottom: 28px;
+    font-size: 24px;
+}
+
+#game-title {
+    font-size: 166px;
+}
+
+#game-subtitle {
+    width: 430px;
+    min-height: 58px;
+    padding: 18px 32px;
+    margin-top: 34px;
+    font-size: 30px;
+}
+
+#menu-buttons {
+    right: 100px;
+    bottom: 150px;
+    width: 520px;
+    flex-direction: column;
+    flex-wrap: nowrap;
+}
+
+#menu-buttons .btn {
+    margin-bottom: 28px;
+}
+
+#play-button {
+    width: 520px;
+    min-height: 150px;
+    border-radius: 68px;
+    border-bottom-width: 22px;
+    font-size: 68px;
+    padding: 24px 34px;
+}
+
+.menu-secondary-row {
+    width: 520px;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 28px;
+}
+
+#garage-button,
+#shop-button {
+    width: 245px;
+    min-height: 116px;
+    border-radius: 52px;
+    border-bottom-width: 16px;
+    font-size: 34px;
+    margin-bottom: 0;
+}
+
+#quit-button {
+    width: 520px;
+    min-height: 106px;
+    border-radius: 52px;
+    border-bottom-width: 16px;
+    font-size: 30px;
+}
+
+#version-label {
+    bottom: 28px;
+    right: 38px;
+    font-size: 28px;
+}
+
+/* ============================================================
+   Unified arcade UI lock
+   Consistent rounded-rect system for menu, HUD, pause, controls.
+   ============================================================ */
+
+.btn,
+.icon-btn,
+#pause-button,
+.touch-btn {
+    transition-property: scale;
+    transition-duration: 0.08s;
+}
+
+.btn {
+    min-height: 64px;
+    border-radius: 18px;
+    border-bottom-width: 8px;
+    padding: 10px 24px;
+    -unity-font-definition: url("../Fonts/Baloo2-ExtraBold.ttf");
+    font-size: 28px;
+}
+
+.btn:hover:enabled,
+.icon-btn:hover:enabled,
+#pause-button:hover:enabled {
+    scale: 1.02 1.02;
+}
+
+.btn:active:enabled,
+.icon-btn:active:enabled,
+#pause-button:active:enabled {
+    scale: 0.98 0.98;
+    translate: 0 2px;
+}
+
+.pill,
+.top-pill,
+.hud-progress,
+#delivery-card,
+#speed-panel,
+.menu-card {
+    border-radius: 18px;
+    background-color: var(--glass);
+    border-width: 2px;
+    border-color: rgba(255, 255, 255, 0.18);
+    border-bottom-width: 6px;
+    border-bottom-color: rgba(47, 30, 15, 0.22);
+}
+
+#menu-root {
+    background-color: rgba(0, 0, 0, 0);
+    align-items: stretch;
+    justify-content: flex-start;
+}
+
+.menu-vignette {
+    background-color: rgba(45, 30, 17, 0.12);
+}
+
+.menu-top-row {
+    left: 34px;
+    top: 34px;
+    right: 34px;
+}
+
+.top-pill {
+    width: 166px;
+    min-height: 70px;
+    padding: 12px 18px;
+}
+
+.top-pill Label {
+    font-size: 30px;
+    color: white;
+    margin-left: 12px;
+}
+
+.soft-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    border-bottom-width: 5px;
+}
+
+.soft-icon--star {
+    border-radius: 12px;
+}
+
+.clock-icon {
+    border-radius: 10px;
+}
+
+.icon-btn {
+    width: 70px;
+    height: 70px;
+    border-radius: 18px;
+    border-bottom-width: 6px;
+}
+
+.gear-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 12px;
+    border-width: 7px;
+}
+
+.gear-icon__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 3px;
+}
+
+.title-card {
+    top: 60px;
+    width: 700px;
+}
+
+.eyebrow {
+    width: 360px;
+    min-height: 46px;
+    padding: 10px 22px;
+    margin-bottom: 20px;
+    border-radius: 14px;
+    font-size: 18px;
+}
+
+#game-title {
+    font-size: 96px;
+    color: white;
+    -unity-text-align: middle-center;
+    -unity-text-outline-width: 0;
+}
+
+#game-subtitle {
+    width: 360px;
+    min-height: 50px;
+    padding: 10px 22px;
+    margin-top: 22px;
+    border-radius: 14px;
+    font-size: 20px;
+}
+
+#menu-buttons {
+    right: 92px;
+    bottom: 94px;
+    width: 460px;
+    flex-direction: column;
+}
+
+#menu-buttons .btn {
+    margin-bottom: 18px;
+}
+
+#play-button {
+    width: 460px;
+    min-height: 96px;
+    border-radius: 22px;
+    border-bottom-width: 10px;
+    font-size: 44px;
+    padding: 16px 30px;
+}
+
+.menu-secondary-row {
+    width: 460px;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 18px;
+}
+
+#garage-button,
+#shop-button {
+    width: 220px;
+    min-height: 70px;
+    border-radius: 18px;
+    border-bottom-width: 8px;
+    font-size: 24px;
+    margin-bottom: 0;
+}
+
+#quit-button {
+    width: 460px;
+    min-height: 70px;
+    border-radius: 18px;
+    border-bottom-width: 8px;
+    font-size: 24px;
+}
+
+#version-label {
+    right: 28px;
+    bottom: 24px;
+    font-size: 18px;
+}
+
+#safe-area {
+    padding: 20px 24px;
+}
+
+#top-bar {
+    min-height: 96px;
+}
+
+#pause-button {
+    width: 58px;
+    height: 58px;
+    border-radius: 16px;
+    background-color: var(--glass-strong);
+    border-width: 2px;
+    border-color: rgba(255, 255, 255, 0.16);
+    border-bottom-width: 6px;
+    border-bottom-color: rgba(47, 30, 15, 0.24);
+}
+
+.pause-bar {
+    width: 6px;
+    height: 24px;
+    border-radius: 3px;
+}
+
+#coins-pill {
+    min-width: 140px;
+    min-height: 58px;
+    padding: 10px 16px;
+}
+
+.stat-pill Label {
+    -unity-font-definition: url("../Fonts/Baloo2-ExtraBold.ttf");
+    font-size: 26px;
+    color: white;
+    margin-left: 10px;
+}
+
+.coin-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 12px;
+    border-width: 0;
+    border-bottom-width: 5px;
+    background-color: var(--gold);
+    border-bottom-color: var(--gold-dark);
+}
+
+.coin-icon__inner {
+    width: 14px;
+    height: 14px;
+    border-radius: 4px;
+    border-width: 3px;
+    border-color: rgba(120, 75, 18, 0.35);
+}
+
+.hud-progress {
+    width: 250px;
+    min-height: 58px;
+    padding: 10px 14px;
+}
+
+.hud-progress-row Label {
+    -unity-font-definition: url("../Fonts/Nunito-ExtraBold.ttf");
+    font-size: 13px;
+}
+
+.track {
+    height: 8px;
+    border-radius: 4px;
+}
+
+.track__fill {
+    height: 8px;
+    border-radius: 4px;
+}
+
+#delivery-card {
+    width: 320px;
+    min-height: 92px;
+    padding: 14px 16px;
+}
+
+.package-icon--large {
+    width: 54px;
+    height: 54px;
+    border-radius: 14px;
+    border-bottom-width: 5px;
+}
+
+.delivery-copy__eyebrow {
+    font-size: 12px;
+}
+
+.delivery-copy__target {
+    font-size: 22px;
+}
+
+#timer-label {
+    font-size: 18px;
+}
+
+.timer-line,
+.timer-line__fill {
+    height: 6px;
+    border-radius: 3px;
+}
+
+#speed-panel {
+    min-width: 212px;
+    min-height: 86px;
+    padding: 12px 18px 12px 12px;
+}
+
+.gauge {
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    border-width: 6px;
+}
+
+.needle {
+    width: 4px;
+    height: 24px;
+    border-radius: 2px;
+}
+
+#speed-label {
+    font-size: 44px;
+}
+
+#speed-unit {
+    font-size: 16px;
+    margin-bottom: 4px;
+}
+
+.menu-card {
+    width: 440px;
+    padding: 30px 34px;
+}
+
+.menu-card__title {
+    font-size: 42px;
+}
+
+.menu-card .btn {
+    min-height: 64px;
+    margin-bottom: 14px;
+}
+
+.touch-btn {
+    border-radius: 18px;
+    border-width: 3px;
+    background-color: var(--glass);
+    border-color: rgba(255, 255, 255, 0.16);
+}
+
+.touch-btn:active {
+    scale: 0.98 0.98;
+}
+
+.steer-btn {
+    width: 128px;
+    height: 128px;
+    border-radius: 24px;
+}
+
+#pedal-brake,
+#pedal-gas {
+    width: 112px;
+    height: 144px;
+    border-radius: 20px;
+}
+
+#handbrake-btn {
+    width: 92px;
+    height: 92px;
+    border-radius: 20px;
+}
+
+.pedal-label {
+    font-size: 24px;
+}
+
+/* ============================================================
+   Main menu final reference pass
+   ============================================================ */
+
+.menu-top-row {
+    left: 24px;
+    top: 22px;
+    right: 30px;
+}
+
+.top-pill {
+    width: 164px;
+    min-height: 74px;
+    padding: 12px 18px;
+    border-radius: 26px;
+    background-color: rgba(244, 248, 252, 0.96);
+    border-width: 2px;
+    border-color: rgba(255, 255, 255, 0.86);
+    border-bottom-width: 6px;
+    border-bottom-color: rgba(88, 82, 73, 0.22);
+}
+
+.top-pill Label {
+    -unity-font-definition: url("../Fonts/Baloo2-ExtraBold.ttf");
+    font-size: 30px;
+    color: rgb(71, 55, 45);
+    margin-left: 14px;
+    -unity-text-outline-width: 0;
+}
+
+.soft-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background-color: rgb(255, 197, 61);
+    border-width: 0;
+    border-bottom-width: 0;
+    align-items: center;
+    justify-content: center;
+}
+
+.soft-icon--star {
+    border-radius: 12px;
+}
+
+.coin-star {
+    position: absolute;
+    background-color: rgb(91, 67, 36);
+    border-radius: 2px;
+}
+
+.coin-star--top {
+    width: 6px;
+    height: 12px;
+    left: 19px;
+    top: 9px;
+}
+
+.coin-star--right {
+    width: 12px;
+    height: 6px;
+    left: 23px;
+    top: 19px;
+}
+
+.coin-star--bottom {
+    width: 6px;
+    height: 12px;
+    left: 19px;
+    top: 23px;
+}
+
+.coin-star--left {
+    width: 12px;
+    height: 6px;
+    left: 9px;
+    top: 19px;
+}
+
+.coin-star--center {
+    width: 10px;
+    height: 10px;
+    left: 17px;
+    top: 17px;
+    border-radius: 3px;
+}
+
+.icon-btn {
+    width: 64px;
+    height: 64px;
+    border-radius: 18px;
+    background-color: rgb(255, 255, 255);
+    border-width: 1px;
+    border-color: rgba(255, 255, 255, 0.8);
+    border-bottom-width: 7px;
+    border-bottom-color: rgba(111, 77, 39, 0.18);
+    align-items: center;
+    justify-content: center;
+}
+
+.settings-icon-btn {
+    width: 128px;
+    height: 128px;
+    border-radius: 34px;
+    border-width: 2px;
+    border-color: rgba(255, 255, 255, 0.88);
+    border-bottom-width: 12px;
+    border-bottom-color: rgba(111, 77, 39, 0.20);
+}
+
+.gear-icon {
+    width: 76px;
+    height: 76px;
+    border-radius: 0;
+    border-width: 0;
+    align-items: center;
+    justify-content: center;
+}
+
+.gear-tooth {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border-radius: 3px;
+    background-color: var(--warm-ink);
+}
+
+.gear-tooth--top {
+    top: 4px;
+    left: 30px;
+    width: 16px;
+    height: 20px;
+}
+
+.gear-tooth--right {
+    right: 4px;
+    top: 30px;
+    width: 20px;
+    height: 16px;
+}
+
+.gear-tooth--bottom {
+    bottom: 4px;
+    left: 30px;
+    width: 16px;
+    height: 20px;
+}
+
+.gear-tooth--left {
+    left: 4px;
+    top: 30px;
+    width: 20px;
+    height: 16px;
+}
+
+.gear-tooth--top-right {
+    right: 12px;
+    top: 12px;
+    rotate: 45deg;
+}
+
+.gear-tooth--bottom-right {
+    right: 12px;
+    bottom: 12px;
+    rotate: -45deg;
+}
+
+.gear-tooth--bottom-left {
+    left: 12px;
+    bottom: 12px;
+    rotate: 45deg;
+}
+
+.gear-tooth--top-left {
+    left: 12px;
+    top: 12px;
+    rotate: -45deg;
+}
+
+.gear-body {
+    position: absolute;
+    left: 16px;
+    top: 16px;
+    width: 44px;
+    height: 44px;
+    border-radius: 17px;
+    background-color: var(--warm-ink);
+    align-items: center;
+    justify-content: center;
+}
+
+.gear-hole {
+    width: 18px;
+    height: 18px;
+    border-radius: 7px;
+    background-color: rgb(255, 255, 255);
+}
+
+.title-card {
+    top: 40px;
+    width: 360px;
+}
+
+.eyebrow {
+    width: 300px;
+    min-height: 42px;
+    padding: 8px 18px;
+    margin-bottom: 0;
+    border-radius: 10px;
+    background-color: rgb(244, 246, 250);
+    color: rgb(123, 78, 45);
+    font-size: 16px;
+    -unity-text-outline-width: 0;
+}
+
+#game-title,
+#game-subtitle {
+    display: none;
+}
+
+#menu-buttons {
+    right: 30px;
+    bottom: 48px;
+    width: 660px;
+    flex-direction: column;
+}
+
+#menu-buttons .btn {
+    margin-bottom: 0;
+    -unity-text-outline-width: 0;
+    border-width: 2px;
+    border-color: rgba(255, 255, 255, 0.82);
+}
+
+.button-depth {
+    position: relative;
+    align-self: flex-end;
+    margin-bottom: 24px;
+    transition-property: scale;
+    transition-duration: 0.08s;
+}
+
+.button-depth:hover {
+    scale: 1.02 1.02;
+}
+
+.button-depth:active {
+    scale: 0.98 0.98;
+}
+
+.button-depth:active #play-button,
+.button-depth:active #quit-button {
+    translate: 0 8px;
+}
+
+.button-depth .btn,
+.button-depth .icon-btn,
+.button-depth #pause-button {
+    position: absolute;
+    left: 0;
+    top: 0;
+    margin-bottom: 0;
+    transition-property: translate;
+    transition-duration: 0.08s;
+}
+
+.button-depth .btn:hover:enabled,
+.button-depth .icon-btn:hover:enabled,
+.button-depth #pause-button:hover:enabled {
+    scale: 1 1;
+}
+
+.button-depth .btn:active:enabled,
+.button-depth .icon-btn:active:enabled,
+.button-depth #pause-button:active:enabled {
+    scale: 1 1;
+    translate: 0 8px;
+}
+
+.button-depth__shadow {
+    position: absolute;
+    left: 0;
+    right: 0;
+}
+
+.button-depth--settings {
+    width: 128px;
+    height: 140px;
+    margin-bottom: 0;
+}
+
+.button-depth__shadow--settings {
+    top: 12px;
+    height: 128px;
+    border-radius: 34px;
+    background-color: rgb(220, 225, 233);
+}
+
+.button-depth--settings .settings-icon-btn {
+    border-bottom-width: 2px;
+    border-bottom-color: rgba(255, 255, 255, 0.62);
+}
+
+.button-depth--pause {
+    width: 58px;
+    height: 66px;
+    align-self: auto;
+    margin-right: 12px;
+    margin-bottom: 0;
+}
+
+.button-depth__shadow--pause {
+    top: 8px;
+    height: 58px;
+    border-radius: 16px;
+    background-color: rgb(48, 34, 24);
+}
+
+.button-depth--pause #pause-button {
+    width: 58px;
+    height: 58px;
+    margin-right: 0;
+    border-bottom-width: 2px;
+    border-bottom-color: rgba(255, 255, 255, 0.18);
+}
+
+.button-depth--card {
+    align-self: stretch;
+    height: 76px;
+    margin-bottom: 14px;
+}
+
+.button-depth--card .btn {
+    right: 0;
+    width: auto;
+    height: 64px;
+    min-height: 64px;
+    border-bottom-width: 2px;
+    border-bottom-color: rgba(255, 255, 255, 0.58);
+}
+
+.button-depth--card .button-depth__shadow {
+    top: 10px;
+    height: 64px;
+    border-radius: 18px;
+}
+
+.button-depth__shadow--green {
+    background-color: rgb(70, 163, 70);
+}
+
+.button-depth__shadow--sky {
+    background-color: rgb(74, 158, 204);
+}
+
+.button-depth__shadow--gold {
+    background-color: rgb(224, 165, 38);
+}
+
+.button-depth__shadow--ghost {
+    background-color: rgb(216, 220, 228);
+}
+
+.button-depth--play {
+    width: 528px;
+    height: 180px;
+}
+
+.button-depth__shadow--play {
+    top: 24px;
+    height: 156px;
+    border-radius: 64px;
+    background-color: rgb(72, 183, 72);
+}
+
+#play-button {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 528px;
+    height: 156px;
+    min-height: 156px;
+    border-radius: 64px;
+    border-bottom-width: 2px;
+    font-size: 109px;
+    padding: 18px 44px;
+    background-color: rgb(121, 216, 111);
+    border-bottom-color: rgba(255, 255, 255, 0.62);
+    color: white;
+    transition-property: translate;
+    transition-duration: 0.08s;
+}
+
+#play-button:hover:enabled,
+#quit-button:hover:enabled {
+    scale: 1 1;
+}
+
+#play-button:active:enabled,
+#quit-button:active:enabled {
+    scale: 1 1;
+    translate: 0 8px;
+}
+
+.menu-secondary-row {
+    display: none;
+}
+
+.button-depth--quit {
+    width: 198px;
+    height: 121px;
+}
+
+.button-depth__shadow--quit {
+    top: 16px;
+    height: 105px;
+    border-radius: 42px;
+    background-color: rgb(216, 220, 228);
+}
+
+#quit-button {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 198px;
+    height: 105px;
+    min-height: 105px;
+    border-radius: 42px;
+    border-bottom-width: 2px;
+    font-size: 53px;
+    background-color: rgb(244, 246, 250);
+    border-bottom-color: rgba(255, 255, 255, 0.62);
+    color: rgb(91, 55, 33);
+    transition-property: translate;
+    transition-duration: 0.08s;
+}
+
+#menu-settings-overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(19, 18, 26, 0.38);
+    align-items: center;
+    justify-content: center;
+    display: none;
+}
+
+#menu-settings-overlay.overlay--show {
+    display: flex;
+}
+
+#menu-settings-card {
+    width: 500px;
+    border-radius: 28px;
+}
+
+#version-label {
+    right: 22px;
+    bottom: 20px;
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.92);
+}
+
+.btn,
+.btn--green,
+.btn--ghost,
+.btn--sky,
+.btn--gold {
+    -unity-text-outline-width: 0;
+}
+
+.theme Label,
+.theme Button {
+    -unity-text-outline-width: 0;
+}
+
+/* ---------- global soft text/icon shadow pass ---------- */
+
+.theme Label,
+.theme Button {
+    -unity-text-outline-width: 1px;
+    -unity-text-outline-color: rgba(47, 30, 15, 0.26);
+}
+
+#play-button {
+    -unity-text-outline-width: 2px;
+    -unity-text-outline-color: rgba(47, 30, 15, 0.28);
+}
+
+.btn--ghost,
+.top-pill Label,
+.eyebrow,
+.settings-row__label {
+    -unity-text-outline-color: rgba(255, 255, 255, 0.38);
+}
+
+.gear-tooth,
+.gear-body,
+.pause-bar,
+.coin-star,
+.coin-icon,
+.soft-icon,
+.clock-icon,
+.package-icon {
+    border-bottom-width: 2px;
+    border-bottom-color: rgba(47, 30, 15, 0.26);
+}
+
+.gear-hole {
+    border-bottom-width: 1px;
+    border-bottom-color: rgba(47, 30, 15, 0.14);
+}
+
+/* ============================================================
+   HUD polish pass — enlarged, kid-friendly, menu-consistent.
+   Bigger touch-safe panels, animated speedo, softer text shadows.
+   This is the last pass, so it wins the cascade over the earlier
+   HUD rules above. Menu styling is intentionally left untouched.
+   ============================================================ */
+
+#safe-area {
+    padding: 34px 44px;
+}
+
+#top-bar {
+    min-height: 132px;
+}
+
+/* ---------- pause + coins (top-left) ---------- */
+
+.button-depth--pause {
+    width: 84px;
+    height: 96px;
+    margin-right: 18px;
+}
+
+.button-depth__shadow--pause {
+    top: 10px;
+    height: 84px;
+    border-radius: 24px;
+}
+
+.button-depth--pause #pause-button {
+    width: 84px;
+    height: 84px;
+    border-radius: 24px;
+}
+
+.pause-bar {
+    width: 9px;
+    height: 34px;
+    border-radius: 4px;
+    margin: 0 3px;
+}
+
+#coins-pill {
+    min-width: 0;
+    min-height: 84px;
+    padding: 14px 28px 14px 16px;
+    border-radius: 28px;
+    border-bottom-width: 8px;
+}
+
+.coin-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 16px;
+    border-width: 0;
+    border-bottom-width: 6px;
+}
+
+.coin-icon__inner {
+    width: 20px;
+    height: 20px;
+    border-radius: 6px;
+    border-width: 4px;
+}
+
+.stat-pill Label {
+    font-size: 44px;
+    margin-left: 16px;
+}
+
+/* ---------- deliveries (top-center) ---------- */
+
+.hud-progress {
+    width: 380px;
+    min-height: 84px;
+    border-radius: 28px;
+    padding: 14px 26px;
+    border-bottom-width: 8px;
+    justify-content: center;
+}
+
+.hud-progress-row {
+    margin-bottom: 8px;
+}
+
+.hud-progress-row Label {
+    font-size: 20px;
+}
+
+#deliveries-label {
+    font-size: 24px;
+    color: white;
+}
+
+.track {
+    height: 14px;
+    border-radius: 7px;
+}
+
+.track__fill {
+    height: 14px;
+    border-radius: 7px;
+    transition-property: width;
+    transition-duration: 0.45s;
+    transition-timing-function: ease-out;
+}
+
+/* ---------- delivery card (top-right) ---------- */
+
+#delivery-card {
+    width: 470px;
+    min-height: 128px;
+    border-radius: 34px;
+    padding: 20px 26px;
+    border-bottom-width: 8px;
+}
+
+.package-icon--large {
+    width: 76px;
+    height: 76px;
+    border-radius: 24px;
+    border-bottom-width: 6px;
+    margin-right: 18px;
+}
+
+.delivery-copy__eyebrow {
+    font-size: 17px;
+}
+
+.delivery-copy__target {
+    font-size: 32px;
+    margin-top: 0;
+}
+
+#timer-label {
+    font-size: 26px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.clock-icon {
+    width: 26px;
+    height: 26px;
+    border-radius: 9px;
+}
+
+.clock-icon__hand {
+    width: 4px;
+    height: 8px;
+    translate: 0 -2px;
+}
+
+.timer-line,
+.timer-line__fill {
+    height: 9px;
+    border-radius: 5px;
+}
+
+/* ---------- speedometer (bottom-left) ---------- */
+
+#speed-panel {
+    min-width: 330px;
+    min-height: 144px;
+    border-radius: 38px;
+    padding: 16px 32px 16px 18px;
+    border-bottom-width: 8px;
+    align-items: center;
+}
+
+.gauge {
+    width: 108px;
+    height: 108px;
+    border-radius: 54px;
+    border-width: 9px;
+    border-color: rgba(121, 216, 111, 0.95);
+    background-color: rgba(20, 14, 10, 0.34);
+    margin-right: 20px;
+}
+
+/* needle pivots from its base at the gauge centre; angle is driven
+   from HudController each frame (see UpdateSpeed). */
+.needle {
+    position: absolute;
+    left: 50%;
+    bottom: 50%;
+    width: 6px;
+    height: 38px;
+    margin-left: -3px;
+    border-radius: 3px;
+    background-color: rgb(255, 255, 255);
+    translate: 0 0;
+    rotate: -120deg;
+    transform-origin: 50% 100%;
+}
+
+.gauge-hub {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 16px;
+    height: 16px;
+    margin-left: -8px;
+    margin-top: -8px;
+    border-radius: 8px;
+    background-color: rgb(242, 246, 244);
+    border-width: 3px;
+    border-color: rgba(67, 47, 31, 0.55);
+}
+
+#speed-label {
+    font-size: 78px;
+    -unity-text-align: middle-left;
+}
+
+#speed-unit {
+    font-size: 24px;
+    margin-left: 10px;
+    margin-bottom: 8px;
+}
+
+/* ---------- soft dark text shadow for legibility over the world ---------- */
+
+#speed-label,
+#banner,
+#reward-toast {
+    -unity-text-outline-width: 2px;
+    -unity-text-outline-color: rgba(24, 16, 8, 0.55);
+}
+
+.stat-pill Label,
+.delivery-copy__target,
+#timer-label {
+    -unity-text-outline-width: 1.5px;
+    -unity-text-outline-color: rgba(24, 16, 8, 0.48);
+}
+
+.delivery-copy__eyebrow,
+#speed-unit,
+#deliveries-label,
+.hud-progress-row Label {
+    -unity-text-outline-width: 1px;
+    -unity-text-outline-color: rgba(24, 16, 8, 0.42);
+}
+
+/* ============================================================
+   Kid-friendly refinement pass
+   Flat solid panels (less gloss / no heavy transparency), a fixed
+   speed panel that no longer resizes, gauge ticks + dynamic feel,
+   and a shared coin badge used by both the HUD and the main menu.
+   ============================================================ */
+
+/* ---------- flat, solid panels ---------- */
+
+#coins-pill,
+#deliveries-pill,
+#delivery-card,
+#speed-panel {
+    background-color: rgb(56, 69, 96);
+    border-width: 0;
+    border-bottom-width: 8px;
+    border-bottom-color: rgb(37, 47, 71);
+}
+
+.button-depth--pause #pause-button {
+    background-color: rgb(56, 69, 96);
+    border-width: 0;
+    border-bottom-width: 3px;
+    border-bottom-color: rgba(255, 255, 255, 0.12);
+}
+
+.button-depth__shadow--pause {
+    background-color: rgb(37, 47, 71);
+}
+
+.gauge {
+    background-color: rgb(33, 41, 60);
+}
+
+/* ---------- speed panel: fixed size so digit count can't flicker it ---------- */
+
+#speed-panel {
+    width: 360px;
+    min-width: 360px;
+    justify-content: flex-start;
+}
+
+#speed-label {
+    min-width: 118px;
+    -unity-text-align: middle-right;
+    transition-property: scale, color;
+    transition-duration: 0.16s, 0.16s;
+    transition-timing-function: ease-out;
+}
+
+/* high-speed pop: the number jumps and warms up (driven from C#) */
+#speed-panel.speed--fast #speed-label {
+    color: rgb(255, 238, 165);
+    scale: 1.16 1.16;
+}
+
+#speed-panel.speed--fast .needle {
+    background-color: rgb(255, 236, 150);
+}
+
+/* ---------- gauge tick marks ---------- */
+
+.gauge-tick {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.gauge-tick__mark {
+    position: absolute;
+    top: 2px;
+    left: 50%;
+    margin-left: -2px;
+    width: 4px;
+    height: 8px;
+    border-radius: 2px;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.gauge-tick--1 { rotate: -120deg; }
+.gauge-tick--2 { rotate: -80deg; }
+.gauge-tick--3 { rotate: -40deg; }
+.gauge-tick--4 { rotate: 0deg; }
+.gauge-tick--5 { rotate: 40deg; }
+.gauge-tick--6 { rotate: 80deg; }
+.gauge-tick--7 { rotate: 120deg; }
+
+/* ============================================================
+   Coin badge — shared reward icon (HUD + main menu, identical).
+   Flat gold disc: outer rim, a 4-point star and a small shine.
+   ============================================================ */
+
+.coin-badge {
+    width: 48px;
+    height: 48px;
+    border-radius: 24px;
+    background-color: rgb(255, 201, 66);
+    border-width: 0;
+    border-bottom-width: 4px;
+    border-bottom-color: rgb(214, 150, 33);
+    align-items: center;
+    justify-content: center;
+}
+
+.coin-badge__ring {
+    position: absolute;
+    left: 5px;
+    top: 5px;
+    right: 5px;
+    bottom: 5px;
+    border-radius: 19px;
+    border-width: 3px;
+    border-color: rgba(198, 138, 26, 0.55);
+}
+
+.coin-badge__ray {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    translate: -50% -50%;
+    background-color: rgb(176, 116, 28);
+    border-radius: 3px;
+    border-bottom-width: 0;
+}
+
+.coin-badge__ray--v {
+    width: 7px;
+    height: 26px;
+}
+
+.coin-badge__ray--h {
+    width: 26px;
+    height: 7px;
+}
+
+.coin-badge__ray--core {
+    width: 13px;
+    height: 13px;
+    rotate: 45deg;
+    border-radius: 4px;
+}
+
+.coin-badge__glint {
+    position: absolute;
+    left: 8px;
+    top: 7px;
+    width: 9px;
+    height: 9px;
+    border-radius: 5px;
+    background-color: rgba(255, 245, 214, 0.92);
+}
+
+/* ============================================================
+   Whitish HUD pass — match the main-menu pills, kill the drab
+   grey, polished candy depth, dark text, fixed gauge aspect,
+   plus the confetti piece style.
+   ============================================================ */
+
+/* light candy panels with a clean chunky bottom ledge */
+#coins-pill,
+#deliveries-pill,
+#delivery-card,
+#speed-panel {
+    background-color: rgb(245, 247, 251);
+    border-width: 2px;
+    border-color: rgba(255, 255, 255, 0.9);
+    border-bottom-width: 9px;
+    border-bottom-color: rgb(213, 218, 227);
+    border-radius: 28px;
+}
+
+/* pause: light icon button (face) over its own offset shadow */
+.button-depth--pause #pause-button {
+    background-color: rgb(245, 247, 251);
+    border-width: 2px;
+    border-color: rgba(255, 255, 255, 0.9);
+    border-bottom-width: 2px;
+    border-bottom-color: rgba(255, 255, 255, 0.62);
+}
+
+.button-depth__shadow--pause {
+    background-color: rgb(213, 218, 227);
+}
+
+.pause-bar {
+    background-color: rgb(78, 62, 50);
+}
+
+/* warm dark text on the light panels (menu palette), no outline */
+.stat-pill Label,
+#speed-label,
+.delivery-copy__target,
+#deliveries-label,
+#timer-label {
+    color: rgb(71, 55, 45);
+    -unity-text-outline-width: 0;
+}
+
+.delivery-copy__eyebrow,
+#speed-unit,
+.hud-progress-row Label {
+    color: rgb(146, 120, 92);
+    -unity-text-outline-width: 0;
+}
+
+#timer-pill.timer--low #timer-label {
+    color: rgb(223, 91, 65);
+}
+
+/* tracks need a darker groove on the light panels */
+.timer-line,
+.track {
+    background-color: rgba(71, 55, 45, 0.14);
+}
+
+/* gauge: stop it being flex-shrunk into an egg; recessed dark dial */
+.gauge {
+    flex-shrink: 0;
+    background-color: rgb(38, 46, 66);
+}
+
+/* high-speed pop reads red on the light panel */
+#speed-panel.speed--fast #speed-label {
+    color: rgb(223, 91, 65);
+    scale: 1.16 1.16;
+}
+
+/* ---------- confetti ---------- */
+
+.confetti {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+    opacity: 1;
+    transition-property: translate, rotate, opacity;
+    transition-duration: 0.95s, 0.95s, 0.95s;
+    transition-timing-function: ease-out;
+}

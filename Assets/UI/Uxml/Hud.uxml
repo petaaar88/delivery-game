@@ -1,0 +1,153 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <ui:Style src="../Uss/Theme.uss" />
+
+    <ui:VisualElement name="hud-root" class="theme" picking-mode="Ignore">
+
+        <ui:VisualElement name="safe-area" picking-mode="Ignore">
+
+            <ui:VisualElement name="top-bar" picking-mode="Ignore">
+                <ui:VisualElement name="top-left" picking-mode="Ignore">
+                    <ui:VisualElement class="button-depth button-depth--pause">
+                        <ui:VisualElement class="button-depth__shadow button-depth__shadow--pause" picking-mode="Ignore" />
+                        <ui:Button name="pause-button">
+                            <ui:VisualElement class="pause-bar" picking-mode="Ignore" />
+                            <ui:VisualElement class="pause-bar" picking-mode="Ignore" />
+                        </ui:Button>
+                    </ui:VisualElement>
+
+                    <ui:VisualElement name="coins-pill" class="pill stat-pill" picking-mode="Ignore">
+                        <ui:VisualElement class="coin-badge" picking-mode="Ignore">
+                            <ui:VisualElement class="coin-badge__ring" picking-mode="Ignore" />
+                            <ui:VisualElement class="coin-badge__ray coin-badge__ray--v" picking-mode="Ignore" />
+                            <ui:VisualElement class="coin-badge__ray coin-badge__ray--h" picking-mode="Ignore" />
+                            <ui:VisualElement class="coin-badge__ray coin-badge__ray--core" picking-mode="Ignore" />
+                            <ui:VisualElement class="coin-badge__glint" picking-mode="Ignore" />
+                        </ui:VisualElement>
+                        <ui:Label name="coins-label" text="0" picking-mode="Ignore" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+
+                <ui:VisualElement name="deliveries-pill" class="hud-progress" picking-mode="Ignore">
+                    <ui:VisualElement class="hud-progress-row" picking-mode="Ignore">
+                        <ui:Label text="Deliveries" picking-mode="Ignore" />
+                        <ui:Label name="deliveries-label" text="0" picking-mode="Ignore" />
+                    </ui:VisualElement>
+                    <ui:VisualElement class="track" picking-mode="Ignore">
+                        <ui:VisualElement name="route-fill" class="track__fill" picking-mode="Ignore" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+
+                <ui:VisualElement name="delivery-card" picking-mode="Ignore">
+                    <ui:VisualElement class="package-icon package-icon--large" picking-mode="Ignore">
+                        <ui:VisualElement class="package-icon__tape" picking-mode="Ignore" />
+                    </ui:VisualElement>
+                    <ui:VisualElement class="delivery-copy" picking-mode="Ignore">
+                        <ui:Label class="delivery-copy__eyebrow" text="Deliver to" picking-mode="Ignore" />
+                        <ui:Label class="delivery-copy__target" text="Next stop" picking-mode="Ignore" />
+                        <ui:VisualElement name="timer-pill" class="pill" picking-mode="Ignore">
+                            <ui:VisualElement class="clock-icon" picking-mode="Ignore">
+                                <ui:VisualElement class="clock-icon__hand" picking-mode="Ignore" />
+                            </ui:VisualElement>
+                            <ui:Label name="timer-label" text="0:00" picking-mode="Ignore" />
+                            <ui:VisualElement class="timer-line" picking-mode="Ignore">
+                                <ui:VisualElement name="timer-fill" class="timer-line__fill" picking-mode="Ignore" />
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <ui:VisualElement name="bottom-bar" picking-mode="Ignore">
+                <ui:VisualElement name="mobile-left" class="mobile-controls" picking-mode="Ignore">
+                    <ui:VisualElement name="steer-left" class="touch-btn steer-btn">
+                        <ui:VisualElement class="chevron" picking-mode="Ignore">
+                            <ui:VisualElement class="chevron__bar-up" picking-mode="Ignore" />
+                            <ui:VisualElement class="chevron__bar-down" picking-mode="Ignore" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="steer-right" class="touch-btn steer-btn">
+                        <ui:VisualElement class="chevron chevron--right" picking-mode="Ignore">
+                            <ui:VisualElement class="chevron__bar-up" picking-mode="Ignore" />
+                            <ui:VisualElement class="chevron__bar-down" picking-mode="Ignore" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+
+                <ui:VisualElement name="speed-panel" picking-mode="Ignore">
+                    <ui:VisualElement name="speed-gauge" class="gauge" picking-mode="Ignore">
+                        <ui:VisualElement class="gauge-tick gauge-tick--1" picking-mode="Ignore"><ui:VisualElement class="gauge-tick__mark" picking-mode="Ignore" /></ui:VisualElement>
+                        <ui:VisualElement class="gauge-tick gauge-tick--2" picking-mode="Ignore"><ui:VisualElement class="gauge-tick__mark" picking-mode="Ignore" /></ui:VisualElement>
+                        <ui:VisualElement class="gauge-tick gauge-tick--3" picking-mode="Ignore"><ui:VisualElement class="gauge-tick__mark" picking-mode="Ignore" /></ui:VisualElement>
+                        <ui:VisualElement class="gauge-tick gauge-tick--4" picking-mode="Ignore"><ui:VisualElement class="gauge-tick__mark" picking-mode="Ignore" /></ui:VisualElement>
+                        <ui:VisualElement class="gauge-tick gauge-tick--5" picking-mode="Ignore"><ui:VisualElement class="gauge-tick__mark" picking-mode="Ignore" /></ui:VisualElement>
+                        <ui:VisualElement class="gauge-tick gauge-tick--6" picking-mode="Ignore"><ui:VisualElement class="gauge-tick__mark" picking-mode="Ignore" /></ui:VisualElement>
+                        <ui:VisualElement class="gauge-tick gauge-tick--7" picking-mode="Ignore"><ui:VisualElement class="gauge-tick__mark" picking-mode="Ignore" /></ui:VisualElement>
+                        <ui:VisualElement name="speed-needle" class="needle" picking-mode="Ignore" />
+                        <ui:VisualElement class="gauge-hub" picking-mode="Ignore" />
+                    </ui:VisualElement>
+                    <ui:Label name="speed-label" text="0" picking-mode="Ignore" />
+                    <ui:Label name="speed-unit" text="km/h" picking-mode="Ignore" />
+                </ui:VisualElement>
+
+                <ui:VisualElement name="mobile-right" class="mobile-controls" picking-mode="Ignore">
+                    <ui:VisualElement name="handbrake-btn" class="touch-btn">
+                        <ui:Label class="pedal-label" text="P" picking-mode="Ignore" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="pedal-brake" class="touch-btn">
+                        <ui:Label class="pedal-label" text="BRAKE" picking-mode="Ignore" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="pedal-gas" class="touch-btn">
+                        <ui:Label class="pedal-label" text="GAS" picking-mode="Ignore" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+        </ui:VisualElement>
+
+        <ui:Label name="banner" text="" picking-mode="Ignore" />
+        <ui:Label name="reward-toast" text="" picking-mode="Ignore" />
+
+        <ui:VisualElement name="pause-overlay">
+            <ui:VisualElement name="pause-card" class="menu-card">
+                <ui:Label class="menu-card__title" text="PAUSED" />
+                <ui:VisualElement class="button-depth button-depth--card button-depth--green">
+                    <ui:VisualElement class="button-depth__shadow button-depth__shadow--green" picking-mode="Ignore" />
+                    <ui:Button name="resume-button" class="btn btn--green" text="RESUME" />
+                </ui:VisualElement>
+                <ui:VisualElement class="button-depth button-depth--card button-depth--sky">
+                    <ui:VisualElement class="button-depth__shadow button-depth__shadow--sky" picking-mode="Ignore" />
+                    <ui:Button name="restart-button" class="btn btn--sky" text="RESTART" />
+                </ui:VisualElement>
+                <ui:VisualElement class="button-depth button-depth--card button-depth--gold">
+                    <ui:VisualElement class="button-depth__shadow button-depth__shadow--gold" picking-mode="Ignore" />
+                    <ui:Button name="settings-button" class="btn btn--gold" text="SOUND" />
+                </ui:VisualElement>
+                <ui:VisualElement class="button-depth button-depth--card button-depth--ghost">
+                    <ui:VisualElement class="button-depth__shadow button-depth__shadow--ghost" picking-mode="Ignore" />
+                    <ui:Button name="quit-to-menu-button" class="btn btn--ghost" text="MAIN MENU" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+
+            <ui:VisualElement name="settings-card" class="menu-card" style="display: none;">
+                <ui:Label class="menu-card__title" text="SOUND" />
+                <ui:VisualElement class="settings-row">
+                    <ui:Label class="settings-row__label" text="Master" />
+                    <ui:Slider name="master-slider" low-value="0" high-value="1" class="volume-slider" />
+                </ui:VisualElement>
+                <ui:VisualElement class="settings-row">
+                    <ui:Label class="settings-row__label" text="Effects" />
+                    <ui:Slider name="sfx-slider" low-value="0" high-value="1" class="volume-slider" />
+                </ui:VisualElement>
+                <ui:VisualElement class="settings-row">
+                    <ui:Label class="settings-row__label" text="Music" />
+                    <ui:Slider name="music-slider" low-value="0" high-value="1" class="volume-slider" />
+                </ui:VisualElement>
+                <ui:VisualElement class="button-depth button-depth--card button-depth--ghost">
+                    <ui:VisualElement class="button-depth__shadow button-depth__shadow--ghost" picking-mode="Ignore" />
+                    <ui:Button name="settings-back-button" class="btn btn--ghost" text="BACK" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+    </ui:VisualElement>
+</ui:UXML>
