@@ -3,7 +3,27 @@ guid: 3041109cf4fdf586e8dadc1413dd1eab
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Braon
+    second: {fileID: 2100000, guid: 7a067a659cebd36fe872db523b56d878, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Guma
+    second: {fileID: 2100000, guid: 6aa339994065715f3b07276f71fce996, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Plava
+    second: {fileID: 2100000, guid: 20b614ab58086bf178ee61c06b0f64d6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Staklo
+    second: {fileID: 2100000, guid: 60f3d6a48d831046ca1a871941ed05f1, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -91,7 +111,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.08
+    globalScale: 8
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

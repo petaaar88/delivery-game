@@ -5,6 +5,16 @@ ModelImporter:
   internalIDToNameTable: []
   externalObjects:
   - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Kutija
+    second: {fileID: 2100000, guid: aa83bb7033f88b490a6f45a9daac17dc, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: deka
+    second: {fileID: 2100000, guid: 8b8c78247d2a2f90bbbd82a3b1bbaf89, type: 2}
+  - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: deka

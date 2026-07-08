@@ -3,7 +3,32 @@ guid: 74489dd3721b5acdc9d1174bc98ca722
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Crna
+    second: {fileID: 2100000, guid: 0229b5e2ccdeed1c3b1eef8b35af5c6e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Crvena
+    second: {fileID: 2100000, guid: 534cf6bfc69a16177a4049909d4442b1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Narandzasta
+    second: {fileID: 2100000, guid: c1a4e45234b11bef2880dfe433e15520, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: logo
+    second: {fileID: 2100000, guid: e544b96546e9ae640bfdc7f335d2302a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: zutaZnak
+    second: {fileID: 2100000, guid: 649819a48244ff7ebb0e9760d2ac3f16, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -91,7 +116,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.9
+    globalScale: 90
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

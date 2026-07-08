@@ -3,7 +3,47 @@ guid: 440d15b7c587fe145ad886012568758d
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Bela
+    second: {fileID: 2100000, guid: 0da2fd416530b81a4bee54664bdb8485, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Guma
+    second: {fileID: 2100000, guid: 4ee8e8597788ce2f88f77bfbc38c2f88, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: openPBR_shader1
+    second: {fileID: 2100000, guid: 2a57212c4ef659297bdbb0e4452565a9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: plava
+    second: {fileID: 2100000, guid: ef0b0124aa127609d9342111a2cbecea, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: red
+    second: {fileID: 2100000, guid: 242f12074a0b70331b1c46a05a2edbcd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: rozor
+    second: {fileID: 2100000, guid: 889657c6896162ff3bdd831703bd7a93, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: siva
+    second: {fileID: 2100000, guid: 6c66b46c21510cb8da93397e65600976, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: zuta
+    second: {fileID: 2100000, guid: 05dc670b004739220b39e0e6531c208f, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -91,7 +131,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.24
+    globalScale: 24
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

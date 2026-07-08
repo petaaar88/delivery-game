@@ -3,7 +3,47 @@ guid: d016f5730ed1ab8a1915b2feeaf363f4
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Bela
+    second: {fileID: 2100000, guid: 416b15006f4b57bf09c92458a224a148, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Crvena
+    second: {fileID: 2100000, guid: 0bf412d8d2338c9ec9587da4f4116087, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Guma
+    second: {fileID: 2100000, guid: 0e446c167d19afc1695879e9b80bedb9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Svetlo
+    second: {fileID: 2100000, guid: 085b750b175386b0e84c804b17173915, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: dd
+    second: {fileID: 2100000, guid: cff375b268122b08ba8285d30fbe8e19, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: glass
+    second: {fileID: 2100000, guid: 961482a441e04a0ba9dbf4fc61dc03e3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lambert1
+    second: {fileID: 2100000, guid: 6d0316462518b2766b0fa2477d9f352b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: siva
+    second: {fileID: 2100000, guid: 3ebadfaa54172af9baf724c622960f89, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -91,7 +131,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.26999998
+    globalScale: 27
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

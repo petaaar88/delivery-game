@@ -3,7 +3,187 @@ guid: 6dfb97ec9c1579572b44e06edc4caf59
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Default_Material
+    second: {fileID: 2100000, guid: f38b0624982c30a0e8b996aa2063e30a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: GreenGrass
+    second: {fileID: 2100000, guid: 71213a55aab2059d1a13cd6134f01eb0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: assets__Colour__GreenBrick
+    second: {fileID: 2100000, guid: 31b08bd846f08475aadbca605c18a4ab, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: assets__Colour__GreyConcrete
+    second: {fileID: 2100000, guid: fa5db519eef388a4ca92bed87a422d08, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: assets__Colour__LightMetal
+    second: {fileID: 2100000, guid: bca47e33ea52a2aabb3d62c54ab80365, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: assets__Colour__LightWood
+    second: {fileID: 2100000, guid: a8df2b803e2cb6993a05e1eda74932fb, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: assets__Colour__Metal
+    second: {fileID: 2100000, guid: 844fdf380de1b8f40ae3f4c1ba890a85, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: assets__Colour__Roof
+    second: {fileID: 2100000, guid: cb015d5a87abf61fdb657d2f1ba398a5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: assets__Colour__WhiteBorder
+    second: {fileID: 2100000, guid: 7fc8dce354a590515a46e0860badb652, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: assets__Colour__WhiteConcrete
+    second: {fileID: 2100000, guid: 9292b1d297a0772fcb6cb5bd8387d0ed, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: assets__Colour__Window
+    second: {fileID: 2100000, guid: 639673b9c281dc5dbb0a1564d6ca9666, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: assets__Colour__WoodFraming
+    second: {fileID: 2100000, guid: 91ba81246d87d49d092cb75a5e966fbd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: assets__Colour__YellowBrick
+    second: {fileID: 2100000, guid: 4f6b0bc8368cab8dc8ddecb6ae6a35e4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: assets__Colour__aiStandardSurface4
+    second: {fileID: 2100000, guid: 8e66013df462fd5a58aabace826c1304, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: assets__Colour__hlass
+    second: {fileID: 2100000, guid: e7867f6e64ba3abce86c56d2b7069c71, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: assets__Colour__wood
+    second: {fileID: 2100000, guid: 1aef748a660067878af8cdcacf37924f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ground
+    second: {fileID: 2100000, guid: 1ac0a49930561308da0510a587d65d63, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lambert1
+    second: {fileID: 2100000, guid: d25f19057c0f88c568c5a94bba3bc04d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: put
+    second: {fileID: 2100000, guid: 837e6d573f6d912ee8771c8571389e54, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: shops_BlueDark
+    second: {fileID: 2100000, guid: 32ab9c214d834daefba7ac18aeaaea13, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: shops_BlueMat
+    second: {fileID: 2100000, guid: 9f08093722f9a9d2d8d563a992ed1317, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: shops_BlueSharp
+    second: {fileID: 2100000, guid: 1a4fc10fcd8ef485b951b44e4b96bd0e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: shops_BrownBrick
+    second: {fileID: 2100000, guid: 44997d62cdb688e79a7f8392fc618d93, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: shops_DarkYellowMat
+    second: {fileID: 2100000, guid: 4e03de626f44ce4f483597e85040cb35, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: shops_Default_Material
+    second: {fileID: 2100000, guid: 7d508af043892576195af4aaf5d682d4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: shops_MetalDoorBorder
+    second: {fileID: 2100000, guid: 9461b61ae39d06763a69227d714ebbf8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: shops_OrangeCover
+    second: {fileID: 2100000, guid: 044472236c494874387893a2fed31670, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: shops_OrangeMaterial
+    second: {fileID: 2100000, guid: 459158fa54c4f19c7964008ef2235d5e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: shops_OrangeSharp
+    second: {fileID: 2100000, guid: 1f05dc29a394813d8ba0bc77e25c1ca8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: shops_Pinkbrick
+    second: {fileID: 2100000, guid: a3003f7ed973c239e8aaa48ad0f1e7d4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: shops_Red
+    second: {fileID: 2100000, guid: e976a1d43c1b67e30967ad7289e8a0ae, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: shops_RedBrick
+    second: {fileID: 2100000, guid: e41fd17bc88b3b1e3afa45dbbe95dbca, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: shops_Roof10
+    second: {fileID: 2100000, guid: f00d2aafeb927a260aea4039dcbed4f7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: shops_WoodDoor
+    second: {fileID: 2100000, guid: cfc50d0207aa9d81281c4a45f05e58e2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: shops_WoodFraming10
+    second: {fileID: 2100000, guid: 4a97435ea03e2f34eafb0877ef2400b7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: shops_YellowBrick1
+    second: {fileID: 2100000, guid: 49d271ec8460f1e8fbb283c5064177d3, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

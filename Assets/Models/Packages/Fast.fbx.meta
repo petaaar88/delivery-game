@@ -3,7 +3,22 @@ guid: 82b8073d8e43da22c965a0e196340cae
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Narandzasta
+    second: {fileID: 2100000, guid: 9363bce24e7826c9b825267e952a9063, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: logo
+    second: {fileID: 2100000, guid: 8d49b174ba9bda513be169b28a7c5631, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: zutaZnak
+    second: {fileID: 2100000, guid: c3ade6db6b624ac7586fadaa41ee8196, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -91,7 +106,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.9
+    globalScale: 90
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

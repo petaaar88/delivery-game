@@ -3,7 +3,17 @@ guid: 940486cd165f38321bbe23ecf2e3e7b0
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Guma
+    second: {fileID: 2100000, guid: 2c7c35ea4703beb2aa564db76eb127f2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Kutija
+    second: {fileID: 2100000, guid: 6cbfe661e73848c73a02f46188f358b9, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -91,7 +101,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.11
+    globalScale: 11
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

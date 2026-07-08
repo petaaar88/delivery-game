@@ -3,7 +3,37 @@ guid: c29c138b264caf1b38e95985ba17e2e9
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Guma
+    second: {fileID: 2100000, guid: 12c8b0847e11d014a9c7d8d9a2b58586, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: plava
+    second: {fileID: 2100000, guid: 85ad51fd1414b645ca32a7f5df177d0a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: red
+    second: {fileID: 2100000, guid: 2fb601ee094b0167db0ad7b72aff3c75, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: rozor
+    second: {fileID: 2100000, guid: 2892fabb66a0686ad8645b3d0a954d69, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: siva
+    second: {fileID: 2100000, guid: 7d75fa471d543c48ca828b5a0e0a774d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: zuta
+    second: {fileID: 2100000, guid: e209416c4797bcf1f8af6b61d0ec2403, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -91,7 +121,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.26999998
+    globalScale: 27
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

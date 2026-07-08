@@ -5,6 +5,11 @@ ModelImporter:
   internalIDToNameTable: []
   externalObjects:
   - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: box
+    second: {fileID: 2100000, guid: df03f20c6cfe4472282f1cd27a934412, type: 2}
+  - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: box

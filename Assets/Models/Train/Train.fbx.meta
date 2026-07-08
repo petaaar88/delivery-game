@@ -3,7 +3,62 @@ guid: bc782fc1455261a8f960e5110c4f8e74
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: black
+    second: {fileID: 2100000, guid: 224478ee3f98ae431adbe018b9b2c18b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ground
+    second: {fileID: 2100000, guid: d1e27b29f50e2a135a4a2836db2dc5b7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: rail.001
+    second: {fileID: 2100000, guid: fe3677a2c8265921986fb177a8404471, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: red
+    second: {fileID: 2100000, guid: 629402b3c04125a43a1c99f089cd803e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: square
+    second: {fileID: 2100000, guid: 513e748fcd82ce40cb4356c348a1ea0d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: trainbase
+    second: {fileID: 2100000, guid: 043d5bff4f80aecdc88ae7e2c871f0e7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: trainsticker
+    second: {fileID: 2100000, guid: 476dc32d614c22c4a83a665349a80b01, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: trainwindow
+    second: {fileID: 2100000, guid: abb96b7b70480093dac6ff3bf63038be, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: wood.001
+    second: {fileID: 2100000, guid: db6230068a72ebb25bfb83016c2a8c2b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: yellow
+    second: {fileID: 2100000, guid: bcf5a01c4ac1180bd91d7de3767d4fd9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: yellowline
+    second: {fileID: 2100000, guid: 2aa90843e90ff1981ae965ca253607c7, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

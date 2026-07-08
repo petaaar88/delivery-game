@@ -3,7 +3,67 @@ guid: ceeb17d268e06671aa8a33348c3d2372
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Bela
+    second: {fileID: 2100000, guid: b587e029b746f1cedbeafecffb77ae3f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Guma
+    second: {fileID: 2100000, guid: 706b5c332857c9575b9465876bc077fe, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Standard_Surface1
+    second: {fileID: 2100000, guid: 2b7f3e72e81751ec1891849e0ad6a2a5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Vatrogasci
+    second: {fileID: 2100000, guid: a7b230d56ffeaa7b18d7bb917ca1f482, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: openPBR_shader1
+    second: {fileID: 2100000, guid: ef64184140754b80ca264a3e056ac6d9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: plava
+    second: {fileID: 2100000, guid: ef0c493b2e0f182119569a3e261cfc38, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: rail.001
+    second: {fileID: 2100000, guid: fa21239ca7bcd37669d3b529a1ae0169, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: red
+    second: {fileID: 2100000, guid: ae6c96fd25e5cc48e8fc1cacae3b949f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: rozor
+    second: {fileID: 2100000, guid: 75e46910824dc5c84b1851b6ef47f25f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: siva
+    second: {fileID: 2100000, guid: 2d0d343e3a025bbdb909099bca873508, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: wood.001
+    second: {fileID: 2100000, guid: 562376e92edd72019bec10bc41071667, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: zuta
+    second: {fileID: 2100000, guid: afc9bb96a5cef26f0ad54e33019b6576, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -91,7 +151,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.29999998
+    globalScale: 30
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

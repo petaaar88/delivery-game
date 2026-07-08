@@ -3,7 +3,22 @@ guid: 76d20a1843c7442a1ab08794b59ddb62
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Crvena
+    second: {fileID: 2100000, guid: bb34529bb6045613b95f5fe9adf0f9a7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Kutija
+    second: {fileID: 2100000, guid: 89320fd0a01d3326a9e768ee23a3ceb8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: openPBR_shader1
+    second: {fileID: 2100000, guid: b1ea5fe5cf3240267a74da104bc1ccab, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -91,7 +106,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.11
+    globalScale: 11
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

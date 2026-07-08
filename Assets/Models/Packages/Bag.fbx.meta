@@ -3,7 +3,12 @@ guid: 03ddeba7e0b599633ad4514a0f2d202d
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: PlasticBag
+    second: {fileID: 2100000, guid: 77b2b160bd4c7f82f8108e05f803f903, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -91,7 +96,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.099999994
+    globalScale: 10
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

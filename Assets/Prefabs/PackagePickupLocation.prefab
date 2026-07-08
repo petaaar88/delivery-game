@@ -191,6 +191,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ba3d72f512b2c2aca921f9f62e9ab76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ExplosivePackageEffect
+  hitsToExplode: 3
+  armImpulseThreshold: 7000
+  hitCooldown: 1
+  maxGroundNormalY: 0.7
+  beepInterval: 0.9
+  upwardKick: 7
+  tumbleKick: 2.5
+  explosionHeight: 1.3
 --- !u!114 &2491865988872895472
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -5,6 +5,16 @@ ModelImporter:
   internalIDToNameTable: []
   externalObjects:
   - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Kutija
+    second: {fileID: 2100000, guid: adf577dd365e0c2bebd57cce7d45e9b8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pizza
+    second: {fileID: 2100000, guid: ec34ead5d5583ba01aea713c85fb6e11, type: 2}
+  - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: pizza
@@ -96,7 +106,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.12
+    globalScale: 12
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

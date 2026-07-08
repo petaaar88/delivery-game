@@ -5,6 +5,21 @@ ModelImporter:
   internalIDToNameTable: []
   externalObjects:
   - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Braon
+    second: {fileID: 2100000, guid: ba23607d533bb1719a7cea75338fc90f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Pecivo
+    second: {fileID: 2100000, guid: 922ac9873029b736c8ffdfc877257c3c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pc
+    second: {fileID: 2100000, guid: 32f72b65cb13d0478bee4febb991ec51, type: 2}
+  - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: p

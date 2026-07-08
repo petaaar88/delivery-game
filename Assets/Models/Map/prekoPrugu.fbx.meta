@@ -3,7 +3,12 @@ guid: f93b82cfc7d4ae2429ccbc5948052374
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Crna
+    second: {fileID: 2100000, guid: 5b97c5161803c095aba3f9038811ac17, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

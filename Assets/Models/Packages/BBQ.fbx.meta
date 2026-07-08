@@ -5,6 +5,21 @@ ModelImporter:
   internalIDToNameTable: []
   externalObjects:
   - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Braon
+    second: {fileID: 2100000, guid: 8f295282395e5ad62875ace5cc63b866, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Kutija
+    second: {fileID: 2100000, guid: aca74901ad1d02ac8942d7143bdf6e01, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: bbq
+    second: {fileID: 2100000, guid: f64bf223891628aa6b3cda0d19a0f161, type: 2}
+  - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: bbq
