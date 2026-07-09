@@ -93,13 +93,13 @@ public class SoundController : MonoBehaviour
         if (GlobalAudioManager.Instance != null)
         {
             if (masterVolumeText != null)
-                masterVolumeText.text = $"Master: {(GlobalAudioManager.Instance.masterVolume * 100):F0}%";
+                masterVolumeText.text = $"MASTER: {(GlobalAudioManager.Instance.masterVolume * 100):F0}%";
 
             if (sfxVolumeText != null)
                 sfxVolumeText.text = $"SFX: {(GlobalAudioManager.Instance.sfxVolume * 100):F0}%";
 
             if (musicVolumeText != null)
-                musicVolumeText.text = $"Music: {(GlobalAudioManager.Instance.musicVolume * 100):F0}%";
+                musicVolumeText.text = $"MUSIC: {(GlobalAudioManager.Instance.musicVolume * 100):F0}%";
         }
     }
 

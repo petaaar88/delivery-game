@@ -29,26 +29,26 @@
     --glass-strong: rgba(67, 47, 31, 0.88);
     --glass-soft: rgba(255, 255, 255, 0.84);
 
-    -unity-font-definition: url("../Fonts/Nunito-SemiBold.ttf");
+    -unity-font-definition: url("../../Kids Magazine.ttf");
     color: var(--ink);
 }
 
 /* ---------- typography ---------- */
 
 .font-display {
-    -unity-font-definition: url("../Fonts/Baloo2-ExtraBold.ttf");
+    -unity-font-definition: url("../../Kids Magazine.ttf");
 }
 
 .font-bold {
-    -unity-font-definition: url("../Fonts/Baloo2-Bold.ttf");
+    -unity-font-definition: url("../../Kids Magazine.ttf");
 }
 
 .font-body {
-    -unity-font-definition: url("../Fonts/Nunito-SemiBold.ttf");
+    -unity-font-definition: url("../../Kids Magazine.ttf");
 }
 
 .font-body-strong {
-    -unity-font-definition: url("../Fonts/Nunito-ExtraBold.ttf");
+    -unity-font-definition: url("../../Kids Magazine.ttf");
 }
 
 /* ---------- generic building blocks ---------- */
@@ -71,7 +71,7 @@
 }
 
 .btn {
-    -unity-font-definition: url("../Fonts/Baloo2-Bold.ttf");
+    -unity-font-definition: url("../../Kids Magazine.ttf");
     font-size: 26px;
     color: white;
     background-color: var(--accent);
@@ -149,7 +149,7 @@
 }
 
 .stat-pill Label {
-    -unity-font-definition: url("../Fonts/Baloo2-ExtraBold.ttf");
+    -unity-font-definition: url("../../Kids Magazine.ttf");
     font-size: 30px;
     color: var(--ink);
     margin-left: 10px;
@@ -210,7 +210,7 @@
 }
 
 #timer-label {
-    -unity-font-definition: url("../Fonts/Baloo2-ExtraBold.ttf");
+    -unity-font-definition: url("../../Kids Magazine.ttf");
     font-size: 34px;
     color: var(--ink);
     margin-left: 12px;
@@ -281,7 +281,7 @@
     left: 0;
     right: 0;
     -unity-text-align: middle-center;
-    -unity-font-definition: url("../Fonts/Baloo2-ExtraBold.ttf");
+    -unity-font-definition: url("../../Kids Magazine.ttf");
     font-size: 52px;
     color: white;
     -unity-text-outline-width: 2px;
@@ -303,7 +303,7 @@
     left: 0;
     right: 0;
     -unity-text-align: middle-center;
-    -unity-font-definition: url("../Fonts/Baloo2-ExtraBold.ttf");
+    -unity-font-definition: url("../../Kids Magazine.ttf");
     font-size: 44px;
     color: var(--gold);
     -unity-text-outline-width: 2px;
@@ -334,7 +334,7 @@
 }
 
 #speed-label {
-    -unity-font-definition: url("../Fonts/Baloo2-ExtraBold.ttf");
+    -unity-font-definition: url("../../Kids Magazine.ttf");
     font-size: 64px;
     color: white;
     -unity-text-outline-width: 2px;
@@ -342,7 +342,7 @@
 }
 
 #speed-unit {
-    -unity-font-definition: url("../Fonts/Baloo2-Bold.ttf");
+    -unity-font-definition: url("../../Kids Magazine.ttf");
     font-size: 24px;
     color: white;
     -unity-text-outline-width: 1px;
@@ -430,7 +430,7 @@
 }
 
 .pedal-label {
-    -unity-font-definition: url("../Fonts/Baloo2-Bold.ttf");
+    -unity-font-definition: url("../../Kids Magazine.ttf");
     font-size: 26px;
     color: white;
     -unity-text-outline-width: 1px;
@@ -498,7 +498,7 @@
 }
 
 .menu-card__title {
-    -unity-font-definition: url("../Fonts/Baloo2-ExtraBold.ttf");
+    -unity-font-definition: url("../../Kids Magazine.ttf");
     font-size: 42px;
     color: var(--ink);
     -unity-text-align: middle-center;
@@ -516,7 +516,7 @@
 }
 
 .settings-row__label {
-    -unity-font-definition: url("../Fonts/Baloo2-Bold.ttf");
+    -unity-font-definition: url("../../Kids Magazine.ttf");
     font-size: 22px;
     color: var(--ink);
     margin-bottom: 2px;
@@ -595,7 +595,7 @@
 }
 
 #game-title {
-    -unity-font-definition: url("../Fonts/Baloo2-ExtraBold.ttf");
+    -unity-font-definition: url("../../Kids Magazine.ttf");
     font-size: 96px;
     color: white;
     -unity-text-outline-width: 3px;
@@ -605,7 +605,7 @@
 }
 
 #game-subtitle {
-    -unity-font-definition: url("../Fonts/Baloo2-Bold.ttf");
+    -unity-font-definition: url("../../Kids Magazine.ttf");
     font-size: 28px;
     color: rgba(255, 255, 255, 0.95);
     -unity-text-outline-width: 1px;
@@ -651,7 +651,7 @@
     border-radius: 24px;
     min-height: 56px;
     padding: 10px 18px;
-    -unity-font-definition: url("../Fonts/Baloo2-ExtraBold.ttf");
+    -unity-font-definition: url("../../Kids Magazine.ttf");
     font-size: 24px;
     letter-spacing: 0;
 }
@@ -774,7 +774,7 @@
 }
 
 .hud-progress-row Label {
-    -unity-font-definition: url("../Fonts/Nunito-ExtraBold.ttf");
+    -unity-font-definition: url("../../Kids Magazine.ttf");
     font-size: 10px;
     color: rgba(255, 255, 255, 0.74);
     -unity-text-align: middle-left;
@@ -836,13 +836,13 @@
 }
 
 .delivery-copy__eyebrow {
-    -unity-font-definition: url("../Fonts/Nunito-ExtraBold.ttf");
+    -unity-font-definition: url("../../Kids Magazine.ttf");
     font-size: 9px;
     color: rgba(255, 255, 255, 0.56);
 }
 
 .delivery-copy__target {
-    -unity-font-definition: url("../Fonts/Baloo2-Bold.ttf");
+    -unity-font-definition: url("../../Kids Magazine.ttf");
     font-size: 15px;
     color: white;
     margin-top: -2px;
@@ -1008,7 +1008,7 @@
 }
 
 .top-pill Label {
-    -unity-font-definition: url("../Fonts/Baloo2-ExtraBold.ttf");
+    -unity-font-definition: url("../../Kids Magazine.ttf");
     font-size: 18px;
     color: white;
     margin-left: 8px;
@@ -1073,13 +1073,13 @@
     border-radius: 14px;
     background-color: rgba(255, 255, 255, 0.86);
     color: rgb(143, 93, 47);
-    -unity-font-definition: url("../Fonts/Nunito-ExtraBold.ttf");
+    -unity-font-definition: url("../../Kids Magazine.ttf");
     font-size: 10px;
     -unity-text-align: middle-center;
 }
 
 #game-title {
-    -unity-font-definition: url("../Fonts/Baloo2-ExtraBold.ttf");
+    -unity-font-definition: url("../../Kids Magazine.ttf");
     font-size: 64px;
     color: white;
     -unity-text-outline-width: 0;
@@ -1095,7 +1095,7 @@
     border-radius: 14px;
     background-color: rgba(255, 255, 255, 0.78);
     color: rgb(106, 68, 39);
-    -unity-font-definition: url("../Fonts/Nunito-ExtraBold.ttf");
+    -unity-font-definition: url("../../Kids Magazine.ttf");
     font-size: 12px;
     -unity-text-outline-width: 0;
 }
@@ -1285,7 +1285,7 @@
     border-radius: 18px;
     border-bottom-width: 8px;
     padding: 10px 24px;
-    -unity-font-definition: url("../Fonts/Baloo2-ExtraBold.ttf");
+    -unity-font-definition: url("../../Kids Magazine.ttf");
     font-size: 28px;
 }
 
@@ -1492,7 +1492,7 @@
 }
 
 .stat-pill Label {
-    -unity-font-definition: url("../Fonts/Baloo2-ExtraBold.ttf");
+    -unity-font-definition: url("../../Kids Magazine.ttf");
     font-size: 26px;
     color: white;
     margin-left: 10px;
@@ -1523,7 +1523,7 @@
 }
 
 .hud-progress-row Label {
-    -unity-font-definition: url("../Fonts/Nunito-ExtraBold.ttf");
+    -unity-font-definition: url("../../Kids Magazine.ttf");
     font-size: 13px;
 }
 
@@ -1667,7 +1667,7 @@
 }
 
 .top-pill Label {
-    -unity-font-definition: url("../Fonts/Baloo2-ExtraBold.ttf");
+    -unity-font-definition: url("../../Kids Magazine.ttf");
     font-size: 30px;
     color: rgb(71, 55, 45);
     margin-left: 14px;
@@ -2708,37 +2708,1802 @@
     display: none;
 }
 
-.menu-score-pill {
-    min-width: 210px;
-    min-height: 92px;
-    width: auto;
-    border-radius: 46px;
-    padding: 12px 32px;
-    background-color: rgb(245, 247, 251);
-    border-width: 2px;
-    border-color: rgba(255, 255, 255, 0.9);
-    border-bottom-width: 8px;
-    border-bottom-color: rgb(213, 218, 227);
-}
-
-.menu-score-pill .coin-badge {
-    width: 56px;
-    height: 56px;
-    border-radius: 28px;
-}
-
-.menu-score-pill Label {
-    -unity-font-definition: url("../Fonts/Baloo2-ExtraBold.ttf");
-    font-size: 53px;
-    margin-left: 22px;
-    color: rgb(91, 55, 33);
-    -unity-text-outline-width: 0;
-}
-
 .button-depth__shadow--play {
     background-color: rgb(30, 190, 54);
 }
 
 #play-button {
     background-color: rgb(83, 224, 72);
+}
+
+/* ============================================================
+   Global run timer pass
+   ============================================================ */
+
+#top-bar {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+#top-left,
+#delivery-card,
+#timer-pill {
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    translate: 0 0;
+}
+
+#top-left,
+#delivery-card {
+    flex-shrink: 0;
+}
+
+#timer-pill {
+    display: none;
+    width: 330px;
+    min-height: 86px;
+    margin-left: 22px;
+    margin-right: 22px;
+    padding: 12px 20px;
+    flex-shrink: 0;
+    flex-direction: row;
+    align-items: center;
+    background-color: rgb(245, 247, 251);
+    border-width: 2px;
+    border-color: rgba(255, 255, 255, 0.9);
+    border-bottom-width: 8px;
+    border-bottom-color: rgb(213, 218, 227);
+    border-radius: 28px;
+}
+
+#timer-pill.timer--visible {
+    display: flex;
+}
+
+#timer-pill .clock-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 16px;
+    margin-right: 16px;
+    flex-shrink: 0;
+    background-color: rgb(115, 206, 255);
+    border-width: 0;
+    border-bottom-width: 6px;
+    border-bottom-color: rgb(72, 172, 223);
+}
+
+#timer-pill .clock-icon__hand {
+    width: 5px;
+    height: 15px;
+    border-radius: 3px;
+    translate: 0 -4px;
+}
+
+.global-timer__copy {
+    flex-grow: 1;
+    min-width: 0;
+    justify-content: center;
+}
+
+.global-timer__eyebrow {
+    -unity-font-definition: url("../../Kids Magazine.ttf");
+    font-size: 13px;
+    color: rgb(146, 120, 92);
+    -unity-text-outline-width: 0;
+    margin-bottom: -6px;
+}
+
+#timer-label {
+    -unity-font-definition: url("../../Kids Magazine.ttf");
+    font-size: 38px;
+    color: rgb(71, 55, 45);
+    -unity-text-outline-width: 0;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.timer-line {
+    width: 100%;
+    height: 10px;
+    border-radius: 5px;
+    background-color: rgba(71, 55, 45, 0.14);
+    margin-top: -6px;
+}
+
+.timer-line__fill {
+    height: 10px;
+    border-radius: 5px;
+    background-color: rgb(255, 197, 61);
+    transition-property: width;
+    transition-duration: 0.18s;
+    transition-timing-function: linear;
+}
+
+#timer-pill.timer--low #timer-label {
+    color: rgb(223, 91, 65);
+}
+
+#timer-pill.timer--low .clock-icon {
+    background-color: rgb(255, 127, 99);
+    border-bottom-color: rgb(223, 91, 65);
+}
+
+#timer-pill.timer--low .timer-line__fill {
+    background-color: rgb(223, 91, 65);
+}
+
+#speed-panel,
+#coins-pill,
+#delivery-card,
+#timer-pill {
+    transition-property: scale;
+    transition-duration: 0.34s;
+    transition-timing-function: ease-out-elastic;
+}
+
+/* ============================================================
+   Time-up arcade overlay
+   ============================================================ */
+
+#time-up-label {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 37%;
+    height: 180px;
+    -unity-font-definition: url("../../Kids Magazine.ttf");
+    font-size: 118px;
+    letter-spacing: 0;
+    color: rgb(255, 251, 166);
+    -unity-text-outline-width: 8px;
+    -unity-text-outline-color: rgb(79, 44, 36);
+    -unity-text-align: middle-center;
+    opacity: 0;
+    translate: 0 86px;
+    scale: 0.35 0.35;
+    rotate: -6deg;
+    transition-property: opacity, translate, scale, rotate;
+    transition-duration: 0.16s, 0.34s, 0.34s, 0.34s;
+    transition-timing-function: ease-out, ease-out-back, ease-out-back, ease-out-back;
+}
+
+/* ============================================================
+   Pause panel reference pass
+   ============================================================ */
+
+#pause-overlay {
+    background-color: rgba(34, 28, 24, 0.36);
+    align-items: center;
+    justify-content: center;
+}
+
+#pause-card,
+#settings-card {
+    width: 398px;
+    min-height: 0;
+    padding: 36px 34px 30px 34px;
+    border-radius: 34px;
+    background-color: rgb(245, 247, 251);
+    border-width: 2px;
+    border-color: rgba(255, 255, 255, 0.96);
+    border-bottom-width: 16px;
+    border-bottom-color: rgb(213, 218, 227);
+}
+
+#pause-card .menu-card__title,
+#settings-card .menu-card__title {
+    -unity-font-definition: url("../../Kids Magazine.ttf");
+    font-size: 40px;
+    color: rgb(71, 55, 45);
+    -unity-text-outline-width: 0;
+    -unity-text-align: middle-center;
+    margin-bottom: 28px;
+}
+
+#pause-card .button-depth--card,
+#settings-card .button-depth--card {
+    align-self: center;
+    width: 304px;
+    height: 84px;
+    margin-bottom: 14px;
+}
+
+#pause-card .button-depth--card .btn,
+#settings-card .button-depth--card .btn {
+    left: 0;
+    right: 0;
+    width: auto;
+    height: 70px;
+    min-height: 70px;
+    border-radius: 30px;
+    border-width: 0;
+    border-bottom-width: 2px;
+    border-bottom-color: rgba(255, 255, 255, 0.48);
+    padding: 0 20px;
+    -unity-font-definition: url("../../Kids Magazine.ttf");
+    font-size: 36px;
+    -unity-text-outline-width: 0;
+    -unity-text-align: middle-center;
+}
+
+#pause-card .button-depth--card .button-depth__shadow,
+#settings-card .button-depth--card .button-depth__shadow {
+    top: 12px;
+    height: 70px;
+    border-radius: 30px;
+}
+
+#pause-card .button-depth--green .btn,
+#settings-card .button-depth--green .btn {
+    background-color: rgb(119, 216, 103);
+    color: white;
+}
+
+#pause-card .button-depth__shadow--green,
+#settings-card .button-depth__shadow--green {
+    background-color: rgb(59, 161, 72);
+}
+
+#pause-card .button-depth--sky .btn {
+    background-color: rgb(111, 195, 239);
+    color: white;
+}
+
+#pause-card .button-depth__shadow--sky {
+    background-color: rgb(74, 158, 204);
+}
+
+#pause-card .button-depth--gold .btn {
+    background-color: rgb(255, 203, 71);
+    color: rgb(71, 55, 45);
+}
+
+#pause-card .button-depth__shadow--gold {
+    background-color: rgb(216, 169, 51);
+}
+
+#pause-card .button-depth--ghost .btn,
+#settings-card .button-depth--ghost .btn {
+    background-color: rgb(232, 236, 243);
+    color: rgb(71, 55, 45);
+}
+
+#pause-card .button-depth__shadow--ghost,
+#settings-card .button-depth__shadow--ghost {
+    background-color: rgb(191, 199, 212);
+}
+
+#settings-card {
+    width: 430px;
+}
+
+#settings-card .settings-row {
+    margin-bottom: 12px;
+}
+
+#settings-card .settings-row__label {
+    -unity-font-definition: url("../../Kids Magazine.ttf");
+    font-size: 22px;
+    color: rgb(71, 55, 45);
+    -unity-text-outline-width: 0;
+    margin-bottom: 4px;
+}
+
+#settings-card .volume-slider {
+    margin-bottom: 8px;
+}
+
+#settings-card .volume-slider .unity-base-slider__tracker {
+    height: 12px;
+    border-radius: 6px;
+    background-color: rgb(220, 225, 233);
+    border-width: 0;
+}
+
+#settings-card .volume-slider .unity-base-slider__dragger {
+    width: 36px;
+    height: 36px;
+    border-radius: 13px;
+    background-color: rgb(190, 198, 211);
+    border-width: 5px;
+    border-color: white;
+    margin-top: -18px;
+}
+
+/* ============================================================
+   Objective banner clarity pass
+   ============================================================ */
+
+#banner {
+    position: absolute;
+    top: 13%;
+    left: 5%;
+    right: 5%;
+    min-height: 124px;
+    padding: 18px 36px;
+    border-radius: 28px;
+    border-width: 8px;
+    border-color: rgb(255, 24, 18);
+    border-bottom-width: 16px;
+    border-bottom-color: rgb(176, 0, 0);
+    background-color: rgba(239, 32, 25, 0.88);
+    -unity-font-definition: url("../../Kids Magazine.ttf");
+    font-size: 64px;
+    letter-spacing: 0;
+    color: white;
+    -unity-text-outline-width: 4px;
+    -unity-text-outline-color: rgb(85, 36, 30);
+    -unity-text-align: middle-center;
+    opacity: 0;
+    translate: 0 92px;
+    scale: 0.18 0.18;
+    rotate: -10deg;
+    transition-property: opacity, translate, scale, rotate;
+    transition-duration: 0.08s, 0.26s, 0.26s, 0.26s;
+    transition-timing-function: ease-out, ease-out-back, ease-out-back, ease-out-back;
+}
+
+#banner.banner--show {
+    opacity: 1;
+    translate: 0 0;
+    scale: 1 1;
+    rotate: 0deg;
+}
+
+#pickup-banner,
+#deliver-banner,
+#exploded-banner {
+    position: absolute;
+    top: 110px;
+    left: 0;
+    right: 0;
+    height: 365px;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    translate: 0 92px;
+    scale: 0.18 0.18;
+    rotate: -10deg;
+    transition-property: opacity, translate, scale, rotate;
+    transition-duration: 0.08s, 0.26s, 0.26s, 0.26s;
+    transition-timing-function: ease-out, ease-out-back, ease-out-back, ease-out-back;
+}
+
+#pickup-banner-image,
+#deliver-banner-image,
+#exploded-banner-image {
+    width: 1092px;
+    height: 365px;
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+#pickup-banner-image {
+    background-image: url("../../deliver.png");
+}
+
+#deliver-banner-image {
+    background-image: url("../../deliverthepackage.png");
+}
+
+#exploded-banner-image {
+    background-image: url("../../packageexploded.png");
+}
+
+#pickup-banner.banner--show,
+#deliver-banner.banner--show,
+#exploded-banner.banner--show {
+    opacity: 1;
+    translate: 0 0;
+    scale: 1 1;
+    rotate: 0deg;
+}
+
+/* ============================================================
+   Main menu sound panel reference pass
+   ============================================================ */
+
+#menu-settings-overlay {
+    background-color: rgba(34, 28, 24, 0.36);
+    align-items: center;
+    justify-content: center;
+}
+
+#menu-settings-card {
+    width: 430px;
+    min-height: 0;
+    padding: 36px 34px 30px 34px;
+    border-radius: 34px;
+    background-color: rgb(245, 247, 251);
+    border-width: 2px;
+    border-color: rgba(255, 255, 255, 0.96);
+    border-bottom-width: 16px;
+    border-bottom-color: rgb(213, 218, 227);
+}
+
+#menu-settings-card .menu-card__title {
+    -unity-font-definition: url("../../Kids Magazine.ttf");
+    font-size: 40px;
+    color: rgb(71, 55, 45);
+    -unity-text-outline-width: 0;
+    -unity-text-align: middle-center;
+    margin-bottom: 28px;
+}
+
+#menu-settings-card .settings-row {
+    margin-bottom: 12px;
+}
+
+#menu-settings-card .settings-row__label {
+    -unity-font-definition: url("../../Kids Magazine.ttf");
+    font-size: 22px;
+    color: rgb(71, 55, 45);
+    -unity-text-outline-width: 0;
+    margin-bottom: 4px;
+}
+
+#menu-settings-card .volume-slider {
+    margin-bottom: 8px;
+}
+
+#menu-settings-card .volume-slider .unity-base-slider__tracker {
+    height: 12px;
+    border-radius: 6px;
+    background-color: rgb(220, 225, 233);
+    border-width: 0;
+}
+
+#menu-settings-card .volume-slider .unity-base-slider__dragger {
+    width: 36px;
+    height: 36px;
+    border-radius: 13px;
+    background-color: rgb(190, 198, 211);
+    border-width: 5px;
+    border-color: white;
+    margin-top: -18px;
+}
+
+#menu-settings-card .button-depth--card {
+    align-self: center;
+    width: 304px;
+    height: 84px;
+    margin-top: 6px;
+    margin-bottom: 0;
+}
+
+#menu-settings-card .button-depth--card .btn {
+    left: 0;
+    right: 0;
+    width: auto;
+    height: 70px;
+    min-height: 70px;
+    border-radius: 30px;
+    border-width: 0;
+    border-bottom-width: 2px;
+    border-bottom-color: rgba(255, 255, 255, 0.48);
+    padding: 0 20px;
+    -unity-font-definition: url("../../Kids Magazine.ttf");
+    font-size: 36px;
+    -unity-text-outline-width: 0;
+    -unity-text-align: middle-center;
+    background-color: rgb(232, 236, 243);
+    color: rgb(71, 55, 45);
+}
+
+#menu-settings-card .button-depth--card .button-depth__shadow {
+    top: 12px;
+    height: 70px;
+    border-radius: 30px;
+    background-color: rgb(191, 199, 212);
+}
+
+/* ============================================================
+   Shared coin PNG pass
+   ============================================================ */
+
+.coin-badge,
+.coin-icon {
+    background-image: url("../../coin.png");
+    -unity-background-scale-mode: scale-to-fit;
+    background-color: transparent;
+    border-width: 0;
+    border-bottom-width: 0;
+    border-radius: 0;
+}
+
+.coin-badge__ring,
+.coin-badge__ray,
+.coin-badge__glint,
+.coin-icon__inner,
+.coin-star {
+    display: none;
+}
+
+/* ============================================================
+   Kids Magazine compact type pass
+   ============================================================ */
+
+.btn {
+    font-size: 20px;
+}
+
+#play-button {
+    font-size: 62px;
+    padding: 14px 36px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.play-button__icon {
+    width: 46px;
+    height: 46px;
+    margin-right: 24px;
+    background-image: url("../Sprites/play-icon.svg");
+    -unity-background-scale-mode: scale-to-fit;
+    translate: 2px 0;
+}
+
+.play-button__label {
+    -unity-font-definition: url("../../Kids Magazine.ttf");
+    font-size: 62px;
+    color: white;
+    -unity-text-align: middle-center;
+    translate: 0 -1px;
+}
+
+#quit-button {
+    font-size: 34px;
+}
+
+#version-label {
+    font-size: 16px;
+}
+
+.stat-pill Label,
+#coins-label {
+    font-size: 30px;
+}
+
+.hud-progress-row Label {
+    font-size: 16px;
+}
+
+#deliveries-label {
+    font-size: 18px;
+}
+
+.delivery-copy__eyebrow,
+.global-timer__eyebrow {
+    font-size: 11px;
+}
+
+.delivery-copy__target {
+    font-size: 24px;
+}
+
+#timer-label {
+    font-size: 28px;
+}
+
+#speed-label {
+    font-size: 54px;
+}
+
+#speed-unit {
+    font-size: 16px;
+}
+
+#banner {
+    font-size: 46px;
+}
+
+#reward-toast {
+    font-size: 44px;
+}
+
+#time-up-label {
+    font-size: 84px;
+}
+
+#pause-card .menu-card__title,
+#settings-card .menu-card__title,
+#menu-settings-card .menu-card__title {
+    font-size: 30px;
+}
+
+#pause-card .button-depth--card .btn,
+#settings-card .button-depth--card .btn,
+#menu-settings-card .button-depth--card .btn {
+    font-size: 26px;
+}
+
+#settings-card .settings-row__label,
+#menu-settings-card .settings-row__label {
+    font-size: 16px;
+}
+
+/* ============================================================
+   Blue arcade HUD reference pass
+   ============================================================ */
+
+#safe-area {
+    padding: 24px 34px;
+}
+
+#top-bar {
+    min-height: 98px;
+    align-items: flex-start;
+}
+
+#top-left {
+    position: relative;
+    width: 190px;
+    height: 78px;
+    min-height: 78px;
+    padding: 8px 18px 8px 66px;
+    flex-direction: row;
+    align-items: center;
+    flex-shrink: 0;
+    border-radius: 24px;
+    background-color: rgb(18, 161, 224);
+    border-width: 4px;
+    border-color: rgb(194, 241, 255);
+    border-bottom-width: 7px;
+    border-bottom-color: rgb(0, 103, 174);
+}
+
+.button-depth--pause {
+    position: absolute;
+    left: -4px;
+    top: 3px;
+    width: 70px;
+    height: 76px;
+    margin-right: 0;
+    margin-bottom: 0;
+}
+
+.button-depth__shadow--pause {
+    top: 8px;
+    height: 64px;
+    border-radius: 32px;
+    background-color: rgb(176, 104, 21);
+}
+
+.button-depth--pause #pause-button {
+    width: 64px;
+    height: 64px;
+    border-radius: 32px;
+    background-color: rgb(255, 202, 49);
+    border-width: 4px;
+    border-color: rgb(255, 239, 109);
+    border-bottom-width: 4px;
+    border-bottom-color: rgb(213, 139, 23);
+}
+
+.pause-bar {
+    width: 7px;
+    height: 25px;
+    border-radius: 4px;
+    margin: 0 3px;
+    background-color: rgb(61, 72, 126);
+}
+
+#coins-pill {
+    min-width: 0;
+    min-height: 0;
+    height: 54px;
+    margin: 0;
+    padding: 0;
+    flex-direction: row;
+    align-items: center;
+    background-color: transparent;
+    border-width: 0;
+    border-bottom-width: 0;
+    border-radius: 0;
+}
+
+#coins-pill .coin-badge {
+    width: 42px;
+    height: 42px;
+    margin-right: 11px;
+    flex-shrink: 0;
+}
+
+#coins-label {
+    -unity-font-definition: url("../../Kids Magazine.ttf");
+    font-size: 38px;
+    letter-spacing: 0;
+    color: white;
+    margin-left: 0;
+    -unity-text-outline-width: 3px;
+    -unity-text-outline-color: rgb(17, 63, 135);
+}
+
+#timer-pill {
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    translate: 0 0;
+    display: none;
+    width: 326px;
+    height: 88px;
+    min-height: 88px;
+    margin-left: 18px;
+    margin-right: 18px;
+    padding: 8px 18px 8px 82px;
+    flex-shrink: 0;
+    flex-direction: row;
+    align-items: center;
+    border-radius: 24px;
+    background-color: rgb(19, 163, 226);
+    border-width: 4px;
+    border-color: rgb(194, 241, 255);
+    border-bottom-width: 7px;
+    border-bottom-color: rgb(0, 103, 174);
+}
+
+#timer-pill.timer--visible {
+    display: flex;
+}
+
+#timer-pill .clock-icon {
+    position: absolute;
+    left: 8px;
+    top: 8px;
+    width: 68px;
+    height: 68px;
+    border-radius: 34px;
+    margin-right: 0;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(54, 180, 239);
+    border-width: 4px;
+    border-color: white;
+    border-bottom-width: 6px;
+    border-bottom-color: rgb(0, 105, 177);
+}
+
+.clock-icon__face {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    border-radius: 25px;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(246, 252, 255);
+    border-width: 3px;
+    border-color: rgb(34, 124, 189);
+}
+
+.clock-icon__tick {
+    position: absolute;
+    width: 4px;
+    height: 8px;
+    border-radius: 2px;
+    background-color: rgb(47, 100, 165);
+}
+
+.clock-icon__tick--top {
+    left: 50%;
+    top: 5px;
+    margin-left: -2px;
+}
+
+.clock-icon__tick--right {
+    right: 5px;
+    top: 50%;
+    margin-top: -4px;
+    rotate: 90deg;
+}
+
+.clock-icon__tick--bottom {
+    left: 50%;
+    bottom: 5px;
+    margin-left: -2px;
+}
+
+.clock-icon__tick--left {
+    left: 5px;
+    top: 50%;
+    margin-top: -4px;
+    rotate: 90deg;
+}
+
+#timer-pill .clock-icon__hand {
+    position: absolute;
+    left: 50%;
+    bottom: 50%;
+    width: 5px;
+    height: 17px;
+    margin-left: -2px;
+    border-radius: 3px;
+    translate: 0 0;
+    rotate: 38deg;
+    transform-origin: 50% 100%;
+    background-color: rgb(47, 77, 141);
+}
+
+.clock-icon__pin {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 9px;
+    height: 9px;
+    margin-left: -4px;
+    margin-top: -4px;
+    border-radius: 5px;
+    background-color: rgb(255, 202, 49);
+    border-width: 2px;
+    border-color: rgb(47, 77, 141);
+}
+
+.global-timer__copy {
+    flex-grow: 1;
+    min-width: 0;
+    justify-content: center;
+}
+
+.global-timer__eyebrow {
+    -unity-font-definition: url("../../Kids Magazine.ttf");
+    font-size: 12px;
+    letter-spacing: 0;
+    color: white;
+    -unity-text-outline-width: 1.5px;
+    -unity-text-outline-color: rgb(17, 63, 135);
+    margin-bottom: -6px;
+}
+
+#timer-label {
+    -unity-font-definition: url("../../Kids Magazine.ttf");
+    font-size: 42px;
+    letter-spacing: 0;
+    color: white;
+    -unity-text-outline-width: 3px;
+    -unity-text-outline-color: rgb(17, 63, 135);
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: -3px;
+}
+
+.timer-line {
+    position: relative;
+    width: 100%;
+    height: 18px;
+    border-radius: 9px;
+    overflow: hidden;
+    margin-top: -4px;
+    background-color: rgb(0, 106, 177);
+    border-width: 2px;
+    border-color: rgb(0, 90, 155);
+}
+
+.timer-line__fill {
+    position: absolute;
+    left: 2px;
+    top: 2px;
+    height: 12px;
+    border-radius: 7px;
+    background-color: rgb(255, 202, 49);
+    border-width: 2px;
+    border-color: rgb(255, 238, 91);
+    border-bottom-width: 3px;
+    border-bottom-color: rgb(218, 138, 14);
+    transition-property: width;
+    transition-duration: 0.18s;
+    transition-timing-function: linear;
+}
+
+.timer-line__divider {
+    position: absolute;
+    top: 2px;
+    width: 4px;
+    height: 14px;
+    border-radius: 2px;
+    background-color: rgb(0, 106, 177);
+}
+
+.timer-line__divider--1 {
+    left: 20%;
+}
+
+.timer-line__divider--2 {
+    left: 40%;
+}
+
+.timer-line__divider--3 {
+    left: 60%;
+}
+
+.timer-line__divider--4 {
+    left: 80%;
+}
+
+#timer-pill.timer--low {
+    background-color: rgb(232, 72, 61);
+    border-color: rgb(255, 218, 143);
+    border-bottom-color: rgb(169, 42, 38);
+}
+
+#timer-pill.timer--low #timer-label,
+#timer-pill.timer--low .global-timer__eyebrow {
+    color: white;
+    -unity-text-outline-color: rgb(121, 36, 47);
+}
+
+#timer-pill.timer--low .clock-icon {
+    background-color: rgb(255, 189, 55);
+    border-bottom-color: rgb(183, 82, 34);
+}
+
+#timer-pill.timer--low .timer-line {
+    background-color: rgb(134, 37, 50);
+    border-color: rgb(111, 31, 45);
+}
+
+#timer-pill.timer--low .timer-line__fill {
+    background-color: rgb(255, 230, 72);
+    border-color: rgb(255, 244, 127);
+    border-bottom-color: rgb(210, 128, 18);
+}
+
+#delivery-card {
+    width: 286px;
+    height: 88px;
+    min-height: 88px;
+    padding: 10px 18px;
+    border-radius: 24px;
+    flex-shrink: 0;
+    background-color: rgb(19, 163, 226);
+    border-width: 4px;
+    border-color: rgb(194, 241, 255);
+    border-bottom-width: 7px;
+    border-bottom-color: rgb(0, 103, 174);
+}
+
+#delivery-card .package-icon--large {
+    width: 56px;
+    height: 56px;
+    border-radius: 18px;
+    margin-right: 14px;
+    background-color: rgb(255, 202, 49);
+    border-bottom-color: rgb(213, 139, 23);
+}
+
+.delivery-copy__eyebrow {
+    font-size: 11px;
+    letter-spacing: 0;
+    color: white;
+    -unity-text-outline-width: 1.5px;
+    -unity-text-outline-color: rgb(17, 63, 135);
+}
+
+.delivery-copy__target {
+    font-size: 24px;
+    letter-spacing: 0;
+    color: white;
+    -unity-text-outline-width: 2px;
+    -unity-text-outline-color: rgb(17, 63, 135);
+    margin-top: 0;
+}
+
+/* ============================================================
+   HUD top-row layout pass
+   ============================================================ */
+
+#safe-area {
+    padding: 16px 28px;
+}
+
+#top-bar {
+    min-height: 112px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+#top-left {
+    width: 246px;
+    height: 96px;
+    min-height: 96px;
+    padding: 10px 24px 10px 84px;
+    border-radius: 28px;
+    border-width: 5px;
+    border-color: rgb(202, 243, 255);
+    border-bottom-width: 8px;
+    border-bottom-color: rgb(0, 95, 167);
+    background-color: rgb(18, 159, 224);
+}
+
+.button-depth--pause {
+    left: -5px;
+    top: 5px;
+    width: 86px;
+    height: 90px;
+}
+
+.button-depth__shadow--pause {
+    top: 10px;
+    height: 76px;
+    border-radius: 38px;
+    background-color: rgb(178, 106, 22);
+}
+
+.button-depth--pause #pause-button {
+    width: 76px;
+    height: 76px;
+    border-radius: 38px;
+    border-width: 5px;
+    border-color: rgb(255, 239, 108);
+    border-bottom-width: 5px;
+    border-bottom-color: rgb(213, 139, 23);
+}
+
+.pause-bar {
+    width: 8px;
+    height: 31px;
+    border-radius: 4px;
+    margin: 0 4px;
+}
+
+#coins-pill {
+    height: 68px;
+    flex-grow: 1;
+    justify-content: center;
+}
+
+#coins-pill .coin-badge {
+    width: 52px;
+    height: 52px;
+    margin-right: 14px;
+}
+
+#coins-label {
+    font-size: 48px;
+    -unity-text-outline-width: 4px;
+    -unity-text-outline-color: rgb(17, 63, 135);
+}
+
+#timer-pill {
+    width: 440px;
+    height: 108px;
+    min-height: 108px;
+    margin-left: auto;
+    margin-right: 0;
+    padding: 10px 24px 10px 112px;
+    border-radius: 29px;
+    border-width: 5px;
+    border-color: rgb(202, 243, 255);
+    border-bottom-width: 8px;
+    border-bottom-color: rgb(0, 95, 167);
+    background-color: rgb(18, 159, 224);
+}
+
+#timer-pill .clock-icon {
+    left: 12px;
+    top: 11px;
+    width: 84px;
+    height: 84px;
+    border-radius: 42px;
+    border-width: 5px;
+    border-bottom-width: 7px;
+}
+
+.clock-icon__face {
+    width: 62px;
+    height: 62px;
+    border-radius: 31px;
+    border-width: 4px;
+}
+
+.clock-icon__tick {
+    width: 5px;
+    height: 10px;
+}
+
+.clock-icon__tick--top {
+    top: 6px;
+    margin-left: -2px;
+}
+
+.clock-icon__tick--right {
+    right: 6px;
+    margin-top: -5px;
+}
+
+.clock-icon__tick--bottom {
+    bottom: 6px;
+    margin-left: -2px;
+}
+
+.clock-icon__tick--left {
+    left: 6px;
+    margin-top: -5px;
+}
+
+#timer-pill .clock-icon__hand {
+    width: 6px;
+    height: 22px;
+    margin-left: -3px;
+}
+
+.clock-icon__pin {
+    width: 11px;
+    height: 11px;
+    margin-left: -5px;
+    margin-top: -5px;
+    border-radius: 6px;
+}
+
+.global-timer__copy {
+    height: 86px;
+}
+
+.global-timer__eyebrow {
+    font-size: 14px;
+    margin-bottom: -8px;
+}
+
+#timer-label {
+    font-size: 56px;
+    margin-top: -5px;
+    -unity-text-outline-width: 4px;
+}
+
+.timer-line {
+    height: 22px;
+    border-radius: 11px;
+    margin-top: -6px;
+    border-width: 3px;
+}
+
+.timer-line__fill {
+    top: 2px;
+    left: 2px;
+    height: 16px;
+    border-radius: 9px;
+    border-width: 2px;
+    border-bottom-width: 4px;
+}
+
+.timer-line__divider {
+    top: 3px;
+    width: 5px;
+    height: 16px;
+    border-radius: 3px;
+}
+
+#delivery-card {
+    display: none;
+}
+
+/* ============================================================
+   HUD polish correction pass
+   Measured against Unity Play Mode screenshot: keep the panels
+   compact but give every text row a fixed lane so nothing clips.
+   ============================================================ */
+
+#safe-area {
+    padding: 14px 22px;
+}
+
+#top-bar {
+    min-height: 118px;
+    align-items: flex-start;
+}
+
+#top-left {
+    width: 268px;
+    height: 88px;
+    min-height: 88px;
+    padding: 8px 20px 8px 84px;
+    border-radius: 27px;
+    border-width: 5px;
+    border-color: rgb(205, 244, 255);
+    border-bottom-width: 8px;
+    border-bottom-color: rgb(0, 91, 165);
+    background-color: rgb(22, 162, 226);
+}
+
+.button-depth--pause {
+    left: -3px;
+    top: 4px;
+    width: 82px;
+    height: 84px;
+}
+
+.button-depth__shadow--pause {
+    top: 9px;
+    height: 72px;
+    border-radius: 36px;
+}
+
+.button-depth--pause #pause-button {
+    width: 72px;
+    height: 72px;
+    border-radius: 36px;
+}
+
+.pause-bar {
+    width: 8px;
+    height: 28px;
+    margin: 0 4px;
+}
+
+#coins-pill {
+    width: 156px;
+    height: 64px;
+    flex-grow: 0;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+#coins-pill .coin-badge {
+    width: 48px;
+    height: 48px;
+    margin-right: 13px;
+}
+
+#coins-label {
+    min-width: 86px;
+    height: 58px;
+    font-size: 44px;
+    -unity-text-align: middle-left;
+    -unity-text-outline-width: 4px;
+}
+
+#timer-pill {
+    width: 392px;
+    height: 104px;
+    min-height: 104px;
+    margin-left: auto;
+    margin-right: 0;
+    padding: 8px 22px 10px 104px;
+    border-radius: 28px;
+    border-width: 5px;
+    border-bottom-width: 8px;
+}
+
+#timer-pill .clock-icon {
+    left: 11px;
+    top: 10px;
+    width: 80px;
+    height: 80px;
+    border-radius: 40px;
+}
+
+.clock-icon__face {
+    width: 58px;
+    height: 58px;
+    border-radius: 29px;
+}
+
+.global-timer__copy {
+    height: 84px;
+    align-items: stretch;
+    justify-content: center;
+}
+
+.global-timer__eyebrow {
+    height: 16px;
+    font-size: 13px;
+    margin-bottom: -2px;
+    -unity-text-align: middle-center;
+}
+
+#timer-label {
+    height: 48px;
+    font-size: 48px;
+    margin-top: -2px;
+    margin-bottom: -1px;
+    -unity-text-align: middle-center;
+    -unity-text-outline-width: 4px;
+}
+
+.timer-line {
+    width: 100%;
+    height: 18px;
+    min-height: 18px;
+    margin-top: 0;
+    border-radius: 9px;
+    border-width: 3px;
+}
+
+.timer-line__fill {
+    top: 2px;
+    left: 2px;
+    height: 12px;
+    min-height: 12px;
+    border-radius: 7px;
+    border-width: 2px;
+    border-bottom-width: 3px;
+}
+
+.timer-line__divider {
+    top: 3px;
+    width: 4px;
+    height: 12px;
+}
+
+/* ============================================================
+   Timer lane fix
+   Use absolute lanes inside the blue timer so the tall Kids
+   Magazine glyphs cannot overlap the label or the progress bar.
+   ============================================================ */
+
+#timer-pill {
+    width: 410px;
+    height: 122px;
+    min-height: 122px;
+    padding: 10px 24px 10px 112px;
+    border-radius: 30px;
+}
+
+#timer-pill .clock-icon {
+    left: 12px;
+    top: 14px;
+    width: 86px;
+    height: 86px;
+    border-radius: 43px;
+}
+
+.clock-icon__face {
+    width: 62px;
+    height: 62px;
+    border-radius: 31px;
+}
+
+.global-timer__copy {
+    position: relative;
+    height: 100px;
+    flex-grow: 1;
+    min-width: 0;
+    justify-content: flex-start;
+}
+
+.global-timer__eyebrow {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 1px;
+    height: 14px;
+    font-size: 10px;
+    margin-bottom: 0;
+    -unity-text-align: middle-center;
+}
+
+#timer-label {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 27px;
+    height: 44px;
+    font-size: 40px;
+    margin-top: 0;
+    margin-bottom: 0;
+    -unity-text-align: middle-center;
+    translate: 0 0;
+}
+
+.timer-line {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 10px;
+    width: auto;
+    height: 19px;
+    min-height: 19px;
+    margin-top: 0;
+}
+
+.timer-line__fill {
+    top: 3px;
+    left: 3px;
+    height: 11px;
+    min-height: 11px;
+}
+
+.timer-line__divider {
+    top: 4px;
+    height: 11px;
+}
+
+/* ============================================================
+   Text speedometer pass
+   The dial is gone — the readout is a big number in a clean white
+   pill (matches the HUD sections). HudController ramps its colour
+   green -> amber -> red with speed and vibrates the whole pill
+   around Z as it nears top speed (see UpdateSpeed). Fixed width so
+   the digit count never reflows the layout.
+   ============================================================ */
+
+#speed-panel {
+    position: relative;
+    width: 216px;
+    min-width: 216px;
+    height: 168px;
+    min-height: 168px;
+    margin-left: 0;
+    padding: 16px 22px 18px 22px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-image: none;
+    background-color: rgb(245, 247, 251);
+    border-width: 3px;
+    border-color: rgba(255, 255, 255, 0.95);
+    border-bottom-width: 9px;
+    border-bottom-color: rgb(213, 218, 227);
+    border-radius: 36px;
+}
+
+/* Fixed lane so a changing digit count never re-measures the label and
+   nudges KM/H. Colour is overridden every frame from C#; this is the rest. */
+#speed-panel #speed-label {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: 100%;
+    height: 96px;
+    margin: 0;
+    -unity-font-definition: url("../../Kids Magazine.ttf");
+    font-size: 66px;
+    color: rgb(60, 165, 75);
+    -unity-text-align: middle-center;
+    -unity-text-outline-width: 0;
+}
+
+#speed-panel #speed-unit {
+    -unity-font-definition: url("../../Kids Magazine.ttf");
+    height: 26px;
+    font-size: 22px;
+    letter-spacing: 0;
+    color: rgb(146, 120, 92);
+    -unity-text-align: middle-center;
+    -unity-text-outline-width: 0;
+    margin-top: 12px;
+    margin-bottom: 0;
+    margin-left: 0;
+}
+
+/* red-hot frame while flat out */
+#speed-panel.speed--fast {
+    border-color: rgb(255, 208, 202);
+    border-bottom-color: rgb(223, 91, 65);
+}
+
+/* The whole pill pops (PopPanel .panel-pop) — the number must NOT scale on
+   its own (older passes set scale:1.16 here), or it spills out of the pill. */
+#speed-panel.speed--fast #speed-label {
+    scale: 1 1;
+}
+
+/* ============================================================
+   Clean HUD pass — match the main menu's sections + buttons.
+   Everything becomes the light "candy" system: #F5F7FB panels
+   with a white sticker border, a soft gray depth ledge, warm
+   dark text and colored accent icons. Replaces the earlier blue
+   arcade treatment. This is the last pass, so it wins the cascade.
+   Layout lanes (fixed heights, absolute timer lanes) are kept.
+   ============================================================ */
+
+#safe-area {
+    padding: 22px 32px;
+}
+
+#top-bar {
+    min-height: 132px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+/* ---------- top-left: pause button + coins pill, side by side ---------- */
+
+#top-left {
+    position: relative;
+    width: auto;
+    min-width: 0;
+    height: 90px;
+    min-height: 90px;
+    padding: 0;
+    background-color: rgba(0, 0, 0, 0);
+    border-width: 0;
+    border-radius: 0;
+    flex-direction: row;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+/* pause: chunky light icon button (menu icon-btn style) */
+.button-depth--pause {
+    position: relative;
+    left: auto;
+    top: auto;
+    align-self: center;
+    width: 88px;
+    height: 90px;
+    margin-right: 14px;
+    margin-bottom: 0;
+}
+
+.button-depth__shadow--pause {
+    top: 9px;
+    height: 78px;
+    border-radius: 26px;
+    background-color: rgb(213, 218, 227);
+}
+
+.button-depth--pause #pause-button {
+    width: 88px;
+    height: 78px;
+    border-radius: 26px;
+    background-color: rgb(245, 247, 251);
+    border-width: 3px;
+    border-color: rgba(255, 255, 255, 0.95);
+    border-bottom-width: 2px;
+    border-bottom-color: rgba(255, 255, 255, 0.6);
+}
+
+.pause-bar {
+    width: 9px;
+    height: 32px;
+    border-radius: 4px;
+    margin: 0 4px;
+    background-color: rgb(71, 55, 45);
+}
+
+/* coins: fully-round white pill with gold coin badge + dark number */
+#coins-pill {
+    width: auto;
+    min-width: 150px;
+    height: 84px;
+    min-height: 84px;
+    flex-grow: 0;
+    flex-shrink: 0;
+    padding: 8px 26px 8px 14px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: rgb(245, 247, 251);
+    border-width: 3px;
+    border-color: rgba(255, 255, 255, 0.95);
+    border-bottom-width: 9px;
+    border-bottom-color: rgb(213, 218, 227);
+    border-radius: 42px;
+}
+
+#coins-pill .coin-badge {
+    width: 54px;
+    height: 54px;
+    margin-right: 12px;
+    flex-shrink: 0;
+}
+
+#coins-label {
+    min-width: 0;
+    height: auto;
+    font-size: 44px;
+    letter-spacing: 0;
+    color: rgb(71, 55, 45);
+    margin-left: 0;
+    -unity-text-align: middle-left;
+    -unity-text-outline-width: 0;
+}
+
+/* ---------- top-right: global run timer as a white section ---------- */
+
+#timer-pill {
+    width: 420px;
+    height: 122px;
+    min-height: 122px;
+    margin-left: auto;
+    margin-right: 0;
+    padding: 12px 26px 12px 114px;
+    flex-shrink: 0;
+    flex-direction: row;
+    align-items: center;
+    background-color: rgb(245, 247, 251);
+    border-width: 3px;
+    border-color: rgba(255, 255, 255, 0.95);
+    border-bottom-width: 9px;
+    border-bottom-color: rgb(213, 218, 227);
+    border-radius: 34px;
+}
+
+/* the clock stays a blue accent icon (like the menu's gold badges) */
+#timer-pill .clock-icon {
+    left: 14px;
+    top: 15px;
+    width: 88px;
+    height: 88px;
+    border-radius: 44px;
+    background-color: rgb(54, 180, 239);
+    border-width: 4px;
+    border-color: white;
+    border-bottom-width: 6px;
+    border-bottom-color: rgb(0, 105, 177);
+}
+
+.global-timer__eyebrow {
+    color: rgb(146, 120, 92);
+    -unity-text-outline-width: 0;
+}
+
+#timer-label {
+    color: rgb(71, 55, 45);
+    -unity-text-outline-width: 0;
+}
+
+/* progress bar: light groove, gold fill */
+.timer-line {
+    background-color: rgb(224, 229, 237);
+    border-width: 2px;
+    border-color: rgb(210, 216, 226);
+}
+
+.timer-line__fill {
+    background-color: rgb(255, 197, 61);
+    border-color: rgb(255, 232, 150);
+    border-bottom-color: rgb(224, 165, 38);
+}
+
+.timer-line__divider {
+    background-color: rgb(213, 218, 227);
+}
+
+/* low-time warning: keep the white pill, turn text + fill coral */
+#timer-pill.timer--low {
+    background-color: rgb(245, 247, 251);
+    border-color: rgba(255, 255, 255, 0.95);
+    border-bottom-color: rgb(213, 218, 227);
+}
+
+#timer-pill.timer--low #timer-label,
+#timer-pill.timer--low .global-timer__eyebrow {
+    color: rgb(223, 91, 65);
+    -unity-text-outline-width: 0;
+}
+
+#timer-pill.timer--low .clock-icon {
+    background-color: rgb(255, 127, 99);
+    border-bottom-color: rgb(223, 91, 65);
+}
+
+#timer-pill.timer--low .timer-line {
+    background-color: rgb(247, 224, 221);
+    border-color: rgb(240, 208, 204);
+}
+
+#timer-pill.timer--low .timer-line__fill {
+    background-color: rgb(232, 72, 61);
+    border-color: rgb(255, 158, 148);
+    border-bottom-color: rgb(180, 42, 40);
+}
+
+/* ============================================================
+   Unified coin pill component (shared: HUD + main menu)
+   One capsule — gold coin badge + count — reused on both screens.
+   Width is auto so it grows from a single digit to a multi-digit
+   total; min-width keeps short values still reading as a pill.
+   Base size is the in-game HUD; .coin-pill--menu scales the whole
+   thing up (bigger badge + font) for the main menu. Last pass, so
+   it wins the cascade over the per-screen rules above.
+   ============================================================ */
+
+#coins-pill,
+.coin-pill {
+    width: auto;
+    min-width: 190px;
+    height: 84px;
+    min-height: 84px;
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 34px 8px 22px;
+    background-color: rgb(245, 247, 251);
+    border-width: 3px;
+    border-color: rgba(255, 255, 255, 0.95);
+    border-bottom-width: 9px;
+    border-bottom-color: rgb(213, 218, 227);
+    border-radius: 46px;
+}
+
+#coins-pill .coin-badge,
+.coin-pill .coin-badge {
+    width: 54px;
+    height: 54px;
+    margin-right: 14px;
+    flex-shrink: 0;
+}
+
+#coins-label,
+.coin-pill__label {
+    min-width: 0;
+    height: auto;
+    -unity-font-definition: url("../../Kids Magazine.ttf");
+    font-size: 44px;
+    letter-spacing: 0;
+    color: rgb(71, 55, 45);
+    margin-left: 0;
+    -unity-text-align: middle-left;
+    -unity-text-outline-width: 0;
+}
+
+/* ---------- main menu: same capsule, scaled up ---------- */
+
+.coin-pill--menu {
+    min-width: 250px;
+    height: 112px;
+    min-height: 112px;
+    padding: 10px 44px 10px 30px;
+    border-bottom-width: 10px;
+    border-radius: 60px;
+}
+
+.coin-pill--menu .coin-badge {
+    width: 76px;
+    height: 76px;
+    margin-right: 20px;
+}
+
+.coin-pill--menu .coin-pill__label {
+    font-size: 64px;
+}
+
+/* ============================================================
+   Timer heartbeat pass
+   The low-time pulse now scales the WHOLE pill (from C#), not the
+   digits (which used to spill out). It's driven per-frame, so the
+   pill's scale must be instant — the shared elastic scale
+   transition would damp the pulse to nothing. Last pass, wins.
+   ============================================================ */
+
+#timer-pill {
+    transition-property: scale;
+    transition-duration: 0s;
+    transform-origin: 50% 50%;
+}
+
+/* ============================================================
+   Timer spacing pass
+   The progress bar was jammed right under the digits. Give the
+   pill a little more height and drop the bar into its own lane
+   with clear air below the number. Absolute lanes inside
+   .global-timer__copy: eyebrow (top), number, then the bar. Last
+   pass, wins the cascade.
+   ============================================================ */
+
+#top-bar {
+    min-height: 140px;
+}
+
+#timer-pill {
+    height: 132px;
+    min-height: 132px;
+    padding: 10px 26px 10px 114px;
+}
+
+#timer-pill .clock-icon {
+    top: 20px;
+}
+
+.global-timer__copy {
+    height: 108px;
+}
+
+#timer-label {
+    top: 20px;
+}
+
+.timer-line {
+    top: 86px;
+    bottom: auto;
 }

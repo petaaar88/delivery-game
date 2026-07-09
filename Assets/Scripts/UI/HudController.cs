@@ -10,20 +10,27 @@ using UnityEngine.UIElements;
 public class HudController : MonoBehaviour
 {
     const float LowTimeThreshold = 10f;
+    const string PickupBannerText = "PICK UP A PACKAGE!";
+    const string DeliverBannerText = "DELIVER THE PACKAGE!";
+    const string ExplodedBannerText = "PACKAGE EXPLODED!";
+    const float PickupBannerAspect = 2170f / 725f;
+    const float DeliverBannerAspect = 2172f / 724f;
+    const float ExplodedBannerAspect = 2172f / 724f;
+    const float ImageBannerMaxWidth = 1092f;
+    const float ImageBannerWidthRatio = 0.952f;
 
     // Speedometer tuning.
-    const float SpeedSmoothTime = 0.14f;   // seconds; higher = calmer needle/number
-    const float GaugeMaxSpeed = 160f;      // km/h at which the needle is fully swept
-    const float NeedleMinAngle = -120f;    // needle angle at 0 km/h
-    const float NeedleMaxAngle = 120f;     // needle angle at GaugeMaxSpeed
+    const float SpeedSmoothTime = 0.14f;   // seconds; higher = calmer number
+    const float GaugeMaxSpeed = 160f;      // km/h treated as "top speed" for colour + shake
+    const float ShakeStartSpeed = 90f;     // km/h where the number starts to vibrate
     const float FastEnterSpeed = 115f;     // km/h that triggers the speed pop
     const float FastExitSpeed = 100f;      // km/h to drop out of it (hysteresis)
     const int DeliveriesGoal = 10;         // deliveries per run (shown as X / goal)
 
-    // Gauge ring colour ramp: calm green -> gold -> hot red.
-    static readonly Color GaugeGreen = new Color(0.474f, 0.847f, 0.435f);
-    static readonly Color GaugeGold = new Color(1f, 0.773f, 0.239f);
-    static readonly Color GaugeRed = new Color(0.910f, 0.333f, 0.357f);
+    // Speed number colour ramp (tuned to read on the light pill): green -> amber -> red.
+    static readonly Color SpeedSlow = new Color(0.235f, 0.647f, 0.294f);
+    static readonly Color SpeedMid = new Color(0.910f, 0.573f, 0.078f);
+    static readonly Color SpeedFast = new Color(0.878f, 0.227f, 0.188f);
 
     // Bright, candy-coloured confetti pieces.
     static readonly Color[] ConfettiColors =
@@ -59,14 +66,19 @@ public class HudController : MonoBehaviour
     Label _speedLabel;
     Label _banner;
     Label _rewardToast;
+    Label _timeUpLabel;
     VisualElement _root;
+    VisualElement _activeBanner;
+    VisualElement _pickupBanner;
+    VisualElement _pickupBannerImage;
+    VisualElement _deliverBanner;
+    VisualElement _deliverBannerImage;
+    VisualElement _explodedBanner;
+    VisualElement _explodedBannerImage;
     VisualElement _timerPill;
-    VisualElement _needle;
-    VisualElement _gauge;
     VisualElement _speedPanel;
     VisualElement _coinsPill;
     VisualElement _coinBadge;
-    VisualElement _deliveryCard;
     VisualElement _routeFill;
     VisualElement _timerFill;
 
@@ -75,7 +87,13 @@ public class HudController : MonoBehaviour
     bool _fast;
 
     IVisualElementScheduledItem _bannerHide;
+    IVisualElementScheduledItem _bannerPunch;
+    IVisualElementScheduledItem _bannerSettle;
+    IVisualElementScheduledItem _bannerKick;
+    IVisualElementScheduledItem _bannerRest;
     IVisualElementScheduledItem _toastHide;
+    IVisualElementScheduledItem _timeUpEnter;
+    IVisualElementScheduledItem _timeUpSettle;
 
     void OnEnable()
     {
@@ -87,14 +105,18 @@ public class HudController : MonoBehaviour
         _timerLabel = root.Q<Label>("timer-label");
         _speedLabel = root.Q<Label>("speed-label");
         _banner = root.Q<Label>("banner");
+        _pickupBanner = root.Q("pickup-banner");
+        _pickupBannerImage = root.Q("pickup-banner-image");
+        _deliverBanner = root.Q("deliver-banner");
+        _deliverBannerImage = root.Q("deliver-banner-image");
+        _explodedBanner = root.Q("exploded-banner");
+        _explodedBannerImage = root.Q("exploded-banner-image");
         _rewardToast = root.Q<Label>("reward-toast");
+        _timeUpLabel = root.Q<Label>("time-up-label");
         _timerPill = root.Q("timer-pill");
-        _needle = root.Q("speed-needle");
-        _gauge = root.Q("speed-gauge");
         _speedPanel = root.Q("speed-panel");
         _coinsPill = root.Q("coins-pill");
         _coinBadge = _coinsPill?.Q(className: "coin-badge");
-        _deliveryCard = root.Q("delivery-card");
         _routeFill = root.Q("route-fill");
         _timerFill = root.Q("timer-fill");
 
@@ -103,6 +125,7 @@ public class HudController : MonoBehaviour
             _routeFill.style.width = Length.Percent(0f);
         if (_timerFill != null)
             _timerFill.style.width = Length.Percent(0f);
+        _timerPill?.AddToClassList("timer--visible");
         if (_deliveriesLabel != null)
             _deliveriesLabel.text = $"0/{DeliveriesGoal}";
 
@@ -110,6 +133,7 @@ public class HudController : MonoBehaviour
         GameSession.OnDeliveriesChanged += HandleDeliveriesChanged;
         GameSession.OnDeliveryRewarded += HandleDeliveryRewarded;
         GameSession.OnDeliveryFailedPenalty += HandleDeliveryFailedPenalty;
+        GameSession.OnTimeExpired += HandleTimeExpired;
         DeliveryManager.OnDeliveryStarted += HandleDeliveryStarted;
         DeliveryManager.OnDeliveryZoneEntered += HandleZoneEntered;
         DeliveryManager.OnDeliveryZoneExited += HandleZoneExited;
@@ -124,17 +148,21 @@ public class HudController : MonoBehaviour
         GameSession.OnDeliveriesChanged -= HandleDeliveriesChanged;
         GameSession.OnDeliveryRewarded -= HandleDeliveryRewarded;
         GameSession.OnDeliveryFailedPenalty -= HandleDeliveryFailedPenalty;
+        GameSession.OnTimeExpired -= HandleTimeExpired;
         DeliveryManager.OnDeliveryStarted -= HandleDeliveryStarted;
         DeliveryManager.OnDeliveryZoneEntered -= HandleZoneEntered;
         DeliveryManager.OnDeliveryZoneExited -= HandleZoneExited;
         DeliveryManager.OnDeliveryTriggered -= HandleDeliveryTriggered;
         DeliveryManager.OnDeliveryCompleted -= HandleDeliveryCompleted;
         DeliveryManager.OnDeliveryFailed -= HandleDeliveryFailed;
+
+        PauseBannerAnimation();
+        PauseTimeUpAnimation();
     }
 
     void Start()
     {
-        ShowBanner("PICK UP A PACKAGE!", 3f);
+        ShowBanner(PickupBannerText, 4f);
     }
 
     void Update()
@@ -161,32 +189,38 @@ public class HudController : MonoBehaviour
         _displaySpeed = Mathf.SmoothDamp(_displaySpeed, target, ref _speedVelocity,
             SpeedSmoothTime, Mathf.Infinity, Time.unscaledDeltaTime);
 
-        _speedLabel.text = Mathf.RoundToInt(_displaySpeed).ToString();
-
-        float fill = Mathf.Clamp01(_displaySpeed / GaugeMaxSpeed);
-
-        if (_needle != null)
+        if (_speedLabel != null)
         {
-            float angle = Mathf.Lerp(NeedleMinAngle, NeedleMaxAngle, fill);
-            _needle.style.rotate = new StyleRotate(new Rotate(new Angle(angle, AngleUnit.Degree)));
-        }
-
-        if (_gauge != null)
-        {
-            Color ring = SpeedZoneColor(_displaySpeed);
-            _gauge.style.borderTopColor = ring;
-            _gauge.style.borderRightColor = ring;
-            _gauge.style.borderBottomColor = ring;
-            _gauge.style.borderLeftColor = ring;
+            _speedLabel.text = Mathf.RoundToInt(_displaySpeed).ToString();
+            _speedLabel.style.color = SpeedTextColor(_displaySpeed);
         }
 
         if (_speedPanel != null)
         {
+            // The number vibrates around Z (with a little jitter) as it nears top
+            // speed — 0 below ShakeStartSpeed, full at GaugeMaxSpeed.
+            float shake = Mathf.Clamp01(Mathf.InverseLerp(ShakeStartSpeed, GaugeMaxSpeed, _displaySpeed));
+            if (shake > 0f)
+            {
+                float t = Time.unscaledTime;
+                float rot = Mathf.Sin(t * 46f) * 6f * shake;
+                float dx = Mathf.Sin(t * 63f) * 3.5f * shake;
+                float dy = Mathf.Cos(t * 57f) * 3.5f * shake;
+                _speedPanel.style.rotate = new StyleRotate(new Rotate(new Angle(rot, AngleUnit.Degree)));
+                _speedPanel.style.translate = new StyleTranslate(new Translate(dx, dy));
+            }
+            else
+            {
+                _speedPanel.style.rotate = new StyleRotate(new Rotate(new Angle(0f, AngleUnit.Degree)));
+                _speedPanel.style.translate = new StyleTranslate(new Translate(0f, 0f));
+            }
+
+            // Crossing into "fast": red-hot frame, a spark burst and a pop (hysteresis out).
             if (!_fast && _displaySpeed >= FastEnterSpeed)
             {
                 _fast = true;
                 _speedPanel.AddToClassList("speed--fast");
-                SpawnSparks(_gauge, 14, 110f, SpeedSparkColors);
+                SpawnSparks(_speedLabel, 14, 96f, SpeedSparkColors);
                 PopPanel(_speedPanel);
             }
             else if (_fast && _displaySpeed <= FastExitSpeed)
@@ -197,13 +231,15 @@ public class HudController : MonoBehaviour
         }
     }
 
-    // Green when cruising, gold mid-range, red near top speed.
-    static Color SpeedZoneColor(float kmh)
+    // Solid green while cruising, warming through amber, red near top speed.
+    static Color SpeedTextColor(float kmh)
     {
-        if (kmh <= 60f)
-            return Color.Lerp(GaugeGreen, GaugeGold, Mathf.Clamp01(kmh / 60f));
+        if (kmh <= 45f)
+            return SpeedSlow;
+        if (kmh <= 100f)
+            return Color.Lerp(SpeedSlow, SpeedMid, (kmh - 45f) / 55f);
 
-        return Color.Lerp(GaugeGold, GaugeRed, Mathf.Clamp01((kmh - 60f) / 60f));
+        return Color.Lerp(SpeedMid, SpeedFast, Mathf.Clamp01((kmh - 100f) / 60f));
     }
 
     /// <summary>
@@ -310,18 +346,22 @@ public class HudController : MonoBehaviour
     void UpdateTimer()
     {
         var session = GameSession.Instance;
-        if (session == null || session.TimeRemaining < 0f)
+        if (_timerLabel == null || session == null || session.TimeAllotted <= 0f)
             return;
 
-        float t = session.TimeRemaining;
-        _timerLabel.text = string.Format("{0}:{1:00}", (int)(t / 60f), (int)(t % 60f));
+        float t = Mathf.Max(0f, session.TimeRemaining);
+        _timerLabel.text = string.Format("{0:00}:{1:00}", (int)(t / 60f), (int)(t % 60f));
 
-        bool low = t <= LowTimeThreshold && t > 0f;
-        _timerPill.EnableInClassList("timer--low", low);
+        bool low = t <= LowTimeThreshold;
+        _timerPill?.EnableInClassList("timer--low", low);
 
-        // Heartbeat pulse on the countdown while time is running out.
-        float pulse = low ? 1f + 0.1f * Mathf.Abs(Mathf.Sin(Time.unscaledTime * 6f)) : 1f;
-        _timerLabel.style.scale = new StyleScale(new Scale(new Vector2(pulse, pulse)));
+        // Heartbeat pulse on the WHOLE pill (not just the digits, which would
+        // spill out) while time is running out.
+        if (_timerPill != null)
+        {
+            float pulse = low && t > 0f ? 1f + 0.055f * Mathf.Abs(Mathf.Sin(Time.unscaledTime * 6f)) : 1f;
+            _timerPill.style.scale = new StyleScale(new Scale(new Vector2(pulse, pulse)));
+        }
 
         if (_timerFill != null)
         {
@@ -356,9 +396,7 @@ public class HudController : MonoBehaviour
 
     void HandleDeliveryStarted(Transform destination)
     {
-        _timerPill.AddToClassList("timer--visible");
-        PopPanel(_deliveryCard);
-        ShowBanner("DELIVER THE PACKAGE!", 2.5f);
+        ShowBanner(DeliverBannerText, 3.5f);
     }
 
     void HandleZoneEntered()
@@ -374,7 +412,6 @@ public class HudController : MonoBehaviour
     void HandleDeliveryTriggered()
     {
         HideBanner();
-        _timerPill.RemoveFromClassList("timer--visible");
     }
 
     void HandleDeliveryRewarded(int baseReward, int bonus)
@@ -395,15 +432,13 @@ public class HudController : MonoBehaviour
 
     void HandleDeliveryCompleted()
     {
-        _timerPill.RemoveFromClassList("timer--visible");
-        ShowBanner("PICK UP A PACKAGE!", 2.5f);
+        ShowBanner(PickupBannerText, 4f);
     }
 
     void HandleDeliveryFailed()
     {
-        _timerPill.RemoveFromClassList("timer--visible");
         FlashScreen(new Color(1f, 0.25f, 0.2f), 0.4f, 600);
-        ShowBanner("PACKAGE EXPLODED!", 3f);
+        ShowBanner(ExplodedBannerText, 3.5f);
     }
 
     void HandleDeliveryFailedPenalty(int penalty)
@@ -417,6 +452,48 @@ public class HudController : MonoBehaviour
         _toastHide?.Pause();
         _toastHide = _rewardToast.schedule.Execute(() => _rewardToast.RemoveFromClassList("toast--show"));
         _toastHide.ExecuteLater(2200);
+    }
+
+    void HandleTimeExpired()
+    {
+        HideBanner();
+        FlashScreen(new Color(1f, 0.86f, 0.32f), 0.22f, 420);
+        ShowTimeUp();
+    }
+
+    void ShowTimeUp()
+    {
+        if (_timeUpLabel == null)
+            return;
+
+        PauseTimeUpAnimation();
+
+        _timeUpLabel.style.opacity = 0f;
+        _timeUpLabel.style.translate = new StyleTranslate(new Translate(0f, 86f));
+        _timeUpLabel.style.scale = new StyleScale(new Scale(new Vector2(0.35f, 0.35f)));
+        _timeUpLabel.style.rotate = new StyleRotate(new Rotate(new Angle(-6f, AngleUnit.Degree)));
+
+        _timeUpEnter = _timeUpLabel.schedule.Execute(() =>
+        {
+            _timeUpLabel.style.opacity = 1f;
+            _timeUpLabel.style.translate = new StyleTranslate(new Translate(0f, 0f));
+            _timeUpLabel.style.scale = new StyleScale(new Scale(new Vector2(1.18f, 1.18f)));
+            _timeUpLabel.style.rotate = new StyleRotate(new Rotate(new Angle(1f, AngleUnit.Degree)));
+        });
+        _timeUpEnter.ExecuteLater(16);
+
+        _timeUpSettle = _timeUpLabel.schedule.Execute(() =>
+        {
+            _timeUpLabel.style.scale = new StyleScale(new Scale(new Vector2(1f, 1f)));
+            _timeUpLabel.style.rotate = new StyleRotate(new Rotate(new Angle(0f, AngleUnit.Degree)));
+        });
+        _timeUpSettle.ExecuteLater(260);
+    }
+
+    void PauseTimeUpAnimation()
+    {
+        _timeUpEnter?.Pause();
+        _timeUpSettle?.Pause();
     }
 
     /// <summary>
@@ -446,13 +523,76 @@ public class HudController : MonoBehaviour
 
     void ShowBanner(string text, float durationSeconds)
     {
-        _banner.text = text;
-        _banner.AddToClassList("banner--show");
-
+        PauseBannerAnimation();
         _bannerHide?.Pause();
+
+        bool useImageBanner = TryGetImageBanner(text, out var imageBanner, out var imageElement, out float imageAspect);
+        HideBannerElement(_banner);
+        HideBannerElement(_pickupBanner);
+        HideBannerElement(_deliverBanner);
+        HideBannerElement(_explodedBanner);
+
+        _activeBanner = useImageBanner ? imageBanner : _banner;
+        if (_activeBanner == null)
+            return;
+
+        if (!useImageBanner && _banner != null)
+            _banner.text = text;
+        if (useImageBanner)
+            LayoutImageBanner(imageBanner, imageElement, imageAspect);
+
+        PrepareBannerElement(_activeBanner);
+        _activeBanner.AddToClassList("banner--show");
+
+        var target = _activeBanner;
+        _bannerPunch = target.schedule.Execute(() =>
+        {
+            if (_activeBanner != target)
+                return;
+
+            target.style.opacity = 1f;
+            target.style.translate = new StyleTranslate(new Translate(0f, 0f));
+            target.style.scale = new StyleScale(new Scale(new Vector2(1.42f, 1.42f)));
+            target.style.rotate = new StyleRotate(new Rotate(new Angle(7f, AngleUnit.Degree)));
+        });
+        _bannerPunch.ExecuteLater(12);
+
+        _bannerSettle = target.schedule.Execute(() =>
+        {
+            if (_activeBanner != target)
+                return;
+
+            target.style.translate = new StyleTranslate(new Translate(-16f, 0f));
+            target.style.scale = new StyleScale(new Scale(new Vector2(0.82f, 0.82f)));
+            target.style.rotate = new StyleRotate(new Rotate(new Angle(-5f, AngleUnit.Degree)));
+        });
+        _bannerSettle.ExecuteLater(125);
+
+        _bannerKick = target.schedule.Execute(() =>
+        {
+            if (_activeBanner != target)
+                return;
+
+            target.style.translate = new StyleTranslate(new Translate(12f, 0f));
+            target.style.scale = new StyleScale(new Scale(new Vector2(1.15f, 1.15f)));
+            target.style.rotate = new StyleRotate(new Rotate(new Angle(3f, AngleUnit.Degree)));
+        });
+        _bannerKick.ExecuteLater(235);
+
+        _bannerRest = target.schedule.Execute(() =>
+        {
+            if (_activeBanner != target)
+                return;
+
+            target.style.translate = new StyleTranslate(new Translate(0f, 0f));
+            target.style.scale = new StyleScale(new Scale(new Vector2(1f, 1f)));
+            target.style.rotate = new StyleRotate(new Rotate(new Angle(0f, AngleUnit.Degree)));
+        });
+        _bannerRest.ExecuteLater(380);
+
         if (durationSeconds > 0f)
         {
-            _bannerHide = _banner.schedule.Execute(HideBanner);
+            _bannerHide = target.schedule.Execute(HideBanner);
             _bannerHide.ExecuteLater((long)(durationSeconds * 1000f));
         }
     }
@@ -460,6 +600,105 @@ public class HudController : MonoBehaviour
     void HideBanner()
     {
         _bannerHide?.Pause();
-        _banner.RemoveFromClassList("banner--show");
+        PauseBannerAnimation();
+        HideBannerElement(_activeBanner);
+        HideBannerElement(_banner);
+        HideBannerElement(_pickupBanner);
+        HideBannerElement(_deliverBanner);
+        HideBannerElement(_explodedBanner);
+        _activeBanner = null;
+    }
+
+    static void PrepareBannerElement(VisualElement banner)
+    {
+        if (banner == null)
+            return;
+
+        banner.style.opacity = 0f;
+        banner.style.translate = new StyleTranslate(new Translate(0f, 92f));
+        banner.style.scale = new StyleScale(new Scale(new Vector2(0.18f, 0.18f)));
+        banner.style.rotate = new StyleRotate(new Rotate(new Angle(-10f, AngleUnit.Degree)));
+    }
+
+    static void HideBannerElement(VisualElement banner)
+    {
+        if (banner == null)
+            return;
+
+        banner.RemoveFromClassList("banner--show");
+        banner.style.opacity = 0f;
+        banner.style.translate = new StyleTranslate(new Translate(0f, -34f));
+        banner.style.scale = new StyleScale(new Scale(new Vector2(0.78f, 0.78f)));
+        banner.style.rotate = new StyleRotate(new Rotate(new Angle(0f, AngleUnit.Degree)));
+    }
+
+    bool TryGetImageBanner(string text, out VisualElement banner, out VisualElement image, out float aspect)
+    {
+        if (text == PickupBannerText && _pickupBanner != null)
+        {
+            banner = _pickupBanner;
+            image = _pickupBannerImage ?? _pickupBanner;
+            aspect = PickupBannerAspect;
+            return true;
+        }
+
+        if (text == DeliverBannerText && _deliverBanner != null)
+        {
+            banner = _deliverBanner;
+            image = _deliverBannerImage ?? _deliverBanner;
+            aspect = DeliverBannerAspect;
+            return true;
+        }
+
+        if (text == ExplodedBannerText && _explodedBanner != null)
+        {
+            banner = _explodedBanner;
+            image = _explodedBannerImage ?? _explodedBanner;
+            aspect = ExplodedBannerAspect;
+            return true;
+        }
+
+        banner = null;
+        image = null;
+        aspect = PickupBannerAspect;
+        return false;
+    }
+
+    void LayoutImageBanner(VisualElement banner, VisualElement image, float aspect)
+    {
+        if (banner == null)
+            return;
+
+        float rootWidth = _root?.resolvedStyle.width ?? 0f;
+        float rootHeight = _root?.resolvedStyle.height ?? 0f;
+        float screenWidth = Screen.width;
+        if (float.IsNaN(rootWidth) || rootWidth <= 0f)
+            rootWidth = screenWidth;
+        else if (screenWidth > 0f && rootWidth < screenWidth * 0.85f)
+            rootWidth = screenWidth;
+        if (float.IsNaN(rootHeight) || rootHeight <= 0f)
+            rootHeight = Screen.height;
+
+        float targetWidth = Mathf.Min(rootWidth * ImageBannerWidthRatio, ImageBannerMaxWidth);
+        targetWidth = Mathf.Max(0f, Mathf.Min(targetWidth, rootWidth - 28f));
+        float targetHeight = targetWidth / Mathf.Max(0.01f, aspect);
+        float top = Mathf.Clamp(rootHeight * 0.16f, 110f, 148f);
+
+        banner.style.left = 0f;
+        banner.style.right = 0f;
+        banner.style.height = targetHeight;
+        banner.style.top = top;
+
+        var content = image ?? banner;
+        content.style.width = targetWidth;
+        content.style.height = targetHeight;
+    }
+
+    void PauseBannerAnimation()
+    {
+        _bannerPunch?.Pause();
+        _bannerSettle?.Pause();
+        _bannerKick?.Pause();
+        _bannerRest?.Pause();
     }
 }

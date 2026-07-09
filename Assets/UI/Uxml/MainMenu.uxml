@@ -6,20 +6,14 @@
         <ui:VisualElement class="menu-vignette" picking-mode="Ignore" />
 
         <ui:VisualElement class="menu-top-row">
-            <ui:VisualElement class="top-pill menu-score-pill" picking-mode="Ignore">
-                <ui:VisualElement class="coin-badge" picking-mode="Ignore">
-                    <ui:VisualElement class="coin-badge__ring" picking-mode="Ignore" />
-                    <ui:VisualElement class="coin-badge__ray coin-badge__ray--v" picking-mode="Ignore" />
-                    <ui:VisualElement class="coin-badge__ray coin-badge__ray--h" picking-mode="Ignore" />
-                    <ui:VisualElement class="coin-badge__ray coin-badge__ray--core" picking-mode="Ignore" />
-                    <ui:VisualElement class="coin-badge__glint" picking-mode="Ignore" />
-                </ui:VisualElement>
-                <ui:Label text="247" picking-mode="Ignore" />
+            <ui:VisualElement class="coin-pill coin-pill--menu" picking-mode="Ignore">
+                <ui:VisualElement class="coin-badge" picking-mode="Ignore" />
+                <ui:Label class="coin-pill__label" text="247" picking-mode="Ignore" />
             </ui:VisualElement>
 
             <ui:VisualElement class="button-depth button-depth--settings">
                 <ui:VisualElement class="button-depth__shadow button-depth__shadow--settings" picking-mode="Ignore" />
-                <ui:Button name="settings-preview-button" class="icon-btn settings-icon-btn" tooltip="Settings">
+                <ui:Button name="settings-preview-button" class="icon-btn settings-icon-btn" tooltip="SETTINGS">
                     <ui:VisualElement class="gear-icon" picking-mode="Ignore">
                         <ui:VisualElement class="gear-tooth gear-tooth--top" picking-mode="Ignore" />
                         <ui:VisualElement class="gear-tooth gear-tooth--right" picking-mode="Ignore" />
@@ -38,13 +32,16 @@
         </ui:VisualElement>
 
         <ui:VisualElement class="title-card" picking-mode="Ignore">
-            <ui:Label class="eyebrow" text="Cute, colorful, speedy" picking-mode="Ignore" />
+            <ui:Label class="eyebrow" text="CUTE, COLORFUL, SPEEDY" picking-mode="Ignore" />
         </ui:VisualElement>
 
         <ui:VisualElement name="menu-buttons" class="menu-actions">
             <ui:VisualElement class="button-depth button-depth--play">
                 <ui:VisualElement class="button-depth__shadow button-depth__shadow--play" picking-mode="Ignore" />
-                <ui:Button name="play-button" class="btn btn--green" text="▶  Play" />
+                <ui:Button name="play-button" class="btn btn--green">
+                    <ui:VisualElement class="play-button__icon" picking-mode="Ignore" />
+                    <ui:Label class="play-button__label" text="PLAY" picking-mode="Ignore" />
+                </ui:Button>
             </ui:VisualElement>
             <ui:VisualElement class="button-depth button-depth--quit">
                 <ui:VisualElement class="button-depth__shadow button-depth__shadow--quit" picking-mode="Ignore" />
@@ -56,15 +53,15 @@
             <ui:VisualElement name="menu-settings-card" class="menu-card">
                 <ui:Label class="menu-card__title" text="SOUND" />
                 <ui:VisualElement class="settings-row">
-                    <ui:Label class="settings-row__label" text="Master" />
+                    <ui:Label class="settings-row__label" text="MASTER" />
                     <ui:Slider name="master-slider" class="volume-slider" low-value="0" high-value="1" />
                 </ui:VisualElement>
                 <ui:VisualElement class="settings-row">
-                    <ui:Label class="settings-row__label" text="Effects" />
+                    <ui:Label class="settings-row__label" text="EFFECTS" />
                     <ui:Slider name="sfx-slider" class="volume-slider" low-value="0" high-value="1" />
                 </ui:VisualElement>
                 <ui:VisualElement class="settings-row">
-                    <ui:Label class="settings-row__label" text="Music" />
+                    <ui:Label class="settings-row__label" text="MUSIC" />
                     <ui:Slider name="music-slider" class="volume-slider" low-value="0" high-value="1" />
                 </ui:VisualElement>
                 <ui:VisualElement class="button-depth button-depth--card button-depth--ghost">
@@ -74,6 +71,6 @@
             </ui:VisualElement>
         </ui:VisualElement>
 
-        <ui:Label name="version-label" text="v0.1" picking-mode="Ignore" />
+        <ui:Label name="version-label" text="V0.1" picking-mode="Ignore" />
     </ui:VisualElement>
 </ui:UXML>

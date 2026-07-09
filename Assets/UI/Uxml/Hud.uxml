@@ -15,21 +15,39 @@
                         </ui:Button>
                     </ui:VisualElement>
 
-                    <ui:VisualElement name="coins-pill" class="pill stat-pill" picking-mode="Ignore">
-                        <ui:VisualElement class="coin-badge" picking-mode="Ignore">
-                            <ui:VisualElement class="coin-badge__ring" picking-mode="Ignore" />
-                            <ui:VisualElement class="coin-badge__ray coin-badge__ray--v" picking-mode="Ignore" />
-                            <ui:VisualElement class="coin-badge__ray coin-badge__ray--h" picking-mode="Ignore" />
-                            <ui:VisualElement class="coin-badge__ray coin-badge__ray--core" picking-mode="Ignore" />
-                            <ui:VisualElement class="coin-badge__glint" picking-mode="Ignore" />
+                    <ui:VisualElement name="coins-pill" class="coin-pill" picking-mode="Ignore">
+                        <ui:VisualElement class="coin-badge" picking-mode="Ignore" />
+                        <ui:Label name="coins-label" class="coin-pill__label" text="0" picking-mode="Ignore" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+
+                <ui:VisualElement name="timer-pill" class="pill global-timer" picking-mode="Ignore">
+                    <ui:VisualElement class="clock-icon" picking-mode="Ignore">
+                        <ui:VisualElement class="clock-icon__face" picking-mode="Ignore">
+                            <ui:VisualElement class="clock-icon__tick clock-icon__tick--top" picking-mode="Ignore" />
+                            <ui:VisualElement class="clock-icon__tick clock-icon__tick--right" picking-mode="Ignore" />
+                            <ui:VisualElement class="clock-icon__tick clock-icon__tick--bottom" picking-mode="Ignore" />
+                            <ui:VisualElement class="clock-icon__tick clock-icon__tick--left" picking-mode="Ignore" />
+                            <ui:VisualElement class="clock-icon__hand" picking-mode="Ignore" />
+                            <ui:VisualElement class="clock-icon__pin" picking-mode="Ignore" />
                         </ui:VisualElement>
-                        <ui:Label name="coins-label" text="0" picking-mode="Ignore" />
+                    </ui:VisualElement>
+                    <ui:VisualElement class="global-timer__copy" picking-mode="Ignore">
+                        <ui:Label class="global-timer__eyebrow" text="TIME LEFT" picking-mode="Ignore" />
+                        <ui:Label name="timer-label" text="00:00" picking-mode="Ignore" />
+                        <ui:VisualElement class="timer-line" picking-mode="Ignore">
+                            <ui:VisualElement name="timer-fill" class="timer-line__fill" picking-mode="Ignore" />
+                            <ui:VisualElement class="timer-line__divider timer-line__divider--1" picking-mode="Ignore" />
+                            <ui:VisualElement class="timer-line__divider timer-line__divider--2" picking-mode="Ignore" />
+                            <ui:VisualElement class="timer-line__divider timer-line__divider--3" picking-mode="Ignore" />
+                            <ui:VisualElement class="timer-line__divider timer-line__divider--4" picking-mode="Ignore" />
+                        </ui:VisualElement>
                     </ui:VisualElement>
                 </ui:VisualElement>
 
                 <ui:VisualElement name="deliveries-pill" class="hud-progress" picking-mode="Ignore">
                     <ui:VisualElement class="hud-progress-row" picking-mode="Ignore">
-                        <ui:Label text="Deliveries" picking-mode="Ignore" />
+                        <ui:Label text="DELIVERIES" picking-mode="Ignore" />
                         <ui:Label name="deliveries-label" text="0" picking-mode="Ignore" />
                     </ui:VisualElement>
                     <ui:VisualElement class="track" picking-mode="Ignore">
@@ -37,24 +55,6 @@
                     </ui:VisualElement>
                 </ui:VisualElement>
 
-                <ui:VisualElement name="delivery-card" picking-mode="Ignore">
-                    <ui:VisualElement class="package-icon package-icon--large" picking-mode="Ignore">
-                        <ui:VisualElement class="package-icon__tape" picking-mode="Ignore" />
-                    </ui:VisualElement>
-                    <ui:VisualElement class="delivery-copy" picking-mode="Ignore">
-                        <ui:Label class="delivery-copy__eyebrow" text="Deliver to" picking-mode="Ignore" />
-                        <ui:Label class="delivery-copy__target" text="Next stop" picking-mode="Ignore" />
-                        <ui:VisualElement name="timer-pill" class="pill" picking-mode="Ignore">
-                            <ui:VisualElement class="clock-icon" picking-mode="Ignore">
-                                <ui:VisualElement class="clock-icon__hand" picking-mode="Ignore" />
-                            </ui:VisualElement>
-                            <ui:Label name="timer-label" text="0:00" picking-mode="Ignore" />
-                            <ui:VisualElement class="timer-line" picking-mode="Ignore">
-                                <ui:VisualElement name="timer-fill" class="timer-line__fill" picking-mode="Ignore" />
-                            </ui:VisualElement>
-                        </ui:VisualElement>
-                    </ui:VisualElement>
-                </ui:VisualElement>
             </ui:VisualElement>
 
             <ui:VisualElement name="bottom-bar" picking-mode="Ignore">
@@ -74,19 +74,8 @@
                 </ui:VisualElement>
 
                 <ui:VisualElement name="speed-panel" picking-mode="Ignore">
-                    <ui:VisualElement name="speed-gauge" class="gauge" picking-mode="Ignore">
-                        <ui:VisualElement class="gauge-tick gauge-tick--1" picking-mode="Ignore"><ui:VisualElement class="gauge-tick__mark" picking-mode="Ignore" /></ui:VisualElement>
-                        <ui:VisualElement class="gauge-tick gauge-tick--2" picking-mode="Ignore"><ui:VisualElement class="gauge-tick__mark" picking-mode="Ignore" /></ui:VisualElement>
-                        <ui:VisualElement class="gauge-tick gauge-tick--3" picking-mode="Ignore"><ui:VisualElement class="gauge-tick__mark" picking-mode="Ignore" /></ui:VisualElement>
-                        <ui:VisualElement class="gauge-tick gauge-tick--4" picking-mode="Ignore"><ui:VisualElement class="gauge-tick__mark" picking-mode="Ignore" /></ui:VisualElement>
-                        <ui:VisualElement class="gauge-tick gauge-tick--5" picking-mode="Ignore"><ui:VisualElement class="gauge-tick__mark" picking-mode="Ignore" /></ui:VisualElement>
-                        <ui:VisualElement class="gauge-tick gauge-tick--6" picking-mode="Ignore"><ui:VisualElement class="gauge-tick__mark" picking-mode="Ignore" /></ui:VisualElement>
-                        <ui:VisualElement class="gauge-tick gauge-tick--7" picking-mode="Ignore"><ui:VisualElement class="gauge-tick__mark" picking-mode="Ignore" /></ui:VisualElement>
-                        <ui:VisualElement name="speed-needle" class="needle" picking-mode="Ignore" />
-                        <ui:VisualElement class="gauge-hub" picking-mode="Ignore" />
-                    </ui:VisualElement>
                     <ui:Label name="speed-label" text="0" picking-mode="Ignore" />
-                    <ui:Label name="speed-unit" text="km/h" picking-mode="Ignore" />
+                    <ui:Label name="speed-unit" text="KM/H" picking-mode="Ignore" />
                 </ui:VisualElement>
 
                 <ui:VisualElement name="mobile-right" class="mobile-controls" picking-mode="Ignore">
@@ -104,8 +93,18 @@
 
         </ui:VisualElement>
 
+        <ui:VisualElement name="pickup-banner" picking-mode="Ignore">
+            <ui:VisualElement name="pickup-banner-image" picking-mode="Ignore" />
+        </ui:VisualElement>
+        <ui:VisualElement name="deliver-banner" picking-mode="Ignore">
+            <ui:VisualElement name="deliver-banner-image" picking-mode="Ignore" />
+        </ui:VisualElement>
+        <ui:VisualElement name="exploded-banner" picking-mode="Ignore">
+            <ui:VisualElement name="exploded-banner-image" picking-mode="Ignore" />
+        </ui:VisualElement>
         <ui:Label name="banner" text="" picking-mode="Ignore" />
         <ui:Label name="reward-toast" text="" picking-mode="Ignore" />
+        <ui:Label name="time-up-label" text="TIME UP!" picking-mode="Ignore" />
 
         <ui:VisualElement name="pause-overlay">
             <ui:VisualElement name="pause-card" class="menu-card">
@@ -131,15 +130,15 @@
             <ui:VisualElement name="settings-card" class="menu-card" style="display: none;">
                 <ui:Label class="menu-card__title" text="SOUND" />
                 <ui:VisualElement class="settings-row">
-                    <ui:Label class="settings-row__label" text="Master" />
+                    <ui:Label class="settings-row__label" text="MASTER" />
                     <ui:Slider name="master-slider" low-value="0" high-value="1" class="volume-slider" />
                 </ui:VisualElement>
                 <ui:VisualElement class="settings-row">
-                    <ui:Label class="settings-row__label" text="Effects" />
+                    <ui:Label class="settings-row__label" text="EFFECTS" />
                     <ui:Slider name="sfx-slider" low-value="0" high-value="1" class="volume-slider" />
                 </ui:VisualElement>
                 <ui:VisualElement class="settings-row">
-                    <ui:Label class="settings-row__label" text="Music" />
+                    <ui:Label class="settings-row__label" text="MUSIC" />
                     <ui:Slider name="music-slider" low-value="0" high-value="1" class="volume-slider" />
                 </ui:VisualElement>
                 <ui:VisualElement class="button-depth button-depth--card button-depth--ghost">
