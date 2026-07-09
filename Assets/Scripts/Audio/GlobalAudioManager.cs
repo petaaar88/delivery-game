@@ -12,6 +12,8 @@ public class GlobalAudioManager : MonoBehaviour
     public float sfxVolume = 1f;
     [Range(0f, 1f)]
     public float musicVolume = 1f;
+    [Range(0f, 1f)]
+    public float vehicleVolume = 1f;
 
     // Lista svih ObjectAudioManager-a koji se registruju
     private List<ObjectAudioManager> registeredAudioManagers = new List<ObjectAudioManager>();
@@ -59,6 +61,11 @@ public class GlobalAudioManager : MonoBehaviour
     {
         musicVolume = Mathf.Clamp01(volume);
         UpdateAllAudioManagers();
+    }
+
+    public void SetVehicleVolume(float volume)
+    {
+        vehicleVolume = Mathf.Clamp01(volume);
     }
 
     public float GetVolumeForType(SoundType soundType)

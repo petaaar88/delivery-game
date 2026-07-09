@@ -8,6 +8,7 @@ using UnityEngine.UIElements;
 /// Pausing freezes time and audio; sliders drive GlobalAudioManager.
 /// </summary>
 [RequireComponent(typeof(UIDocument))]
+[RequireComponent(typeof(ObjectAudioManager))]
 public class PauseMenuController : MonoBehaviour
 {
     [Tooltip("Scene loaded by the MAIN MENU button.")]
@@ -21,9 +22,13 @@ public class PauseMenuController : MonoBehaviour
     Slider _masterSlider;
     Slider _sfxSlider;
     Slider _musicSlider;
+    Slider _vehicleSlider;
+    ObjectAudioManager _audioManager;
 
     void OnEnable()
     {
+        _audioManager = GetComponent<ObjectAudioManager>();
+
         var root = GetComponent<UIDocument>().rootVisualElement;
 
         _overlay = root.Q("pause-overlay");
@@ -32,17 +37,32 @@ public class PauseMenuController : MonoBehaviour
         _masterSlider = root.Q<Slider>("master-slider");
         _sfxSlider = root.Q<Slider>("sfx-slider");
         _musicSlider = root.Q<Slider>("music-slider");
+        _vehicleSlider = root.Q<Slider>("vehicle-slider");
 
-        root.Q<Button>("pause-button").clicked += Pause;
-        root.Q<Button>("resume-button").clicked += Resume;
-        root.Q<Button>("restart-button").clicked += Restart;
-        root.Q<Button>("settings-button").clicked += ShowSettings;
-        root.Q<Button>("settings-back-button").clicked += ShowPauseCard;
-        root.Q<Button>("quit-to-menu-button").clicked += QuitToMenu;
+        var pauseButton = root.Q<Button>("pause-button");
+        var resumeButton = root.Q<Button>("resume-button");
+        var restartButton = root.Q<Button>("restart-button");
+        var settingsButton = root.Q<Button>("settings-button");
+        var settingsBackButton = root.Q<Button>("settings-back-button");
+        var quitToMenuButton = root.Q<Button>("quit-to-menu-button");
+
+        pauseButton.clicked += Pause;
+        pauseButton.clicked += PlayClickSound;
+        resumeButton.clicked += Resume;
+        resumeButton.clicked += PlayClickSound;
+        restartButton.clicked += Restart;
+        restartButton.clicked += PlayClickSound;
+        settingsButton.clicked += ShowSettings;
+        settingsButton.clicked += PlayClickSound;
+        settingsBackButton.clicked += ShowPauseCard;
+        settingsBackButton.clicked += PlayClickSound;
+        quitToMenuButton.clicked += QuitToMenu;
+        quitToMenuButton.clicked += PlayClickSound;
 
         _masterSlider.RegisterValueChangedCallback(e => GlobalAudioManager.Instance?.SetMasterVolume(e.newValue));
         _sfxSlider.RegisterValueChangedCallback(e => GlobalAudioManager.Instance?.SetSFXVolume(e.newValue));
         _musicSlider.RegisterValueChangedCallback(e => GlobalAudioManager.Instance?.SetMusicVolume(e.newValue));
+        _vehicleSlider.RegisterValueChangedCallback(e => GlobalAudioManager.Instance?.SetVehicleVolume(e.newValue));
     }
 
     void Update()
@@ -62,6 +82,11 @@ public class PauseMenuController : MonoBehaviour
             Time.timeScale = 1f;
             AudioListener.pause = false;
         }
+    }
+
+    void PlayClickSound()
+    {
+        _audioManager?.PlaySoundOneShot("ButtonClick");
     }
 
     public void Pause()
@@ -119,5 +144,6 @@ public class PauseMenuController : MonoBehaviour
         _masterSlider.SetValueWithoutNotify(audio.masterVolume);
         _sfxSlider.SetValueWithoutNotify(audio.sfxVolume);
         _musicSlider.SetValueWithoutNotify(audio.musicVolume);
+        _vehicleSlider.SetValueWithoutNotify(audio.vehicleVolume);
     }
 }

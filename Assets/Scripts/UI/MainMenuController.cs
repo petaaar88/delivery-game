@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 [RequireComponent(typeof(UIDocument))]
+[RequireComponent(typeof(ObjectAudioManager))]
 public class MainMenuController : MonoBehaviour
 {
     [Tooltip("Scene loaded by the PLAY button.")]
@@ -33,9 +34,11 @@ public class MainMenuController : MonoBehaviour
     Button _settingsButton;
     Button _settingsBackButton;
     VisualElement _settingsOverlay;
+    ObjectAudioManager _audioManager;
     Slider _masterSlider;
     Slider _sfxSlider;
     Slider _musicSlider;
+    Slider _vehicleSlider;
     Transform _parkedVan;
     Vector3 _vanBasePosition;
     Quaternion _vanBaseRotation;
@@ -45,6 +48,8 @@ public class MainMenuController : MonoBehaviour
 
     void OnEnable()
     {
+        _audioManager = GetComponent<ObjectAudioManager>();
+
         var root = GetComponent<UIDocument>().rootVisualElement;
 
         _playButton = root.Q<Button>("play-button");
@@ -55,18 +60,31 @@ public class MainMenuController : MonoBehaviour
         _masterSlider = root.Q<Slider>("master-slider");
         _sfxSlider = root.Q<Slider>("sfx-slider");
         _musicSlider = root.Q<Slider>("music-slider");
+        _vehicleSlider = root.Q<Slider>("vehicle-slider");
 
         if (_playButton != null)
+        {
             _playButton.clicked += Play;
+            _playButton.clicked += PlayClickSound;
+        }
 
         if (_quitButton != null)
+        {
             _quitButton.clicked += Quit;
+            _quitButton.clicked += PlayClickSound;
+        }
 
         if (_settingsButton != null)
+        {
             _settingsButton.clicked += ShowSettings;
+            _settingsButton.clicked += PlayClickSound;
+        }
 
         if (_settingsBackButton != null)
+        {
             _settingsBackButton.clicked += HideSettings;
+            _settingsBackButton.clicked += PlayClickSound;
+        }
 
         if (_masterSlider != null)
             _masterSlider.RegisterValueChangedCallback(OnMasterVolumeChanged);
@@ -77,22 +95,37 @@ public class MainMenuController : MonoBehaviour
         if (_musicSlider != null)
             _musicSlider.RegisterValueChangedCallback(OnMusicVolumeChanged);
 
+        if (_vehicleSlider != null)
+            _vehicleSlider.RegisterValueChangedCallback(OnVehicleVolumeChanged);
+
         HideSettings();
     }
 
     void OnDisable()
     {
         if (_playButton != null)
+        {
             _playButton.clicked -= Play;
+            _playButton.clicked -= PlayClickSound;
+        }
 
         if (_quitButton != null)
+        {
             _quitButton.clicked -= Quit;
+            _quitButton.clicked -= PlayClickSound;
+        }
 
         if (_settingsButton != null)
+        {
             _settingsButton.clicked -= ShowSettings;
+            _settingsButton.clicked -= PlayClickSound;
+        }
 
         if (_settingsBackButton != null)
+        {
             _settingsBackButton.clicked -= HideSettings;
+            _settingsBackButton.clicked -= PlayClickSound;
+        }
 
         if (_masterSlider != null)
             _masterSlider.UnregisterValueChangedCallback(OnMasterVolumeChanged);
@@ -102,6 +135,9 @@ public class MainMenuController : MonoBehaviour
 
         if (_musicSlider != null)
             _musicSlider.UnregisterValueChangedCallback(OnMusicVolumeChanged);
+
+        if (_vehicleSlider != null)
+            _vehicleSlider.UnregisterValueChangedCallback(OnVehicleVolumeChanged);
     }
 
     void Start()
@@ -129,6 +165,11 @@ public class MainMenuController : MonoBehaviour
                     _wheels[i].SetPositionAndRotation(_wheelBasePositions[i], _wheelBaseRotations[i]);
             }
         }
+    }
+
+    void PlayClickSound()
+    {
+        _audioManager?.PlaySoundOneShot("ButtonClick");
     }
 
     void Play()
@@ -167,6 +208,7 @@ public class MainMenuController : MonoBehaviour
         _masterSlider?.SetValueWithoutNotify(audio.masterVolume);
         _sfxSlider?.SetValueWithoutNotify(audio.sfxVolume);
         _musicSlider?.SetValueWithoutNotify(audio.musicVolume);
+        _vehicleSlider?.SetValueWithoutNotify(audio.vehicleVolume);
     }
 
     void OnMasterVolumeChanged(ChangeEvent<float> e)
@@ -182,6 +224,11 @@ public class MainMenuController : MonoBehaviour
     void OnMusicVolumeChanged(ChangeEvent<float> e)
     {
         GlobalAudioManager.Instance?.SetMusicVolume(e.newValue);
+    }
+
+    void OnVehicleVolumeChanged(ChangeEvent<float> e)
+    {
+        GlobalAudioManager.Instance?.SetVehicleVolume(e.newValue);
     }
 
     void ConfigureSceneShowcase()

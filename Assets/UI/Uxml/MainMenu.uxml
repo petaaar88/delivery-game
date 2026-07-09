@@ -64,6 +64,10 @@
                     <ui:Label class="settings-row__label" text="MUSIC" />
                     <ui:Slider name="music-slider" class="volume-slider" low-value="0" high-value="1" />
                 </ui:VisualElement>
+                <ui:VisualElement class="settings-row">
+                    <ui:Label class="settings-row__label" text="VEHICLE" />
+                    <ui:Slider name="vehicle-slider" class="volume-slider" low-value="0" high-value="1" />
+                </ui:VisualElement>
                 <ui:VisualElement class="button-depth button-depth--card button-depth--ghost">
                     <ui:VisualElement class="button-depth__shadow button-depth__shadow--ghost" picking-mode="Ignore" />
                     <ui:Button name="settings-back-button" class="btn btn--ghost" text="BACK" />

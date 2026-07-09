@@ -119,6 +119,141 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &597976488
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 597976492}
+  - component: {fileID: 597976491}
+  - component: {fileID: 597976494}
+  - component: {fileID: 597976493}
+  - component: {fileID: 597976495}
+  m_Layer: 0
+  m_Name: GlobalAudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &597976491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 597976488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51b943f19e810a438a1da07286270fb2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GlobalAudioManager
+  masterVolume: 1
+  sfxVolume: 1
+  musicVolume: 1
+  vehicleVolume: 1
+--- !u!4 &597976492
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 597976488}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &597976493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 597976488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fe4dfb1b00ad7085ba86828d793da28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MusicPlaylistPlayer
+  playlists:
+  - sceneName: MainMenu
+    trackNames:
+    - Main Menu Music
+  - sceneName: GameScene
+    trackNames:
+    - In Game Music
+    - In Game Music 2
+--- !u!114 &597976494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 597976488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4629b2fc8bc6013b3981d3e780414721, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObjectAudioManager
+  soundClips:
+  - soundName: Main Menu Music
+    audioClip: {fileID: 8300000, guid: 83a2209a8cf4e2c66bc4611bea2bbbc1, type: 3}
+    soundType: 1
+    individualVolume: 1
+    pitch: 1
+    loop: 0
+    playAtAwake: 0
+    is3D: 0
+    spatialBlend: 0
+    minDistance: 1
+    maxDistance: 50
+    rolloffMode: 1
+    audioSource: {fileID: 0}
+  - soundName: In Game Music
+    audioClip: {fileID: 8300000, guid: 07206d7b941d36bd09b6bb6021870cea, type: 3}
+    soundType: 1
+    individualVolume: 1
+    pitch: 1
+    loop: 0
+    playAtAwake: 0
+    is3D: 0
+    spatialBlend: 0
+    minDistance: 1
+    maxDistance: 50
+    rolloffMode: 1
+    audioSource: {fileID: 0}
+  - soundName: In Game Music 2
+    audioClip: {fileID: 8300000, guid: be80054a6a34e1abfadd869be2627887, type: 3}
+    soundType: 1
+    individualVolume: 1
+    pitch: 1
+    loop: 0
+    playAtAwake: 0
+    is3D: 0
+    spatialBlend: 0
+    minDistance: 1
+    maxDistance: 50
+    rolloffMode: 1
+    audioSource: {fileID: 0}
+--- !u!114 &597976495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 597976488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74b7e21fe8dc94eb79276617b51559b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VehicleAudioVolumeController
 --- !u!1 &798189910
 GameObject:
   m_ObjectHideFlags: 0
@@ -432,6 +567,7 @@ GameObject:
   - component: {fileID: 1539543415}
   - component: {fileID: 1539543414}
   - component: {fileID: 1539543413}
+  - component: {fileID: 1539543416}
   m_Layer: 0
   m_Name: MenuUI
   m_TagString: Untagged
@@ -502,6 +638,32 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 26.053, z: 0}
+--- !u!114 &1539543416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1539543412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4629b2fc8bc6013b3981d3e780414721, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObjectAudioManager
+  soundClips:
+  - soundName: ButtonClick
+    audioClip: {fileID: 8300000, guid: d10769bc69dab1a8192d5000f4c2a4fd, type: 3}
+    soundType: 0
+    individualVolume: 1
+    pitch: 1
+    loop: 0
+    playAtAwake: 0
+    is3D: 0
+    spatialBlend: 0
+    minDistance: 1
+    maxDistance: 50
+    rolloffMode: 1
+    audioSource: {fileID: 0}
 --- !u!1 &2013367377
 GameObject:
   m_ObjectHideFlags: 0
@@ -649,3 +811,4 @@ SceneRoots:
   - {fileID: 910100001}
   - {fileID: 910100003}
   - {fileID: 1154732776}
+  - {fileID: 597976492}

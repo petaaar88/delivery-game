@@ -7,6 +7,7 @@ using UnityEngine.UIElements;
 /// to GameSession and DeliveryManager events.
 /// </summary>
 [RequireComponent(typeof(UIDocument))]
+[RequireComponent(typeof(ObjectAudioManager))]
 public class HudController : MonoBehaviour
 {
     const float LowTimeThreshold = 10f;
@@ -81,6 +82,7 @@ public class HudController : MonoBehaviour
     VisualElement _coinBadge;
     VisualElement _routeFill;
     VisualElement _timerFill;
+    ObjectAudioManager _audioManager;
 
     float _displaySpeed;
     float _speedVelocity;
@@ -97,6 +99,8 @@ public class HudController : MonoBehaviour
 
     void OnEnable()
     {
+        _audioManager = GetComponent<ObjectAudioManager>();
+
         var root = GetComponent<UIDocument>().rootVisualElement;
         _root = root;
 
@@ -419,6 +423,7 @@ public class HudController : MonoBehaviour
         int total = baseReward + bonus;
         _rewardToast.text = bonus > 0 ? $"+{total}  (fast bonus +{bonus})" : $"+{total}";
         _rewardToast.AddToClassList("toast--show");
+        _audioManager?.PlaySoundOneShot("DeliverySuccessful");
 
         // Confetti on every delivery, with an extra burst for a fast arrival.
         SpawnConfetti(50f, 34f, 18, 320f);
@@ -527,6 +532,14 @@ public class HudController : MonoBehaviour
         _bannerHide?.Pause();
 
         bool useImageBanner = TryGetImageBanner(text, out var imageBanner, out var imageElement, out float imageAspect);
+
+        if (text == PickupBannerText)
+            _audioManager?.PlaySoundOneShot("PickupPackage");
+        else if (text == DeliverBannerText)
+            _audioManager?.PlaySoundOneShot("DeliverPackage");
+        else if (text == ExplodedBannerText)
+            _audioManager?.PlaySoundOneShot("PackageExploded");
+
         HideBannerElement(_banner);
         HideBannerElement(_pickupBanner);
         HideBannerElement(_deliverBanner);
