@@ -50,7 +50,7 @@ MeshRenderer:
   m_GameObject: {fileID: 1180316214450473337}
   m_Enabled: 1
   m_CastShadows: 0
-  m_ReceiveShadows: 1
+  m_ReceiveShadows: 0
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
   m_MotionVectors: 1
@@ -283,7 +283,7 @@ MeshRenderer:
   m_GameObject: {fileID: 2143150395911209071}
   m_Enabled: 1
   m_CastShadows: 0
-  m_ReceiveShadows: 1
+  m_ReceiveShadows: 0
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
   m_MotionVectors: 1
@@ -376,7 +376,7 @@ MeshRenderer:
   m_GameObject: {fileID: 5248917196982218352}
   m_Enabled: 0
   m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_ReceiveShadows: 0
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
   m_MotionVectors: 1
@@ -429,8 +429,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DeliveryZoneVisual
   zoneColor: {r: 1, g: 0.72, b: 0.2, a: 1}
-  ringIntensity: 1.6
-  beamIntensity: 1
+  ringIntensity: 1.9
+  beamIntensity: 1.25
   worldRadius: 15.5
   beamHeight: 10
   beamRadiusScale: 0.35

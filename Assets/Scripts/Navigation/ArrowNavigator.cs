@@ -43,7 +43,14 @@ public class ArrowNavigator : MonoBehaviour
         _baseScale = transform.localScale;
         _renderers = GetComponentsInChildren<Renderer>();
         transform.localScale = Vector3.zero;
-        foreach (var r in _renderers) r.enabled = false;
+        foreach (var r in _renderers)
+        {
+            // The navigation arrow must stay readable against every sky and
+            // building: it neither receives nor casts scene shadows.
+            r.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+            r.receiveShadows = false;
+            r.enabled = false;
+        }
 
         DeliveryManager.OnDeliveryStarted      += HandleDeliveryStarted;
         DeliveryManager.OnDeliveryZoneEntered  += HideArrow;

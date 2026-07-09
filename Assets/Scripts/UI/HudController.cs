@@ -421,7 +421,12 @@ public class HudController : MonoBehaviour
     void HandleDeliveryRewarded(int baseReward, int bonus)
     {
         int total = baseReward + bonus;
-        _rewardToast.text = bonus > 0 ? $"+{total}  (fast bonus +{bonus})" : $"+{total}";
+        // Kids Magazine only renders its uppercase glyph set consistently.
+        // Split the reward into compact lines so the delivery result and the
+        // earned coins read as one message instead of drifting apart.
+        _rewardToast.text = bonus > 0
+            ? $"PACKAGE DELIVERED!\n+{total} COINS\n+{bonus} FAST BONUS"
+            : $"PACKAGE DELIVERED!\n+{total} COINS";
         _rewardToast.AddToClassList("toast--show");
         _audioManager?.PlaySoundOneShot("DeliverySuccessful");
 

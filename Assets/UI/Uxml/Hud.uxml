@@ -33,7 +33,9 @@
                         </ui:VisualElement>
                     </ui:VisualElement>
                     <ui:VisualElement class="global-timer__copy" picking-mode="Ignore">
-                        <ui:Label class="global-timer__eyebrow" text="TIME LEFT" picking-mode="Ignore" />
+                        <ui:VisualElement class="global-timer__heading" picking-mode="Ignore">
+                            <ui:Label class="global-timer__eyebrow" text="TIME LEFT" picking-mode="Ignore" />
+                        </ui:VisualElement>
                         <ui:Label name="timer-label" text="00:00" picking-mode="Ignore" />
                         <ui:VisualElement class="timer-line" picking-mode="Ignore">
                             <ui:VisualElement name="timer-fill" class="timer-line__fill" picking-mode="Ignore" />

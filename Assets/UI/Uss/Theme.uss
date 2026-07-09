@@ -4507,3 +4507,189 @@
     top: 86px;
     bottom: auto;
 }
+
+/* ============================================================
+   Run timer card
+   A compact status card instead of the old floating stopwatch.
+   It reuses the HUD's white depth, warm copy and gold accent system:
+   the clock is now an inset badge, while the time and its progress
+   get their own uncluttered reading lane.
+   ============================================================ */
+
+#timer-pill {
+    width: 410px;
+    height: 140px;
+    min-height: 140px;
+    margin-left: auto;
+    margin-right: 0;
+    padding: 12px 22px 14px 112px;
+    flex-direction: row;
+    align-items: center;
+    background-color: rgb(245, 247, 251);
+    border-width: 3px;
+    border-color: rgba(255, 255, 255, 0.96);
+    border-bottom-width: 9px;
+    border-bottom-color: rgb(213, 218, 227);
+    border-radius: 32px;
+}
+
+/* The coloured element is deliberately an inset badge, not a second pill. */
+#timer-pill .clock-icon {
+    left: 15px;
+    top: 21px;
+    width: 84px;
+    height: 84px;
+    border-radius: 26px;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(255, 197, 61);
+    border-width: 3px;
+    border-color: rgb(255, 236, 153);
+    border-bottom-width: 6px;
+    border-bottom-color: rgb(224, 165, 38);
+}
+
+#timer-pill .clock-icon__face {
+    width: 60px;
+    height: 60px;
+    border-radius: 30px;
+    background-color: rgb(250, 252, 255);
+    border-width: 3px;
+    border-color: rgb(45, 126, 183);
+}
+
+#timer-pill .clock-icon__tick {
+    background-color: rgb(45, 126, 183);
+}
+
+#timer-pill .clock-icon__hand {
+    background-color: rgb(52, 78, 130);
+}
+
+#timer-pill .clock-icon__pin {
+    background-color: rgb(255, 197, 61);
+    border-color: rgb(52, 78, 130);
+}
+
+.global-timer__copy {
+    position: relative;
+    height: 114px;
+    min-width: 0;
+    flex-grow: 1;
+    justify-content: flex-start;
+}
+
+.global-timer__heading {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 1px;
+    height: 20px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.global-timer__eyebrow {
+    position: relative;
+    left: auto;
+    right: auto;
+    top: auto;
+    height: 20px;
+    margin: 0;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    color: rgb(74, 124, 166);
+    -unity-text-align: middle-left;
+    -unity-text-outline-width: 0;
+}
+
+#timer-label {
+    position: absolute;
+    left: -2px;
+    right: 0;
+    top: 29px;
+    height: 58px;
+    margin: 0;
+    font-size: 52px;
+    letter-spacing: 1px;
+    color: rgb(71, 55, 45);
+    -unity-text-align: middle-left;
+    -unity-text-outline-width: 0;
+}
+
+.timer-line {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 98px;
+    bottom: auto;
+    width: auto;
+    height: 16px;
+    min-height: 16px;
+    margin: 0;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: rgb(224, 229, 237);
+    border-width: 2px;
+    border-color: rgb(208, 215, 226);
+}
+
+.timer-line__fill {
+    top: 2px;
+    left: 2px;
+    height: 9px;
+    min-height: 9px;
+    border-radius: 5px;
+    background-color: rgb(54, 180, 239);
+    border-width: 1px;
+    border-color: rgb(166, 227, 255);
+    border-bottom-width: 2px;
+    border-bottom-color: rgb(22, 137, 196);
+}
+
+.timer-line__divider {
+    top: 2px;
+    width: 3px;
+    height: 10px;
+    border-radius: 2px;
+    background-color: rgb(208, 215, 226);
+}
+
+#timer-pill.timer--low {
+    background-color: rgb(255, 247, 244);
+    border-color: rgb(255, 232, 226);
+    border-bottom-color: rgb(239, 192, 184);
+}
+
+#timer-pill.timer--low #timer-label,
+#timer-pill.timer--low .global-timer__eyebrow {
+    color: rgb(223, 91, 65);
+}
+
+#timer-pill.timer--low .clock-icon {
+    background-color: rgb(255, 127, 99);
+    border-color: rgb(255, 215, 205);
+    border-bottom-color: rgb(211, 81, 62);
+}
+
+#timer-pill.timer--low .timer-line {
+    background-color: rgb(247, 224, 221);
+    border-color: rgb(240, 208, 204);
+}
+
+#timer-pill.timer--low .timer-line__fill {
+    background-color: rgb(232, 72, 61);
+    border-color: rgb(255, 171, 158);
+    border-bottom-color: rgb(180, 42, 40);
+}
+
+/* Delivery reward: keep the three short lines together and centred. */
+#reward-toast {
+    height: 150px;
+    padding-left: 24px;
+    padding-right: 24px;
+    letter-spacing: 0;
+    white-space: normal;
+    -unity-text-align: middle-center;
+}
