@@ -47,6 +47,21 @@
                     </ui:VisualElement>
                 </ui:VisualElement>
 
+                <ui:VisualElement name="rush-timer-card" picking-mode="Ignore">
+                    <ui:VisualElement class="rush-timer__bolt" picking-mode="Ignore">
+                        <ui:Label class="rush-timer__bolt-mark" text="!" picking-mode="Ignore" />
+                    </ui:VisualElement>
+                    <ui:VisualElement class="rush-timer__copy" picking-mode="Ignore">
+                        <ui:VisualElement class="rush-timer__heading" picking-mode="Ignore">
+                            <ui:Label class="rush-timer__eyebrow" text="RUSH DELIVERY" picking-mode="Ignore" />
+                        </ui:VisualElement>
+                        <ui:Label name="rush-timer-label" text="00:30" picking-mode="Ignore" />
+                        <ui:VisualElement class="rush-timer__track" picking-mode="Ignore">
+                            <ui:VisualElement name="rush-timer-fill" class="rush-timer__fill" picking-mode="Ignore" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+
                 <ui:VisualElement name="deliveries-pill" class="hud-progress" picking-mode="Ignore">
                     <ui:VisualElement class="hud-progress-row" picking-mode="Ignore">
                         <ui:Label text="DELIVERIES" picking-mode="Ignore" />
@@ -106,6 +121,7 @@
         </ui:VisualElement>
         <ui:Label name="banner" text="" picking-mode="Ignore" />
         <ui:Label name="reward-toast" text="" picking-mode="Ignore" />
+        <ui:VisualElement name="time-up-curtain" picking-mode="Ignore" />
         <ui:Label name="time-up-label" text="TIME UP!" picking-mode="Ignore" />
 
         <ui:VisualElement name="pause-overlay">
@@ -150,6 +166,41 @@
                 <ui:VisualElement class="button-depth button-depth--card button-depth--ghost">
                     <ui:VisualElement class="button-depth__shadow button-depth__shadow--ghost" picking-mode="Ignore" />
                     <ui:Button name="settings-back-button" class="btn btn--ghost" text="BACK" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <ui:VisualElement name="end-overlay">
+            <ui:VisualElement name="end-card">
+                <ui:Label class="end-card__eyebrow" text="SHIFT COMPLETE" />
+                <ui:Label class="end-card__title" text="TIME UP!" />
+                <ui:Label name="end-score-label" class="end-card__score" text="0 COINS" />
+
+                <ui:VisualElement class="end-stats">
+                    <ui:VisualElement class="end-stat">
+                        <ui:Label class="end-stat__label" text="DELIVERIES" />
+                        <ui:Label name="end-deliveries-label" class="end-stat__value" text="0" />
+                    </ui:VisualElement>
+                    <ui:VisualElement class="end-stat">
+                        <ui:Label class="end-stat__label" text="RUSH" />
+                        <ui:Label name="end-rush-label" class="end-stat__value" text="0/0" />
+                    </ui:VisualElement>
+                    <ui:VisualElement class="end-stat">
+                        <ui:Label class="end-stat__label" text="EXPLOSIONS" />
+                        <ui:Label name="end-explosions-label" class="end-stat__value" text="0" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+
+                <ui:Label name="end-rank-label" class="end-card__rank" text="LOCAL RANK #1" />
+                <ui:VisualElement class="end-card__actions">
+                    <ui:VisualElement class="button-depth button-depth--card button-depth--sky end-action-depth">
+                        <ui:VisualElement class="button-depth__shadow button-depth__shadow--sky" picking-mode="Ignore" />
+                        <ui:Button name="end-restart-button" class="btn btn--sky" text="RESTART" />
+                    </ui:VisualElement>
+                    <ui:VisualElement class="button-depth button-depth--card button-depth--ghost end-action-depth">
+                        <ui:VisualElement class="button-depth__shadow button-depth__shadow--ghost" picking-mode="Ignore" />
+                        <ui:Button name="end-menu-button" class="btn btn--ghost" text="MAIN MENU" />
+                    </ui:VisualElement>
                 </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>

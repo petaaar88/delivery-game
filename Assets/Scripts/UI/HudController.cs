@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 /// <summary>
@@ -11,6 +12,8 @@ using UnityEngine.UIElements;
 public class HudController : MonoBehaviour
 {
     const float LowTimeThreshold = 10f;
+    const float TimeUpSequenceDuration = 2.65f;
+    const float StatsCountDuration = 1.2f;
     const string PickupBannerText = "PICK UP A PACKAGE!";
     const string DeliverBannerText = "DELIVER THE PACKAGE!";
     const string ExplodedBannerText = "PACKAGE EXPLODED!";
@@ -27,6 +30,9 @@ public class HudController : MonoBehaviour
     const float FastEnterSpeed = 115f;     // km/h that triggers the speed pop
     const float FastExitSpeed = 100f;      // km/h to drop out of it (hysteresis)
     const int DeliveriesGoal = 10;         // deliveries per run (shown as X / goal)
+
+    [Tooltip("Scene loaded by the end-of-run MAIN MENU button.")]
+    public string mainMenuScene = "MainMenu";
 
     // Speed number colour ramp (tuned to read on the light pill): green -> amber -> red.
     static readonly Color SpeedSlow = new Color(0.235f, 0.647f, 0.294f);
@@ -68,6 +74,12 @@ public class HudController : MonoBehaviour
     Label _banner;
     Label _rewardToast;
     Label _timeUpLabel;
+    Label _rushTimerLabel;
+    Label _endScoreLabel;
+    Label _endDeliveriesLabel;
+    Label _endRushLabel;
+    Label _endExplosionsLabel;
+    Label _endRankLabel;
     VisualElement _root;
     VisualElement _activeBanner;
     VisualElement _pickupBanner;
@@ -77,16 +89,33 @@ public class HudController : MonoBehaviour
     VisualElement _explodedBanner;
     VisualElement _explodedBannerImage;
     VisualElement _timerPill;
+    VisualElement _rushTimerCard;
+    VisualElement _rushTimerFill;
     VisualElement _speedPanel;
     VisualElement _coinsPill;
+    VisualElement _deliveriesPill;
     VisualElement _coinBadge;
     VisualElement _routeFill;
     VisualElement _timerFill;
+    VisualElement _timeUpCurtain;
+    VisualElement _endOverlay;
+    VisualElement _endCard;
+    Button _endRestartButton;
+    Button _endMenuButton;
     ObjectAudioManager _audioManager;
 
     float _displaySpeed;
     float _speedVelocity;
     bool _fast;
+    bool _timeUpSequenceActive;
+    bool _statsCountActive;
+    float _timeUpSequenceStart;
+    float _statsCountStart;
+    int _finalScore;
+    int _finalDeliveries;
+    int _finalRushDeliveries;
+    int _finalRushAttempts;
+    int _finalExplosions;
 
     IVisualElementScheduledItem _bannerHide;
     IVisualElementScheduledItem _bannerPunch;
@@ -94,8 +123,6 @@ public class HudController : MonoBehaviour
     IVisualElementScheduledItem _bannerKick;
     IVisualElementScheduledItem _bannerRest;
     IVisualElementScheduledItem _toastHide;
-    IVisualElementScheduledItem _timeUpEnter;
-    IVisualElementScheduledItem _timeUpSettle;
 
     void OnEnable()
     {
@@ -117,18 +144,34 @@ public class HudController : MonoBehaviour
         _explodedBannerImage = root.Q("exploded-banner-image");
         _rewardToast = root.Q<Label>("reward-toast");
         _timeUpLabel = root.Q<Label>("time-up-label");
+        _rushTimerLabel = root.Q<Label>("rush-timer-label");
         _timerPill = root.Q("timer-pill");
+        _rushTimerCard = root.Q("rush-timer-card");
+        _rushTimerFill = root.Q("rush-timer-fill");
         _speedPanel = root.Q("speed-panel");
         _coinsPill = root.Q("coins-pill");
+        _deliveriesPill = root.Q("deliveries-pill");
         _coinBadge = _coinsPill?.Q(className: "coin-badge");
         _routeFill = root.Q("route-fill");
         _timerFill = root.Q("timer-fill");
+        _endOverlay = root.Q("end-overlay");
+        _endCard = root.Q("end-card");
+        _endScoreLabel = root.Q<Label>("end-score-label");
+        _endDeliveriesLabel = root.Q<Label>("end-deliveries-label");
+        _endRushLabel = root.Q<Label>("end-rush-label");
+        _endExplosionsLabel = root.Q<Label>("end-explosions-label");
+        _endRankLabel = root.Q<Label>("end-rank-label");
+        _timeUpCurtain = root.Q("time-up-curtain");
+        _endRestartButton = root.Q<Button>("end-restart-button");
+        _endMenuButton = root.Q<Button>("end-menu-button");
 
         // Clear the static placeholder widths baked into the stylesheet.
         if (_routeFill != null)
             _routeFill.style.width = Length.Percent(0f);
         if (_timerFill != null)
             _timerFill.style.width = Length.Percent(0f);
+        if (_rushTimerFill != null)
+            _rushTimerFill.style.width = Length.Percent(100f);
         _timerPill?.AddToClassList("timer--visible");
         if (_deliveriesLabel != null)
             _deliveriesLabel.text = $"0/{DeliveriesGoal}";
@@ -137,6 +180,8 @@ public class HudController : MonoBehaviour
         GameSession.OnDeliveriesChanged += HandleDeliveriesChanged;
         GameSession.OnDeliveryRewarded += HandleDeliveryRewarded;
         GameSession.OnDeliveryFailedPenalty += HandleDeliveryFailedPenalty;
+        GameSession.OnRushStarted += HandleRushStarted;
+        GameSession.OnRushEnded += HandleRushEnded;
         GameSession.OnTimeExpired += HandleTimeExpired;
         DeliveryManager.OnDeliveryStarted += HandleDeliveryStarted;
         DeliveryManager.OnDeliveryZoneEntered += HandleZoneEntered;
@@ -144,6 +189,11 @@ public class HudController : MonoBehaviour
         DeliveryManager.OnDeliveryTriggered += HandleDeliveryTriggered;
         DeliveryManager.OnDeliveryCompleted += HandleDeliveryCompleted;
         DeliveryManager.OnDeliveryFailed += HandleDeliveryFailed;
+
+        if (_endRestartButton != null)
+            _endRestartButton.clicked += RestartRun;
+        if (_endMenuButton != null)
+            _endMenuButton.clicked += BackToMainMenu;
     }
 
     void OnDisable()
@@ -152,6 +202,8 @@ public class HudController : MonoBehaviour
         GameSession.OnDeliveriesChanged -= HandleDeliveriesChanged;
         GameSession.OnDeliveryRewarded -= HandleDeliveryRewarded;
         GameSession.OnDeliveryFailedPenalty -= HandleDeliveryFailedPenalty;
+        GameSession.OnRushStarted -= HandleRushStarted;
+        GameSession.OnRushEnded -= HandleRushEnded;
         GameSession.OnTimeExpired -= HandleTimeExpired;
         DeliveryManager.OnDeliveryStarted -= HandleDeliveryStarted;
         DeliveryManager.OnDeliveryZoneEntered -= HandleZoneEntered;
@@ -160,8 +212,14 @@ public class HudController : MonoBehaviour
         DeliveryManager.OnDeliveryCompleted -= HandleDeliveryCompleted;
         DeliveryManager.OnDeliveryFailed -= HandleDeliveryFailed;
 
+        if (_endRestartButton != null)
+            _endRestartButton.clicked -= RestartRun;
+        if (_endMenuButton != null)
+            _endMenuButton.clicked -= BackToMainMenu;
+
         PauseBannerAnimation();
-        PauseTimeUpAnimation();
+        _timeUpSequenceActive = false;
+        _statsCountActive = false;
     }
 
     void Start()
@@ -173,6 +231,8 @@ public class HudController : MonoBehaviour
     {
         UpdateSpeed();
         UpdateTimer();
+        UpdateRushTimer();
+        UpdateEndSequence();
     }
 
     void UpdateSpeed()
@@ -376,6 +436,33 @@ public class HudController : MonoBehaviour
         }
     }
 
+    void UpdateRushTimer()
+    {
+        var session = GameSession.Instance;
+        if (session == null || !session.IsRushActive)
+            return;
+
+        float t = Mathf.Max(0f, session.RushTimeRemaining);
+        if (_rushTimerLabel != null)
+            _rushTimerLabel.text = FormatCountdown(t);
+
+        if (_rushTimerFill != null)
+        {
+            float fraction = session.RushTimeAllotted > 0f
+                ? Mathf.Clamp01(session.RushTimeRemaining / session.RushTimeAllotted)
+                : 0f;
+            _rushTimerFill.style.width = Length.Percent(fraction * 100f);
+        }
+
+        if (_rushTimerCard != null)
+        {
+            bool urgent = t <= 8f;
+            _rushTimerCard.EnableInClassList("rush-timer--urgent", urgent);
+            float pulse = urgent ? 1f + 0.035f * Mathf.Abs(Mathf.Sin(Time.unscaledTime * 9f)) : 1f;
+            _rushTimerCard.style.scale = new StyleScale(new Scale(new Vector2(pulse, pulse)));
+        }
+    }
+
     void HandleCoinsChanged(int coins)
     {
         _coinsLabel.text = coins.ToString();
@@ -418,15 +505,18 @@ public class HudController : MonoBehaviour
         HideBanner();
     }
 
-    void HandleDeliveryRewarded(int baseReward, int bonus)
+    void HandleDeliveryRewarded(int baseReward, int bonus, int secondsAdded)
     {
         int total = baseReward + bonus;
+        bool rushDelivery = GameSession.Instance != null && GameSession.Instance.IsRushActive;
         // Kids Magazine only renders its uppercase glyph set consistently.
         // Split the reward into compact lines so the delivery result and the
         // earned coins read as one message instead of drifting apart.
-        _rewardToast.text = bonus > 0
-            ? $"PACKAGE DELIVERED!\n+{total} COINS\n+{bonus} FAST BONUS"
-            : $"PACKAGE DELIVERED!\n+{total} COINS";
+        _rewardToast.text = rushDelivery
+            ? $"RUSH COMPLETE!\n+{total} COINS  +{secondsAdded} SEC"
+            : bonus > 0
+                ? $"PACKAGE DELIVERED!\n+{total} COINS  +{secondsAdded} SEC\n+{bonus} FAST BONUS"
+                : $"PACKAGE DELIVERED!\n+{total} COINS  +{secondsAdded} SEC";
         _rewardToast.AddToClassList("toast--show");
         _audioManager?.PlaySoundOneShot("DeliverySuccessful");
 
@@ -451,12 +541,14 @@ public class HudController : MonoBehaviour
         ShowBanner(ExplodedBannerText, 3.5f);
     }
 
-    void HandleDeliveryFailedPenalty(int penalty)
+    void HandleDeliveryFailedPenalty(int penalty, int timePenalty)
     {
-        if (penalty <= 0)
+        if (penalty <= 0 && timePenalty <= 0)
             return;
 
-        _rewardToast.text = $"-{penalty}";
+        _rewardToast.text = penalty > 0
+            ? $"PACKAGE LOST!\n-{penalty} COINS  -{timePenalty} SEC"
+            : $"PACKAGE LOST!\n-{timePenalty} SEC";
         _rewardToast.AddToClassList("toast--show");
 
         _toastHide?.Pause();
@@ -468,42 +560,242 @@ public class HudController : MonoBehaviour
     {
         HideBanner();
         FlashScreen(new Color(1f, 0.86f, 0.32f), 0.22f, 420);
-        ShowTimeUp();
+        BeginTimeUpSequence();
     }
 
-    void ShowTimeUp()
+    void HandleRushStarted(float duration)
+    {
+        if (_rushTimerLabel != null)
+            _rushTimerLabel.text = FormatCountdown(duration);
+        if (_rushTimerFill != null)
+            _rushTimerFill.style.width = Length.Percent(100f);
+
+        _root?.AddToClassList("rush--active");
+        _rushTimerCard?.AddToClassList("rush-timer--visible");
+
+        PunchRushHolder(_coinsPill, 0);
+        PunchRushHolder(_timerPill, 35);
+        PunchRushHolder(_deliveriesPill, 70);
+        _speedPanel?.schedule.Execute(() => PopPanel(_speedPanel)).ExecuteLater(105);
+        SpawnSparks(_rushTimerCard, 18, 96f, CoinSparkColors);
+    }
+
+    void HandleRushEnded(bool deliveredInTime)
+    {
+        _root?.RemoveFromClassList("rush--active");
+        _rushTimerCard?.RemoveFromClassList("rush-timer--visible");
+        _rushTimerCard?.RemoveFromClassList("rush-timer--urgent");
+        if (_rushTimerCard != null)
+            _rushTimerCard.style.scale = new StyleScale(new Scale(Vector2.one));
+
+        var session = GameSession.Instance;
+        if (!deliveredInTime && session != null && !session.IsGameOver && session.HasPackage)
+        {
+            _rewardToast.text = "RUSH TIME EXPIRED!";
+            _rewardToast.AddToClassList("toast--show");
+            _toastHide?.Pause();
+            _toastHide = _rewardToast.schedule.Execute(() => _rewardToast.RemoveFromClassList("toast--show"));
+            _toastHide.ExecuteLater(1800);
+        }
+    }
+
+    void BeginTimeUpSequence()
+    {
+        var session = GameSession.Instance;
+        if (session == null)
+            return;
+
+        _finalScore = session.Coins;
+        _finalDeliveries = session.DeliveriesCompleted;
+        _finalRushDeliveries = session.RushDeliveriesCompleted;
+        _finalRushAttempts = session.RushAttempts;
+        _finalExplosions = session.Explosions;
+
+        if (_endRankLabel != null)
+            _endRankLabel.text = session.FinalLeaderboardRank > 0
+                ? $"LOCAL RANK #{session.FinalLeaderboardRank}"
+                : "LOCAL TOP 10 MISSED";
+
+        _endOverlay?.RemoveFromClassList("end--show");
+        _endCard?.RemoveFromClassList("end-card--show");
+        _endCard?.RemoveFromClassList("stats--settled");
+        _endRestartButton?.SetEnabled(false);
+        _endMenuButton?.SetEnabled(false);
+
+        if (_timeUpLabel != null)
+        {
+            _timeUpLabel.style.display = DisplayStyle.Flex;
+            _timeUpLabel.style.opacity = 0f;
+            _timeUpLabel.style.translate = new StyleTranslate(new Translate(0f, 130f));
+            _timeUpLabel.style.scale = new StyleScale(new Scale(new Vector2(0.15f, 0.15f)));
+            _timeUpLabel.style.rotate = new StyleRotate(new Rotate(new Angle(-12f, AngleUnit.Degree)));
+            _timeUpLabel.AddToClassList("time-up--active");
+        }
+
+        _timeUpCurtain?.AddToClassList("time-up--active");
+        _timeUpSequenceStart = Time.unscaledTime;
+        _timeUpSequenceActive = true;
+        _statsCountActive = false;
+        SpawnConfetti(50f, 48f, 34, 500f);
+    }
+
+    void UpdateEndSequence()
+    {
+        if (_timeUpSequenceActive)
+        {
+            float elapsed = Time.unscaledTime - _timeUpSequenceStart;
+            AnimateTimeUpLabel(elapsed);
+
+            if (elapsed >= TimeUpSequenceDuration)
+            {
+                _timeUpSequenceActive = false;
+                _timeUpLabel?.RemoveFromClassList("time-up--active");
+                _timeUpCurtain?.RemoveFromClassList("time-up--active");
+                if (_timeUpLabel != null)
+                    _timeUpLabel.style.display = DisplayStyle.None;
+                ShowEndScreen();
+            }
+        }
+
+        if (_statsCountActive)
+            UpdateStatsCount();
+    }
+
+    void AnimateTimeUpLabel(float elapsed)
     {
         if (_timeUpLabel == null)
             return;
 
-        PauseTimeUpAnimation();
-
-        _timeUpLabel.style.opacity = 0f;
-        _timeUpLabel.style.translate = new StyleTranslate(new Translate(0f, 86f));
-        _timeUpLabel.style.scale = new StyleScale(new Scale(new Vector2(0.35f, 0.35f)));
-        _timeUpLabel.style.rotate = new StyleRotate(new Rotate(new Angle(-6f, AngleUnit.Degree)));
-
-        _timeUpEnter = _timeUpLabel.schedule.Execute(() =>
+        if (elapsed < 0.32f)
         {
+            float t = Mathf.Clamp01(elapsed / 0.32f);
+            float eased = EaseOutBack(t);
+            float scale = Mathf.LerpUnclamped(0.15f, 1f, eased);
+            _timeUpLabel.style.opacity = t;
+            _timeUpLabel.style.translate = new StyleTranslate(new Translate(0f, Mathf.Lerp(130f, 0f, t * t)));
+            _timeUpLabel.style.scale = new StyleScale(new Scale(new Vector2(scale, scale)));
+            _timeUpLabel.style.rotate = new StyleRotate(new Rotate(new Angle(Mathf.Lerp(-12f, 2f, eased), AngleUnit.Degree)));
+            return;
+        }
+
+        if (elapsed < 2.12f)
+        {
+            float hold = elapsed - 0.32f;
+            float damp = Mathf.Lerp(1f, 0.35f, Mathf.Clamp01(hold / 1.8f));
+            float punch = Mathf.Pow(Mathf.Max(0f, Mathf.Sin(hold * Mathf.PI * 3.2f)), 8f);
+            float scale = 1f + punch * 0.12f;
+            float rotation = Mathf.Sin(hold * 18f) * 3.2f * damp;
+            float shakeX = Mathf.Sin(hold * 35f) * 7f * damp;
+            float shakeY = Mathf.Cos(hold * 29f) * 3f * damp;
             _timeUpLabel.style.opacity = 1f;
-            _timeUpLabel.style.translate = new StyleTranslate(new Translate(0f, 0f));
-            _timeUpLabel.style.scale = new StyleScale(new Scale(new Vector2(1.18f, 1.18f)));
-            _timeUpLabel.style.rotate = new StyleRotate(new Rotate(new Angle(1f, AngleUnit.Degree)));
-        });
-        _timeUpEnter.ExecuteLater(16);
+            _timeUpLabel.style.translate = new StyleTranslate(new Translate(shakeX, shakeY));
+            _timeUpLabel.style.scale = new StyleScale(new Scale(new Vector2(scale, scale)));
+            _timeUpLabel.style.rotate = new StyleRotate(new Rotate(new Angle(rotation, AngleUnit.Degree)));
+            return;
+        }
 
-        _timeUpSettle = _timeUpLabel.schedule.Execute(() =>
-        {
-            _timeUpLabel.style.scale = new StyleScale(new Scale(new Vector2(1f, 1f)));
-            _timeUpLabel.style.rotate = new StyleRotate(new Rotate(new Angle(0f, AngleUnit.Degree)));
-        });
-        _timeUpSettle.ExecuteLater(260);
+        float exit = Mathf.Clamp01((elapsed - 2.12f) / (TimeUpSequenceDuration - 2.12f));
+        float exitEase = exit * exit;
+        float exitScale = Mathf.Lerp(1f, 1.7f, exitEase);
+        _timeUpLabel.style.opacity = 1f - exit;
+        _timeUpLabel.style.translate = new StyleTranslate(new Translate(0f, Mathf.Lerp(0f, -120f, exitEase)));
+        _timeUpLabel.style.scale = new StyleScale(new Scale(new Vector2(exitScale, exitScale)));
+        _timeUpLabel.style.rotate = new StyleRotate(new Rotate(new Angle(Mathf.Lerp(0f, 8f, exitEase), AngleUnit.Degree)));
     }
 
-    void PauseTimeUpAnimation()
+    void ShowEndScreen()
     {
-        _timeUpEnter?.Pause();
-        _timeUpSettle?.Pause();
+        if (_endOverlay == null)
+            return;
+
+        SetStatsCount(0f);
+        _root?.AddToClassList("game--finished");
+        _endOverlay.AddToClassList("end--show");
+        _endCard?.AddToClassList("end-card--show");
+        _statsCountStart = Time.unscaledTime + 0.18f;
+        _statsCountActive = true;
+    }
+
+    void UpdateStatsCount()
+    {
+        float elapsed = Time.unscaledTime - _statsCountStart;
+        if (elapsed < 0f)
+            return;
+
+        float t = Mathf.Clamp01(elapsed / StatsCountDuration);
+        float eased = 1f - Mathf.Pow(1f - t, 3f);
+        SetStatsCount(eased);
+
+        float pulse = 1f + Mathf.Sin(t * Mathf.PI * 8f) * (1f - t) * 0.035f;
+        var scale = new StyleScale(new Scale(new Vector2(pulse, pulse)));
+        if (_endScoreLabel != null) _endScoreLabel.style.scale = scale;
+        if (_endDeliveriesLabel != null) _endDeliveriesLabel.style.scale = scale;
+        if (_endRushLabel != null) _endRushLabel.style.scale = scale;
+        if (_endExplosionsLabel != null) _endExplosionsLabel.style.scale = scale;
+
+        if (t >= 1f)
+        {
+            _statsCountActive = false;
+            _endCard?.AddToClassList("stats--settled");
+            _endRestartButton?.SetEnabled(true);
+            _endMenuButton?.SetEnabled(true);
+            if (_endScoreLabel != null) _endScoreLabel.style.scale = new StyleScale(new Scale(Vector2.one));
+            if (_endDeliveriesLabel != null) _endDeliveriesLabel.style.scale = new StyleScale(new Scale(Vector2.one));
+            if (_endRushLabel != null) _endRushLabel.style.scale = new StyleScale(new Scale(Vector2.one));
+            if (_endExplosionsLabel != null) _endExplosionsLabel.style.scale = new StyleScale(new Scale(Vector2.one));
+            SpawnConfetti(50f, 44f, 24, 380f);
+        }
+    }
+
+    void SetStatsCount(float progress)
+    {
+        if (_endScoreLabel != null)
+            _endScoreLabel.text = $"{Mathf.RoundToInt(_finalScore * progress)} COINS";
+        if (_endDeliveriesLabel != null)
+            _endDeliveriesLabel.text = Mathf.RoundToInt(_finalDeliveries * progress).ToString();
+        if (_endRushLabel != null)
+            _endRushLabel.text = $"{Mathf.RoundToInt(_finalRushDeliveries * progress)}/{Mathf.RoundToInt(_finalRushAttempts * progress)}";
+        if (_endExplosionsLabel != null)
+            _endExplosionsLabel.text = Mathf.RoundToInt(_finalExplosions * progress).ToString();
+    }
+
+    void RestartRun()
+    {
+        _audioManager?.PlaySoundOneShot("ButtonClick");
+        Time.timeScale = 1f;
+        AudioListener.pause = false;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    void BackToMainMenu()
+    {
+        _audioManager?.PlaySoundOneShot("ButtonClick");
+        Time.timeScale = 1f;
+        AudioListener.pause = false;
+        SceneManager.LoadScene(mainMenuScene);
+    }
+
+    static string FormatCountdown(float seconds)
+    {
+        int totalSeconds = Mathf.Max(0, Mathf.CeilToInt(seconds));
+        return $"{totalSeconds / 60:00}:{totalSeconds % 60:00}";
+    }
+
+    static float EaseOutBack(float t)
+    {
+        const float c1 = 1.70158f;
+        const float c3 = c1 + 1f;
+        float x = t - 1f;
+        return 1f + c3 * x * x * x + c1 * x * x;
+    }
+
+    static void PunchRushHolder(VisualElement holder, long delayMs)
+    {
+        if (holder == null)
+            return;
+
+        holder.schedule.Execute(() => holder.AddToClassList("rush-holder-punch")).ExecuteLater(delayMs);
+        holder.schedule.Execute(() => holder.RemoveFromClassList("rush-holder-punch")).ExecuteLater(delayMs + 170);
     }
 
     /// <summary>

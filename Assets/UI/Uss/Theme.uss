@@ -4693,3 +4693,687 @@
     white-space: normal;
     -unity-text-align: middle-center;
 }
+
+/* ============================================================
+   Rush delivery state
+   ============================================================ */
+
+#coins-pill,
+#deliveries-pill,
+#speed-panel {
+    transition-property: scale, translate, background-color, border-color;
+    transition-duration: 0.34s, 0.14s, 0.18s, 0.18s;
+    transition-timing-function: ease-out;
+}
+
+#timer-pill {
+    transition-property: translate, background-color, border-color;
+    transition-duration: 0.14s, 0.18s, 0.18s;
+    transition-timing-function: ease-out;
+}
+
+.rush-holder-punch {
+    translate: 0 -10px;
+}
+
+#hud-root.rush--active #coins-pill,
+#hud-root.rush--active #timer-pill,
+#hud-root.rush--active #deliveries-pill,
+#hud-root.rush--active #speed-panel {
+    background-color: rgb(255, 246, 204);
+    border-color: rgb(255, 232, 137);
+    border-bottom-color: rgb(224, 165, 38);
+}
+
+#hud-root.rush--active #timer-pill .clock-icon {
+    background-color: rgb(255, 181, 35);
+    border-color: rgb(255, 239, 168);
+    border-bottom-color: rgb(197, 126, 20);
+}
+
+#hud-root.rush--active #timer-pill .timer-line__fill,
+#hud-root.rush--active #deliveries-pill .track__fill {
+    background-color: rgb(255, 181, 35);
+    border-color: rgb(255, 236, 143);
+    border-bottom-color: rgb(197, 126, 20);
+}
+
+#rush-timer-card {
+    position: absolute;
+    right: 0;
+    top: 154px;
+    width: 410px;
+    height: 140px;
+    min-height: 140px;
+    padding: 12px 22px 14px 112px;
+    flex-direction: row;
+    align-items: center;
+    background-color: rgb(255, 197, 61);
+    border-width: 3px;
+    border-color: rgb(255, 239, 168);
+    border-bottom-width: 8px;
+    border-bottom-color: rgb(197, 126, 20);
+    border-radius: 26px;
+    opacity: 0;
+    visibility: hidden;
+    translate: 42px -16px;
+    transition-property: opacity, translate, background-color, border-color;
+    transition-duration: 0.16s, 0.2s, 0.16s, 0.16s;
+}
+
+#rush-timer-card.rush-timer--visible {
+    opacity: 1;
+    visibility: visible;
+    translate: 0 0;
+}
+
+.rush-timer__bolt {
+    position: absolute;
+    left: 15px;
+    top: 21px;
+    width: 84px;
+    height: 84px;
+    margin: 0;
+    border-radius: 26px;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(255, 247, 213);
+    border-width: 3px;
+    border-color: white;
+    border-bottom-width: 5px;
+    border-bottom-color: rgb(232, 174, 46);
+}
+
+.rush-timer__bolt-mark {
+    width: 60px;
+    height: 64px;
+    margin: 0;
+    padding: 0 0 5px 0;
+    -unity-font-definition: url("../../Kids Magazine.ttf");
+    font-size: 58px;
+    color: rgb(132, 76, 18);
+    -unity-text-align: middle-center;
+    -unity-text-outline-width: 0;
+}
+
+.rush-timer__copy {
+    position: relative;
+    height: 114px;
+    min-width: 0;
+    flex-grow: 1;
+    justify-content: flex-start;
+}
+
+.rush-timer__heading {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 1px;
+    height: 20px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.rush-timer__eyebrow {
+    position: relative;
+    height: 20px;
+    margin: 0;
+    padding: 0;
+    -unity-font-definition: url("../../Kids Magazine.ttf");
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    color: rgb(132, 76, 18);
+    -unity-text-align: middle-left;
+    -unity-text-outline-width: 0;
+}
+
+#rush-timer-label {
+    position: absolute;
+    left: -2px;
+    right: 0;
+    top: 29px;
+    height: 58px;
+    margin: 0;
+    padding: 0;
+    -unity-font-definition: url("../../Kids Magazine.ttf");
+    font-size: 52px;
+    letter-spacing: 1px;
+    color: rgb(92, 53, 19);
+    -unity-text-align: middle-left;
+    -unity-text-outline-width: 0;
+}
+
+.rush-timer__track {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 98px;
+    width: auto;
+    height: 16px;
+    min-height: 16px;
+    margin: 0;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: rgb(225, 161, 39);
+    border-width: 2px;
+    border-color: rgb(196, 126, 21);
+}
+
+.rush-timer__fill {
+    top: 2px;
+    left: 2px;
+    height: 9px;
+    min-height: 9px;
+    border-radius: 5px;
+    background-color: rgb(255, 253, 235);
+    border-bottom-width: 2px;
+    border-bottom-color: rgb(255, 225, 126);
+    transition-property: width;
+    transition-duration: 0.08s;
+}
+
+#rush-timer-card.rush-timer--urgent {
+    background-color: rgb(255, 127, 99);
+    border-color: rgb(255, 215, 205);
+    border-bottom-color: rgb(211, 81, 62);
+}
+
+#rush-timer-card.rush-timer--urgent .rush-timer__track {
+    background-color: rgb(199, 69, 53);
+    border-color: rgb(173, 53, 43);
+}
+
+/* ============================================================
+   End-of-run stats screen
+   ============================================================ */
+
+#time-up-curtain {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(30, 24, 20, 0.42);
+    opacity: 0;
+    visibility: hidden;
+    transition-property: opacity;
+    transition-duration: 0.12s;
+}
+
+#time-up-curtain.time-up--active {
+    opacity: 1;
+    visibility: visible;
+}
+
+#time-up-label {
+    display: none;
+    visibility: hidden;
+    top: 31%;
+    height: 250px;
+    font-size: 154px;
+    letter-spacing: -2px;
+    color: rgb(255, 241, 84);
+    -unity-text-outline-width: 12px;
+    -unity-text-outline-color: rgb(87, 43, 29);
+    transform-origin: 50% 55%;
+    transition-property: opacity, translate, scale, rotate;
+    transition-duration: 0s, 0s, 0s, 0s;
+}
+
+#time-up-label.time-up--active {
+    display: flex;
+    visibility: visible;
+}
+
+#end-overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(31, 27, 24, 0.68);
+    opacity: 0;
+    visibility: hidden;
+    transition-property: opacity;
+    transition-duration: 0.2s;
+}
+
+#end-overlay.end--show {
+    opacity: 1;
+    visibility: visible;
+}
+
+#end-card {
+    width: 780px;
+    min-height: 610px;
+    padding: 32px 44px 36px 44px;
+    align-items: center;
+    background-color: rgb(245, 247, 251);
+    border-width: 4px;
+    border-color: rgba(255, 255, 255, 0.98);
+    border-bottom-width: 16px;
+    border-bottom-color: rgb(200, 205, 216);
+    border-radius: 46px;
+    opacity: 0;
+    translate: 0 82px;
+    scale: 0.84 0.84;
+    transition-property: opacity, translate, scale;
+    transition-duration: 0.18s, 0.24s, 0.24s;
+}
+
+#end-card.end-card--show {
+    opacity: 1;
+    translate: 0 0;
+    scale: 1 1;
+}
+
+.end-card__eyebrow {
+    min-width: 230px;
+    height: 38px;
+    padding: 6px 22px;
+    border-radius: 18px;
+    background-color: rgb(255, 232, 151);
+    -unity-font-definition: url("../../Kids Magazine.ttf");
+    font-size: 16px;
+    letter-spacing: 1px;
+    color: rgb(132, 76, 18);
+    -unity-text-align: middle-center;
+    -unity-text-outline-width: 0;
+}
+
+.end-card__title {
+    height: 82px;
+    margin-top: 4px;
+    -unity-font-definition: url("../../Kids Magazine.ttf");
+    font-size: 70px;
+    color: rgb(71, 55, 45);
+    -unity-text-align: middle-center;
+    -unity-text-outline-width: 0;
+}
+
+.end-card__score {
+    width: 100%;
+    height: 68px;
+    margin-bottom: 24px;
+    border-radius: 25px;
+    background-color: rgb(255, 244, 195);
+    -unity-font-definition: url("../../Kids Magazine.ttf");
+    font-size: 46px;
+    color: rgb(151, 91, 21);
+    -unity-text-align: middle-center;
+    -unity-text-outline-width: 0;
+}
+
+.end-stats {
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+
+.end-stat {
+    width: 218px;
+    height: 118px;
+    margin-bottom: 18px;
+    padding: 12px 12px 14px 12px;
+    border-radius: 24px;
+    background-color: rgb(232, 236, 243);
+    border-bottom-width: 7px;
+    border-bottom-color: rgb(205, 211, 222);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.end-stat__label {
+    height: 24px;
+    margin-bottom: 2px;
+    font-size: 15px;
+    color: rgb(118, 99, 80);
+    -unity-text-align: middle-center;
+    -unity-text-outline-width: 0;
+}
+
+.end-stat__value {
+    -unity-font-definition: url("../../Kids Magazine.ttf");
+    height: 58px;
+    font-size: 46px;
+    color: rgb(71, 55, 45);
+    -unity-text-align: middle-center;
+    -unity-text-outline-width: 0;
+}
+
+.end-card__rank {
+    height: 42px;
+    margin: 4px 0 14px 0;
+    -unity-font-definition: url("../../Kids Magazine.ttf");
+    font-size: 24px;
+    color: rgb(52, 126, 183);
+    -unity-text-align: middle-center;
+    -unity-text-outline-width: 0;
+    opacity: 0;
+    translate: 0 18px;
+    transition-property: opacity, translate;
+    transition-duration: 0.22s, 0.22s;
+}
+
+.end-card__actions {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    opacity: 0;
+    translate: 0 24px;
+    transition-property: opacity, translate;
+    transition-duration: 0.24s, 0.24s;
+}
+
+#end-card.stats--settled .end-card__rank,
+#end-card.stats--settled .end-card__actions {
+    opacity: 1;
+    translate: 0 0;
+}
+
+.end-action-depth {
+    width: 332px;
+    height: 88px;
+    margin: 0;
+    align-self: auto;
+}
+
+.end-action-depth.button-depth--card .btn,
+.end-action-depth.button-depth--card .button-depth__shadow {
+    height: 74px;
+    border-radius: 29px;
+}
+
+.end-action-depth.button-depth--card .btn {
+    font-size: 30px;
+}
+
+/* ============================================================
+   Main-menu leaderboard
+   ============================================================ */
+
+.menu-utility-buttons {
+    height: 140px;
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+.menu-utility-buttons .button-depth--settings {
+    align-self: auto;
+}
+
+.button-depth--leaderboard {
+    margin-right: 18px;
+}
+
+.leaderboard-icon-btn {
+    width: 128px;
+    height: 128px;
+    border-radius: 34px;
+    background-color: rgb(255, 255, 255);
+    border-width: 2px;
+    border-color: rgba(255, 255, 255, 0.9);
+    border-bottom-width: 2px;
+    border-bottom-color: rgba(255, 255, 255, 0.62);
+    align-items: center;
+    justify-content: center;
+}
+
+.button-depth__shadow--leaderboard {
+    background-color: rgb(220, 225, 233);
+}
+
+.leaderboard-glyph {
+    position: relative;
+    width: 78px;
+    height: 74px;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.leaderboard-glyph__bar {
+    position: relative;
+    width: 23px;
+    margin: 0 1px;
+    border-radius: 6px;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: rgb(71, 55, 45);
+    border-bottom-width: 5px;
+    border-bottom-color: rgb(46, 35, 28);
+}
+
+.leaderboard-glyph__bar--first {
+    height: 66px;
+    background-color: rgb(255, 188, 47);
+    border-bottom-color: rgb(205, 135, 25);
+}
+
+.leaderboard-glyph__bar--second {
+    height: 50px;
+    background-color: rgb(132, 191, 221);
+    border-bottom-color: rgb(78, 139, 174);
+}
+
+.leaderboard-glyph__bar--third {
+    height: 38px;
+    background-color: rgb(227, 142, 94);
+    border-bottom-color: rgb(178, 95, 55);
+}
+
+.leaderboard-glyph__bar Label {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 1px;
+    width: auto;
+    height: 27px;
+    margin: 0;
+    padding: 0;
+    -unity-font-definition: url("../../Kids Magazine.ttf");
+    font-size: 19px;
+    color: white;
+    -unity-text-align: middle-center;
+    -unity-text-outline-width: 1px;
+    -unity-text-outline-color: rgba(71, 55, 45, 0.35);
+}
+
+.leaderboard-glyph__bar--third Label {
+    left: -2px;
+    right: 2px;
+    top: 0;
+    translate: 0 0;
+}
+
+#menu-leaderboard-overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(34, 28, 24, 0.48);
+}
+
+#menu-leaderboard-overlay.overlay--show {
+    display: flex;
+}
+
+#menu-leaderboard-card {
+    width: 780px;
+    height: 850px;
+    padding: 34px 38px 30px 38px;
+    align-items: center;
+    border-radius: 42px;
+    background-color: rgb(245, 247, 251);
+    border-width: 3px;
+    border-color: rgba(255, 255, 255, 0.98);
+    border-bottom-width: 16px;
+    border-bottom-color: rgb(200, 205, 216);
+}
+
+.leaderboard-card__eyebrow {
+    height: 34px;
+    padding: 5px 18px;
+    border-radius: 15px;
+    background-color: rgb(255, 232, 151);
+    font-size: 14px;
+    letter-spacing: 1px;
+    color: rgb(132, 76, 18);
+    -unity-text-align: middle-center;
+    -unity-text-outline-width: 0;
+}
+
+#menu-leaderboard-card .menu-card__title {
+    height: 66px;
+    margin: 0 0 16px 0;
+    -unity-font-definition: url("../../Kids Magazine.ttf");
+    font-size: 48px;
+    color: rgb(71, 55, 45);
+    -unity-text-align: middle-center;
+    -unity-text-outline-width: 0;
+}
+
+.leaderboard-header,
+.leaderboard-row {
+    width: auto;
+    align-self: stretch;
+    flex-direction: row;
+    align-items: center;
+}
+
+.leaderboard-header {
+    height: 34px;
+    padding: 0 16px;
+}
+
+.leaderboard-header Label {
+    font-size: 13px;
+    color: rgb(133, 113, 94);
+    -unity-text-outline-width: 0;
+}
+
+.leaderboard-header__rank,
+.leaderboard-row__rank {
+    width: 70px;
+    -unity-text-align: middle-center;
+}
+
+.leaderboard-header__score,
+.leaderboard-row__score {
+    width: 240px;
+    -unity-text-align: middle-left;
+}
+
+.leaderboard-header__detail,
+.leaderboard-row__detail {
+    width: 175px;
+    -unity-text-align: middle-center;
+}
+
+.leaderboard-list {
+    width: 100%;
+    height: 560px;
+    margin-bottom: 14px;
+}
+
+.leaderboard-list .unity-scroll-view__content-container {
+    width: 100%;
+    padding-right: 8px;
+}
+
+.leaderboard-list .unity-scroller--horizontal {
+    display: none;
+}
+
+.leaderboard-row {
+    height: 70px;
+    min-height: 70px;
+    margin-bottom: 8px;
+    padding: 0 16px;
+    border-radius: 21px;
+    background-color: rgb(232, 236, 243);
+    border-bottom-width: 6px;
+    border-bottom-color: rgb(205, 211, 222);
+}
+
+.leaderboard-row--first {
+    background-color: rgb(255, 244, 195);
+    border-bottom-color: rgb(224, 165, 38);
+}
+
+.leaderboard-row Label {
+    -unity-font-definition: url("../../Kids Magazine.ttf");
+    color: rgb(71, 55, 45);
+    -unity-text-outline-width: 0;
+}
+
+.leaderboard-row__rank {
+    font-size: 28px;
+    color: rgb(151, 91, 21);
+}
+
+.leaderboard-row__score {
+    font-size: 34px;
+}
+
+.leaderboard-row__detail {
+    font-size: 27px;
+}
+
+.leaderboard-empty {
+    height: 300px;
+    -unity-font-definition: url("../../Kids Magazine.ttf");
+    font-size: 28px;
+    color: rgb(118, 99, 80);
+    -unity-text-align: middle-center;
+    -unity-text-outline-width: 0;
+}
+
+.menu-back-depth {
+    width: 304px;
+    height: 84px;
+    align-self: center;
+}
+
+#menu-settings-card .menu-back-depth,
+#menu-leaderboard-card .menu-back-depth {
+    margin-top: 6px;
+    margin-bottom: 0;
+}
+
+#menu-settings-card .menu-back-depth .btn,
+#menu-leaderboard-card .menu-back-depth .btn {
+    left: 0;
+    right: 0;
+    width: auto;
+    height: 70px;
+    min-height: 70px;
+    border-radius: 30px;
+    border-width: 0;
+    border-bottom-width: 2px;
+    border-bottom-color: rgba(255, 255, 255, 0.48);
+    padding: 0 20px;
+    -unity-font-definition: url("../../Kids Magazine.ttf");
+    font-size: 36px;
+    -unity-text-outline-width: 0;
+    -unity-text-align: middle-center;
+    background-color: rgb(232, 236, 243);
+    color: rgb(71, 55, 45);
+}
+
+#menu-settings-card .menu-back-depth .button-depth__shadow,
+#menu-leaderboard-card .menu-back-depth .button-depth__shadow {
+    top: 12px;
+    height: 70px;
+    border-radius: 30px;
+    background-color: rgb(191, 199, 212);
+}

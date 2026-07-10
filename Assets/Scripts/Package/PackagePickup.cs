@@ -3,9 +3,6 @@ using UnityEngine.Rendering.Universal;
 
 public class PackagePickup : MonoBehaviour
 {
-    static readonly int EmissionColorId = Shader.PropertyToID("_EmissionColor");
-    static readonly Color PickupPinEmission = new Color(0.02f, 1.05f, 0.08f, 1f);
-
     public PackageVariant[] variants;
     public Transform packageSpawnPosition;
     public float speedThreshold = 0.5f;
@@ -36,25 +33,6 @@ public class PackagePickup : MonoBehaviour
         {
             renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
             renderer.receiveShadows = false;
-        }
-    }
-
-    void ConfigurePickupPinGlow(GameObject pin)
-    {
-        ConfigureIndicatorRenderers(pin);
-
-        // .materials gives this world-pin its own material instances, so the
-        // carried and decorative package assets retain their normal shading.
-        foreach (Renderer renderer in pin.GetComponentsInChildren<Renderer>(true))
-        {
-            foreach (Material material in renderer.materials)
-            {
-                if (!material.HasProperty(EmissionColorId))
-                    continue;
-
-                material.EnableKeyword("_EMISSION");
-                material.SetColor(EmissionColorId, PickupPinEmission);
-            }
         }
     }
 
@@ -109,7 +87,6 @@ public class PackagePickup : MonoBehaviour
         // Spawn the package only now, on pickup — idle locations no longer each hold one in memory.
         PackageVariant variant = variants[Random.Range(0, variants.Length)];
         _spawnedPackage = Instantiate(variant.prefab, packageSpawnPosition.position, packageSpawnPosition.rotation);
-        ConfigurePickupPinGlow(_spawnedPackage);
 
         IPackageEffect effect = variant.effect as IPackageEffect;
         animator.StartPickupSequence(_spawnedPackage.transform, effect);

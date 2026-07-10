@@ -233,6 +233,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2947f41947dff5e6288356f7038bfa16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RushPackageEffect
+  rushDuration: 30
 --- !u!1 &2143150395911209071
 GameObject:
   m_ObjectHideFlags: 0

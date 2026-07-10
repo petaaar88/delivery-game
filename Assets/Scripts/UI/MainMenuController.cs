@@ -33,7 +33,11 @@ public class MainMenuController : MonoBehaviour
     Button _quitButton;
     Button _settingsButton;
     Button _settingsBackButton;
+    Button _leaderboardButton;
+    Button _leaderboardBackButton;
     VisualElement _settingsOverlay;
+    VisualElement _leaderboardOverlay;
+    ScrollView _leaderboardList;
     ObjectAudioManager _audioManager;
     Slider _masterSlider;
     Slider _sfxSlider;
@@ -56,7 +60,16 @@ public class MainMenuController : MonoBehaviour
         _quitButton = root.Q<Button>("quit-button");
         _settingsButton = root.Q<Button>("settings-preview-button");
         _settingsBackButton = root.Q<Button>("settings-back-button");
+        _leaderboardButton = root.Q<Button>("leaderboard-button");
+        _leaderboardBackButton = root.Q<Button>("leaderboard-back-button");
         _settingsOverlay = root.Q("menu-settings-overlay");
+        _leaderboardOverlay = root.Q("menu-leaderboard-overlay");
+        _leaderboardList = root.Q<ScrollView>("leaderboard-list");
+        if (_leaderboardList != null)
+        {
+            _leaderboardList.horizontalScrollerVisibility = ScrollerVisibility.Hidden;
+            _leaderboardList.verticalScrollerVisibility = ScrollerVisibility.Auto;
+        }
         _masterSlider = root.Q<Slider>("master-slider");
         _sfxSlider = root.Q<Slider>("sfx-slider");
         _musicSlider = root.Q<Slider>("music-slider");
@@ -86,6 +99,18 @@ public class MainMenuController : MonoBehaviour
             _settingsBackButton.clicked += PlayClickSound;
         }
 
+        if (_leaderboardButton != null)
+        {
+            _leaderboardButton.clicked += ShowLeaderboard;
+            _leaderboardButton.clicked += PlayClickSound;
+        }
+
+        if (_leaderboardBackButton != null)
+        {
+            _leaderboardBackButton.clicked += HideLeaderboard;
+            _leaderboardBackButton.clicked += PlayClickSound;
+        }
+
         if (_masterSlider != null)
             _masterSlider.RegisterValueChangedCallback(OnMasterVolumeChanged);
 
@@ -99,6 +124,7 @@ public class MainMenuController : MonoBehaviour
             _vehicleSlider.RegisterValueChangedCallback(OnVehicleVolumeChanged);
 
         HideSettings();
+        HideLeaderboard();
     }
 
     void OnDisable()
@@ -125,6 +151,18 @@ public class MainMenuController : MonoBehaviour
         {
             _settingsBackButton.clicked -= HideSettings;
             _settingsBackButton.clicked -= PlayClickSound;
+        }
+
+        if (_leaderboardButton != null)
+        {
+            _leaderboardButton.clicked -= ShowLeaderboard;
+            _leaderboardButton.clicked -= PlayClickSound;
+        }
+
+        if (_leaderboardBackButton != null)
+        {
+            _leaderboardBackButton.clicked -= HideLeaderboard;
+            _leaderboardBackButton.clicked -= PlayClickSound;
         }
 
         if (_masterSlider != null)
@@ -188,6 +226,7 @@ public class MainMenuController : MonoBehaviour
 
     void ShowSettings()
     {
+        HideLeaderboard();
         SyncSliders();
         if (_settingsOverlay != null)
             _settingsOverlay.AddToClassList("overlay--show");
@@ -197,6 +236,63 @@ public class MainMenuController : MonoBehaviour
     {
         if (_settingsOverlay != null)
             _settingsOverlay.RemoveFromClassList("overlay--show");
+    }
+
+    void ShowLeaderboard()
+    {
+        HideSettings();
+        RefreshLeaderboard();
+        _leaderboardOverlay?.AddToClassList("overlay--show");
+    }
+
+    void HideLeaderboard()
+    {
+        _leaderboardOverlay?.RemoveFromClassList("overlay--show");
+    }
+
+    void RefreshLeaderboard()
+    {
+        if (_leaderboardList == null)
+            return;
+
+        VisualElement content = _leaderboardList.contentContainer;
+        content.Clear();
+
+        var entries = LocalLeaderboard.GetEntries();
+        if (entries.Count == 0)
+        {
+            var empty = new Label("NO RUNS YET - HIT PLAY!");
+            empty.AddToClassList("leaderboard-empty");
+            content.Add(empty);
+            return;
+        }
+
+        for (int i = 0; i < entries.Count; i++)
+        {
+            LocalLeaderboardEntry entry = entries[i];
+            var row = new VisualElement();
+            row.AddToClassList("leaderboard-row");
+            if (i == 0)
+                row.AddToClassList("leaderboard-row--first");
+
+            var rank = new Label($"{i + 1}");
+            rank.AddToClassList("leaderboard-row__rank");
+            row.Add(rank);
+
+            var score = new Label($"{entry.score}");
+            score.AddToClassList("leaderboard-row__score");
+            row.Add(score);
+
+            var deliveries = new Label(entry.deliveries.ToString());
+            deliveries.AddToClassList("leaderboard-row__detail");
+            row.Add(deliveries);
+
+            var rush = new Label($"{entry.rushDeliveries}/{entry.rushAttempts}");
+            rush.AddToClassList("leaderboard-row__detail");
+            row.Add(rush);
+
+            content.Add(row);
+        }
     }
 
     void SyncSliders()

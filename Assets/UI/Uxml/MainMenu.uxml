@@ -11,23 +11,41 @@
                 <ui:Label class="coin-pill__label" text="247" picking-mode="Ignore" />
             </ui:VisualElement>
 
-            <ui:VisualElement class="button-depth button-depth--settings">
-                <ui:VisualElement class="button-depth__shadow button-depth__shadow--settings" picking-mode="Ignore" />
-                <ui:Button name="settings-preview-button" class="icon-btn settings-icon-btn" tooltip="SETTINGS">
-                    <ui:VisualElement class="gear-icon" picking-mode="Ignore">
-                        <ui:VisualElement class="gear-tooth gear-tooth--top" picking-mode="Ignore" />
-                        <ui:VisualElement class="gear-tooth gear-tooth--right" picking-mode="Ignore" />
-                        <ui:VisualElement class="gear-tooth gear-tooth--bottom" picking-mode="Ignore" />
-                        <ui:VisualElement class="gear-tooth gear-tooth--left" picking-mode="Ignore" />
-                        <ui:VisualElement class="gear-tooth gear-tooth--top-right" picking-mode="Ignore" />
-                        <ui:VisualElement class="gear-tooth gear-tooth--bottom-right" picking-mode="Ignore" />
-                        <ui:VisualElement class="gear-tooth gear-tooth--bottom-left" picking-mode="Ignore" />
-                        <ui:VisualElement class="gear-tooth gear-tooth--top-left" picking-mode="Ignore" />
-                        <ui:VisualElement class="gear-body" picking-mode="Ignore">
-                            <ui:VisualElement class="gear-hole" picking-mode="Ignore" />
+            <ui:VisualElement class="menu-utility-buttons">
+                <ui:VisualElement class="button-depth button-depth--settings button-depth--leaderboard">
+                    <ui:VisualElement class="button-depth__shadow button-depth__shadow--settings button-depth__shadow--leaderboard" picking-mode="Ignore" />
+                    <ui:Button name="leaderboard-button" class="icon-btn settings-icon-btn leaderboard-icon-btn" tooltip="LEADERBOARD">
+                        <ui:VisualElement class="leaderboard-glyph" picking-mode="Ignore">
+                            <ui:VisualElement class="leaderboard-glyph__bar leaderboard-glyph__bar--second" picking-mode="Ignore">
+                                <ui:Label text="2" picking-mode="Ignore" />
+                            </ui:VisualElement>
+                            <ui:VisualElement class="leaderboard-glyph__bar leaderboard-glyph__bar--first" picking-mode="Ignore">
+                                <ui:Label text="1" picking-mode="Ignore" />
+                            </ui:VisualElement>
+                            <ui:VisualElement class="leaderboard-glyph__bar leaderboard-glyph__bar--third" picking-mode="Ignore">
+                                <ui:Label text="3" picking-mode="Ignore" />
+                            </ui:VisualElement>
                         </ui:VisualElement>
-                    </ui:VisualElement>
-                </ui:Button>
+                    </ui:Button>
+                </ui:VisualElement>
+                <ui:VisualElement class="button-depth button-depth--settings">
+                    <ui:VisualElement class="button-depth__shadow button-depth__shadow--settings" picking-mode="Ignore" />
+                    <ui:Button name="settings-preview-button" class="icon-btn settings-icon-btn" tooltip="SETTINGS">
+                        <ui:VisualElement class="gear-icon" picking-mode="Ignore">
+                            <ui:VisualElement class="gear-tooth gear-tooth--top" picking-mode="Ignore" />
+                            <ui:VisualElement class="gear-tooth gear-tooth--right" picking-mode="Ignore" />
+                            <ui:VisualElement class="gear-tooth gear-tooth--bottom" picking-mode="Ignore" />
+                            <ui:VisualElement class="gear-tooth gear-tooth--left" picking-mode="Ignore" />
+                            <ui:VisualElement class="gear-tooth gear-tooth--top-right" picking-mode="Ignore" />
+                            <ui:VisualElement class="gear-tooth gear-tooth--bottom-right" picking-mode="Ignore" />
+                            <ui:VisualElement class="gear-tooth gear-tooth--bottom-left" picking-mode="Ignore" />
+                            <ui:VisualElement class="gear-tooth gear-tooth--top-left" picking-mode="Ignore" />
+                            <ui:VisualElement class="gear-body" picking-mode="Ignore">
+                                <ui:VisualElement class="gear-hole" picking-mode="Ignore" />
+                            </ui:VisualElement>
+                        </ui:VisualElement>
+                    </ui:Button>
+                </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
 
@@ -68,9 +86,27 @@
                     <ui:Label class="settings-row__label" text="VEHICLE" />
                     <ui:Slider name="vehicle-slider" class="volume-slider" low-value="0" high-value="1" />
                 </ui:VisualElement>
-                <ui:VisualElement class="button-depth button-depth--card button-depth--ghost">
+                <ui:VisualElement class="button-depth button-depth--card button-depth--ghost menu-back-depth">
                     <ui:VisualElement class="button-depth__shadow button-depth__shadow--ghost" picking-mode="Ignore" />
                     <ui:Button name="settings-back-button" class="btn btn--ghost" text="BACK" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <ui:VisualElement name="menu-leaderboard-overlay">
+            <ui:VisualElement name="menu-leaderboard-card" class="menu-card">
+                <ui:Label class="leaderboard-card__eyebrow" text="LOCAL BEST" />
+                <ui:Label class="menu-card__title" text="LEADERBOARD" />
+                <ui:VisualElement class="leaderboard-header">
+                    <ui:Label class="leaderboard-header__rank" text="#" />
+                    <ui:Label class="leaderboard-header__score" text="SCORE" />
+                    <ui:Label class="leaderboard-header__detail" text="DELIVERIES" />
+                    <ui:Label class="leaderboard-header__detail" text="RUSH" />
+                </ui:VisualElement>
+                <ui:ScrollView name="leaderboard-list" class="leaderboard-list" mode="Vertical" />
+                <ui:VisualElement class="button-depth button-depth--card button-depth--ghost menu-back-depth leaderboard-back-depth">
+                    <ui:VisualElement class="button-depth__shadow button-depth__shadow--ghost" picking-mode="Ignore" />
+                    <ui:Button name="leaderboard-back-button" class="btn btn--ghost" text="BACK" />
                 </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>

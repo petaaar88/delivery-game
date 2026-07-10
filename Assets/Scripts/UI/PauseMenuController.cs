@@ -67,6 +67,9 @@ public class PauseMenuController : MonoBehaviour
 
     void Update()
     {
+        if (GameSession.Instance != null && GameSession.Instance.IsGameOver)
+            return;
+
         if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
         {
             if (IsPaused) Resume();
@@ -91,7 +94,7 @@ public class PauseMenuController : MonoBehaviour
 
     public void Pause()
     {
-        if (IsPaused) return;
+        if (IsPaused || (GameSession.Instance != null && GameSession.Instance.IsGameOver)) return;
         IsPaused = true;
 
         Time.timeScale = 0f;

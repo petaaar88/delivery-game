@@ -22,6 +22,16 @@ public class DeliveryManager : MonoBehaviour
         Instance = this;
     }
 
+    void OnEnable()
+    {
+        GameSession.OnTimeExpired += HandleTimeExpired;
+    }
+
+    void OnDisable()
+    {
+        GameSession.OnTimeExpired -= HandleTimeExpired;
+    }
+
     void Start()
     {
         _pickups = FindObjectsByType<PackagePickup>(FindObjectsSortMode.None);
@@ -33,12 +43,15 @@ public class DeliveryManager : MonoBehaviour
 
     void Update()
     {
-        if (Keyboard.current.rKey.wasPressedThisFrame)
+        if (!IsGameOver() && Keyboard.current != null && Keyboard.current.rKey.wasPressedThisFrame)
             DebugResetAll();
     }
 
     public void OnPackagePickedUp(PackagePickup source)
     {
+        if (IsGameOver())
+            return;
+
         _lastUsedPickup = source;
         foreach (var p in _pickups) p.Deactivate();
 
@@ -50,21 +63,27 @@ public class DeliveryManager : MonoBehaviour
 
     public void NotifyDeliveryZoneEntered()
     {
+        if (IsGameOver()) return;
         OnDeliveryZoneEntered?.Invoke();
     }
 
     public void NotifyDeliveryZoneExited()
     {
+        if (IsGameOver()) return;
         OnDeliveryZoneExited?.Invoke();
     }
 
     public void NotifyDeliveryTriggered()
     {
+        if (IsGameOver()) return;
         OnDeliveryTriggered?.Invoke();
     }
 
     public void OnPackageDelivered()
     {
+        if (IsGameOver())
+            return;
+
         if (_lastUsedPickup != null)
             _lastUsedPickup.ResetPackage();
 
@@ -84,6 +103,9 @@ public class DeliveryManager : MonoBehaviour
     /// </summary>
     public void OnPackageDestroyed()
     {
+        if (IsGameOver())
+            return;
+
         if (_lastUsedPickup != null)
             _lastUsedPickup.ResetPackage();
 
@@ -105,5 +127,25 @@ public class DeliveryManager : MonoBehaviour
         _lastUsedPickup = null;
         _activeDestination = null;
         OnDeliveryCompleted?.Invoke();
+    }
+
+    void HandleTimeExpired()
+    {
+        if (_destinations != null)
+        {
+            foreach (var destination in _destinations)
+                if (destination != null) destination.Deactivate();
+        }
+
+        if (_pickups != null)
+        {
+            foreach (var pickup in _pickups)
+                if (pickup != null) pickup.Deactivate();
+        }
+    }
+
+    static bool IsGameOver()
+    {
+        return GameSession.Instance != null && GameSession.Instance.IsGameOver;
     }
 }

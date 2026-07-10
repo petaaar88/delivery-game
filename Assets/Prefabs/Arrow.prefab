@@ -102,3 +102,4 @@ MonoBehaviour:
   popInOvershoot: 1.28
   popOutDuration: 0.22
   popOutBulge: 0.18
+  glowMaterial: {fileID: 2100000, guid: 74115fbe8a844012a1f20ef9c03beb6c, type: 2}

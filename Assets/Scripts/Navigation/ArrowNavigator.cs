@@ -28,6 +28,10 @@ public class ArrowNavigator : MonoBehaviour
     public float popOutDuration = 0.22f;
     public float popOutBulge    = 0.18f;
 
+    [Header("Glow")]
+    [Tooltip("Additive silhouette material used to keep the arrow readable without washing out its centre.")]
+    [SerializeField] private Material glowMaterial;
+
     private Renderer[] _renderers;
     private Transform _destination;
     private List<Vector3> _path = new List<Vector3>();
@@ -41,7 +45,8 @@ public class ArrowNavigator : MonoBehaviour
     void Awake()
     {
         _baseScale = transform.localScale;
-        _renderers = GetComponentsInChildren<Renderer>();
+        CreateGlowShells();
+        _renderers = GetComponentsInChildren<Renderer>(true);
         transform.localScale = Vector3.zero;
         foreach (var r in _renderers)
         {
@@ -59,6 +64,37 @@ public class ArrowNavigator : MonoBehaviour
         DeliveryManager.OnDeliveryCompleted    += HandleDeliveryCompleted;
         DeliveryManager.OnDeliveryFailed       += HandleDeliveryCompleted;
         VehiclePickupAnimator.OnPickupComplete += HandlePickupComplete;
+    }
+
+    void CreateGlowShells()
+    {
+        if (glowMaterial == null)
+            return;
+
+        MeshRenderer[] sourceRenderers = GetComponentsInChildren<MeshRenderer>(true);
+        foreach (MeshRenderer sourceRenderer in sourceRenderers)
+        {
+            MeshFilter sourceFilter = sourceRenderer.GetComponent<MeshFilter>();
+            if (sourceFilter == null || sourceFilter.sharedMesh == null)
+                continue;
+
+            var glowObject = new GameObject($"{sourceRenderer.gameObject.name} Glow");
+            glowObject.layer = sourceRenderer.gameObject.layer;
+            glowObject.transform.SetParent(sourceRenderer.transform, false);
+
+            MeshFilter glowFilter = glowObject.AddComponent<MeshFilter>();
+            glowFilter.sharedMesh = sourceFilter.sharedMesh;
+
+            MeshRenderer glowRenderer = glowObject.AddComponent<MeshRenderer>();
+            int materialCount = Mathf.Max(1, sourceRenderer.sharedMaterials.Length);
+            var glowMaterials = new Material[materialCount];
+            for (int i = 0; i < glowMaterials.Length; i++)
+                glowMaterials[i] = glowMaterial;
+
+            glowRenderer.sharedMaterials = glowMaterials;
+            glowRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+            glowRenderer.receiveShadows = false;
+        }
     }
 
     void OnDestroy()
